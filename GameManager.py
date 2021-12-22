@@ -18,6 +18,7 @@ class GameManager:
             'settings': SettingsStage(self).init(),
             'choose_lvl': LevelChooseStage(self).init(),
             'game': LevelStage(self).init(),
+            'result': EndStage(self).init(),
         }
         self.current_stage = 'init'
         self.screen = screen
