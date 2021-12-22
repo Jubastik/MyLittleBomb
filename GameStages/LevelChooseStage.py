@@ -3,4 +3,7 @@ from GameStages.Stage import Stage
 
 
 class LevelChooseStage(Stage):
-    pass
+    """Выбор уровня"""
+
+    def __init__(self):
+        pass

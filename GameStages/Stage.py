@@ -2,4 +2,7 @@ import pygame
 
 
 class Stage:
-    pass
+    """Материнский класс стадии игры"""
+
+    def __init__(self):
+        pass

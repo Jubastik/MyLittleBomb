@@ -2,8 +2,8 @@ import pygame
 from GameStages.Stage import Stage
 
 
-class SettingsStage(Stage):
-    """Экран настроек"""
+class InitStage(Stage):
+    """Загрузка игры"""
 
     def __init__(self):
         pass

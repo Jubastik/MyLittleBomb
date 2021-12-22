@@ -2,8 +2,8 @@ import pygame
 from GameStages.Stage import Stage
 
 
-class SettingsStage(Stage):
-    """Экран настроек"""
+class MenuStage(Stage):
+    """Меню игры"""
 
     def __init__(self):
         pass
