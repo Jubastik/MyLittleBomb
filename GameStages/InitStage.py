@@ -1,7 +1,7 @@
 import pygame
 from GameStages.Stage import Stage
-from image_loader import  load_image
-from CONSTANTS import WIDTH, HEIGHT
+from image_loader import load_image
+
 
 class InitStage(Stage):
     """Загрузка игры"""
@@ -12,7 +12,7 @@ class InitStage(Stage):
         return self
 
     def draw(self, screen):
-        screen.blit(self.background, (WIDTH // 4 - 35, HEIGHT // 4))
+        screen.blit(self.background, (self.width // 4 - 35, self.height // 4))
 
     def update(self):
         self.timer -= 1
