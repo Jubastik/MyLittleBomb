@@ -29,6 +29,9 @@ class GameManager:
             'game': LevelStage(self).init(),
             'result': EndStage(self).init(),
         }
+        self.current_stage = 'choose_lvl'
+        self.screen = screen
+        self.fps = fps
 
     def change_stage(self, name):
         self.current_stage = name
@@ -42,9 +45,6 @@ class GameManager:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 3:
-                        print(event.pos)
                 self.ui_manager.process_events(event)
                 stage.process_event(event)
             stage.update()
