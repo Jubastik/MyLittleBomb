@@ -20,7 +20,7 @@ class GameManager:
             'game': LevelStage(self).init(),
             'result': EndStage(self).init(),
         }
-        self.current_stage = 'init'
+        self.current_stage = 'choose_lvl'
         self.screen = screen
         self.fps = fps
 
