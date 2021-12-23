@@ -6,9 +6,9 @@ import ctypes
 
 
 def launch():
-    """Запускает игру"""
+    '''Запускает игру'''
 
-    ctypes.windll.user32.SetProcessDPIAware()  # игнорирование масштабирования Windows
+    ctypes.windll.user32.SetProcessDPIAware() # игнорирование масштабирования Windows
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
     pygame.display.set_caption("Voice neutralization")
