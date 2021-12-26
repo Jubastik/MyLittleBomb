@@ -7,29 +7,13 @@ class LevelChooseStage(Stage):
     """Выбор уровня"""
 
     def init(self):
-        self.init_gui()
-        self.width_block = (self.width - 200 - 20 * 3) // 3
+        self.ui_manager = self.gm.ui_manager
+        self.WIDTH_BLOCK = (self.width - 200 - 20 * 3) // 3
         self.page = 1
-        self.manager = self.manager_page1
+        self.page1_ui_group = []
+        self.page2_ui_group = []
+        self.init_gui()
         return self
-
-    def init_gui(self):
-        self.manager_lvl = pygame_gui.UIManager((self.width, self.height))
-        self.next_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((self.width - 75, self.height // 2), (50, 100)),
-            text='>',
-            manager=self.manager_lvl)
-
-        self.back_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((15, self.height // 2), (50, 100)),
-            text='<',
-            manager=self.manager_lvl)
-
-        self.manager_page1 = pygame_gui.UIManager((self.width, self.height))
-        self.hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 275), (100, 50)),
-                                                         text='Say Hello',
-                                                         manager=self.manager_page1)
-        self.manager_page2 = pygame_gui.UIManager((self.width, self.height))
 
     def draw(self, screen):
         screen.fill((100, 100, 100))
@@ -37,59 +21,151 @@ class LevelChooseStage(Stage):
             self.draw_first_page(screen)
         else:
             self.draw_second_page(screen)
-        self.manager_lvl.draw_ui(screen)
-        self.manager.draw_ui(screen)
 
     def process_event(self, event):
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == self.next_button:
-                    if self.page == 1:
-                        self.change_page(2)
-                if event.ui_element == self.back_button:
-                    if self.page == 2:
-                        self.change_page(1)
-                elif event.ui_element == self.hello_button:
-                    print("урааа")
+                self.button_processing(event)
 
-        self.manager_lvl.process_events(event)
-        self.manager.process_events(event)
+    def button_processing(self, event):
+        if event.ui_element == self.next_button:
+            if self.page == 1:
+                self.change_page(2)
+        elif event.ui_element == self.back_button:
+            if self.page == 2:
+                self.change_page(1)
+        elif event.ui_element == self.btn_first_lvl:
+            self.start_first_lvl()
+        elif event.ui_element == self.btn_second_lvl:
+            self.start_second_lvl()
+        elif event.ui_element == self.btn_third_lvl:
+            self.start_third_lvl()
 
     def change_page(self, page):
         self.page = page
         if page == 1:
-            self.manager = self.manager_page1
+            for ui in self.page2_ui_group:
+                ui.visible = False
+            for ui in self.page1_ui_group:
+                ui.visible = True
         else:
-            self.manager = self.manager_page2
+            for ui in self.page2_ui_group:
+                ui.visible = True
+            for ui in self.page1_ui_group:
+                ui.visible = False
 
     def update(self):
-        self.manager_lvl.update(0.03)
-        self.manager.update(0.03)  # непонятно зачем нужно время с прошлого кадра, я вставил просто 30 / 1000
+        pass
+
+    def init_gui(self):
+        self.next_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect((self.width - 75, self.height // 2), (50, 100)),
+            text='>',
+            manager=self.ui_manager)
+        self.back_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect((15, self.height // 2), (50, 100)),
+            text='<',
+            manager=self.ui_manager)
+        self.own_lvl_gui()
+        self.first_lvl_gui()
+        self.second_lvl_gui()
+        self.third_lvl_gui()
+        self.change_page(1)
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def draw_first_page(self, screen):
-        self.draw_own_level(screen)
-        self.draw_first_level(screen)
-        self.draw_second_level(screen)
+        self.draw_own_lvl(screen)
+        self.draw_first_lvl(screen)
+        self.draw_second_lvl(screen)
 
     def draw_second_page(self, screen):
-        self.draw_third_level(screen)
-        self.draw_fourth_level(screen)
-        self.draw_fifth_level(screen)
+        self.draw_third_lvl(screen)
+        self.draw_fourth_lvl(screen)
+        self.draw_fifth_lvl(screen)
 
-    def draw_own_level(self, screen):
-        pygame.draw.rect(screen, (0, 0, 0), (100, 20, self.width_block, self.height - 40))
+    # ------------------------------------------------------------------------------------------------------------------
 
-    def draw_first_level(self, screen):
-        pygame.draw.rect(screen, (0, 20, 0), (self.width // 3 + 50, 20, self.width_block, self.height - 40))
+    def start_own_lvl(self):
+        print("Старт своего уровня")
 
-    def draw_second_level(self, screen):
-        pygame.draw.rect(screen, (0, 30, 0), (self.width // 3 * 2, 20, self.width_block, self.height - 40))
+    def start_first_lvl(self):
+        print("Старт 1го уровня")  # переключение стейджа и запуск 1го уровня
+        self.end()
 
-    def draw_third_level(self, screen):
-        pygame.draw.rect(screen, (100, 0, 0), (100, 20, self.width_block, self.height - 40))
+    def start_second_lvl(self):
+        print("Старт 2го уровня")
 
-    def draw_fourth_level(self, screen):
-        pygame.draw.rect(screen, (100, 20, 0), (self.width // 3 + 50, 20, self.width_block, self.height - 40))
+    def start_third_lvl(self):
+        print("Старт 3го уровня")
 
-    def draw_fifth_level(self, screen):
-        pygame.draw.rect(screen, (100, 30, 0), (self.width // 3 * 2, 20, self.width_block, self.height - 40))
+    def start_fourth_lvl(self):
+        print("Старт 5го уровня")
+
+    def start_fifth_lvl(self):
+        print("Старт 5го уровня")
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def own_lvl_gui(self):
+        pass
+
+    def first_lvl_gui(self):
+        self.btn_first_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((850, 950), (250, 50)),
+                                                          text='1 уровень',
+                                                          manager=self.ui_manager)
+        self.lbl_first_lvl = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((800, 200), (300, 50)),
+                                                         text='Перые шаги',
+                                                         manager=self.ui_manager,
+                                                         object_id="#game_title")
+        self.txt_first_lvl = pygame_gui.elements.UITextBox(
+            """<p>Первого уровня <strong>не будет</strong>, кодеры приняли <strong>ислам</strong></p>""",
+            relative_rect=pygame.Rect((800, 300), (400, 50)),
+            manager=self.ui_manager)
+        self.page1_ui_group.extend([self.btn_first_lvl, self.lbl_first_lvl, self.txt_first_lvl])
+
+    def second_lvl_gui(self):
+        self.btn_second_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((1450, 950), (250, 50)),
+                                                           text='2 уровень',
+                                                           manager=self.ui_manager)
+        self.page1_ui_group.extend([self.btn_second_lvl])
+
+    def third_lvl_gui(self):
+        self.btn_third_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((250, 950), (250, 50)),
+                                                          text='3 уровень',
+                                                          manager=self.ui_manager)
+        self.page2_ui_group.extend([self.btn_third_lvl])
+
+    def fourth_lvl_gui(self):
+        pass
+
+    def fifth_lvl_gui(self):
+        pass
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def draw_own_lvl(self, screen):
+        pygame.draw.rect(screen, (0, 0, 0), (100, 20, self.WIDTH_BLOCK, self.height - 40))  # ширина 550pt
+
+    def draw_first_lvl(self, screen):
+        pygame.draw.rect(screen, (0, 20, 0), (self.width // 3 + 50, 20, self.WIDTH_BLOCK, self.height - 40))
+
+    def draw_second_lvl(self, screen):
+        pygame.draw.rect(screen, (0, 30, 0), (self.width // 3 * 2, 20, self.WIDTH_BLOCK, self.height - 40))
+
+    def draw_third_lvl(self, screen):
+        pygame.draw.rect(screen, (100, 0, 0), (100, 20, self.WIDTH_BLOCK, self.height - 40))
+
+    def draw_fourth_lvl(self, screen):
+        pygame.draw.rect(screen, (100, 20, 0), (self.width // 3 + 50, 20, self.WIDTH_BLOCK, self.height - 40))
+
+    def draw_fifth_lvl(self, screen):
+        pygame.draw.rect(screen, (100, 30, 0), (self.width // 3 * 2, 20, self.WIDTH_BLOCK, self.height - 40))
+
+    def end(self):
+        self.next_button.kill()
+        self.back_button.kill()
+        for ui in self.page1_ui_group:
+            ui.kill()
+        for ui in self.page2_ui_group:
+            ui.kill()
