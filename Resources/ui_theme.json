@@ -1,0 +1,49 @@
+{
+  "defaults":
+  {
+    "colours":
+    {
+      "normal_bg": "#606060",
+      "hovered_bg": "#707070"
+    }
+  },
+
+  "tool_tip":
+  {
+    "colours":
+    {
+      "normal_text": "#FFFFFF",
+      "dark_bg": "#15191eCC"
+    }
+  },
+
+  "world_space_health_bar":
+  {
+    "colours":
+    {
+      "normal_border": "#F0F0F0A0",
+      "unfilled_bar": "#50505080",
+      "filled_bar": "#f4251b"
+    },
+    "misc":
+    {
+      "border_width": "1"
+    }
+  },
+
+  "#game_title":
+  {
+    "colours":
+    {
+      "normal_text": "#EDA93B",
+      "dark_bg": "#FFFFFF00"
+    },
+    "font":
+    {
+      "name": "montserrat",
+      "size": "40",
+      "regular_path": "Resources/Montserrat-Regular.ttf"
+    }
+  }
+
+}

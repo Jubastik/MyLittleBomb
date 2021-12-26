@@ -1,4 +1,6 @@
 import pygame
+from pygame_gui import UIManager
+
 from CONSTANTS import *
 from GameStages.SettingsStage import SettingsStage
 from GameStages.MenuStage import MenuStage
@@ -12,6 +14,13 @@ class GameManager:
     '''Осуществляет управление игрой'''
 
     def __init__(self, screen, fps):
+        self.ui_manager = UIManager(screen.get_size(), "Resources/ui_theme.json")
+        self.ui_manager.preload_fonts([{'name': 'fira_code', 'point_size': 10, 'style': 'bold'},
+                                  {'name': 'fira_code', 'point_size': 10, 'style': 'regular'},
+                                  {'name': 'fira_code', 'point_size': 14, 'style': 'bold'}])
+        self.current_stage = 'choose_lvl'
+        self.screen = screen
+        self.fps = fps
         self.stages = {
             'init': InitStage(self).init(),
             'menu': MenuStage(self).init(),
@@ -20,9 +29,6 @@ class GameManager:
             'game': LevelStage(self).init(),
             'result': EndStage(self).init(),
         }
-        self.current_stage = 'init'
-        self.screen = screen
-        self.fps = fps
 
     def change_stage(self, name):
         self.current_stage = name
@@ -30,12 +36,16 @@ class GameManager:
     def loop(self):
         clock = pygame.time.Clock()
         while True:
+            frame_time = clock.tick(self.fps)
+            time_delta = min(frame_time / 1000.0, 0.1)
             stage = self.stages[self.current_stage]
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return
+                self.ui_manager.process_events(event)
                 stage.process_event(event)
             stage.update()
+            self.ui_manager.update(time_delta)
             stage.draw(self.screen)
+            self.ui_manager.draw_ui(self.screen)
             pygame.display.flip()
-            clock.tick(self.fps)
