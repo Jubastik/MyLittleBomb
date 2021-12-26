@@ -2,14 +2,14 @@ import pygame
 from BobmModules import BobmModule
 
 
-class Wires(BobmModule):
-    """Моудуль бомбы с проводами"""
+class Timer(BobmModule):
+    """Моудуль бомбы с таймером"""
 
     def init(self):
         return self
     
     def draw(self):
-        return self
-    
+        pass
+
     def generate(self):
         pass

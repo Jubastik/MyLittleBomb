@@ -10,3 +10,6 @@ class MenuStage(Stage):
 
     def draw(self, screen):
         screen.fill((0, 40, 0))
+
+    def process_event(self, event):
+        pass
