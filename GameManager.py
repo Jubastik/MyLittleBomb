@@ -18,7 +18,7 @@ class GameManager:
         self.ui_manager.preload_fonts([{'name': 'fira_code', 'point_size': 10, 'style': 'bold'},
                                   {'name': 'fira_code', 'point_size': 10, 'style': 'regular'},
                                   {'name': 'fira_code', 'point_size': 14, 'style': 'bold'}])
-        self.current_stage = 'choose_lvl'
+        self.current_stage = 'init'
         self.screen = screen
         self.fps = fps
         self.stages = {
@@ -44,6 +44,8 @@ class GameManager:
                     return
                 self.ui_manager.process_events(event)
                 stage.process_event(event)
+            if stage != self.stages[self.current_stage]:
+                continue
             stage.update()
             self.ui_manager.update(time_delta)
             stage.draw(self.screen)

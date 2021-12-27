@@ -13,10 +13,19 @@ class LevelChooseStage(Stage):
         self.page1_ui_group = []
         self.page2_ui_group = []
         self.init_gui()
+        self.end()
+        self.work = False
         return self
 
+    def update(self):
+        if not self.work:
+            self.work = True
+            self.start()
+            self.change_page(1)
+            print("show")
+
     def draw(self, screen):
-        screen.fill((100, 100, 100))
+        screen.fill((90, 90, 90))
         if self.page == 1:
             self.draw_first_page(screen)
         else:
@@ -54,9 +63,6 @@ class LevelChooseStage(Stage):
             for ui in self.page1_ui_group:
                 ui.visible = False
 
-    def update(self):
-        pass
-
     def init_gui(self):
         self.next_button = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((self.width - 75, self.height // 2), (50, 100)),
@@ -92,6 +98,7 @@ class LevelChooseStage(Stage):
     def start_first_lvl(self):
         print("Старт 1го уровня")  # переключение стейджа и запуск 1го уровня
         self.end()
+        self.gm.change_stage("menu")
 
     def start_second_lvl(self):
         print("Старт 2го уровня")
@@ -162,10 +169,21 @@ class LevelChooseStage(Stage):
     def draw_fifth_lvl(self, screen):
         pygame.draw.rect(screen, (100, 30, 0), (self.width // 3 * 2, 20, self.WIDTH_BLOCK, self.height - 40))
 
-    def end(self):
-        self.next_button.kill()
-        self.back_button.kill()
-        for ui in self.page1_ui_group:
-            ui.kill()
+    def start(self):
+        self.work = True
+        self.back_button.visible = True
+        self.next_button.visible = True
         for ui in self.page2_ui_group:
-            ui.kill()
+            ui.visible = True
+        for ui in self.page1_ui_group:
+            ui.visible = True
+
+    def end(self):
+        self.work = False
+        self.back_button.visible = False
+        self.next_button.visible = False
+        for ui in self.page2_ui_group:
+            ui.visible = False
+        for ui in self.page1_ui_group:
+            ui.visible = False
+
