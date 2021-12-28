@@ -1,6 +1,6 @@
 import pygame
-from Entities.BobmModules.Timer import Timer
-from Entities.BobmModules.Wires import Wires
+from Entities.BobmModules.TimerModule import Timer
+from Entities.BobmModules.WiresModule import Wires
 from Entities.BobmModules.NoneModule import NoneModule
 
 

@@ -12,7 +12,7 @@ def launch():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
     pygame.display.set_caption("Voice neutralization")
-    gm = GameManager(screen, FPS)
+    gm = GameManager(screen, FPS, current_stage='')
     gm.loop()
     pygame.quit()
 
