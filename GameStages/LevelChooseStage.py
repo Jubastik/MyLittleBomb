@@ -14,15 +14,14 @@ class LevelChooseStage(Stage):
         self.page2_ui_group = []
         self.init_gui()
         self.end()
-        self.work = False
         return self
 
+    def stage_launch(self):
+        self.start()
+        self.change_page(1)
+
     def update(self):
-        if not self.work:
-            self.work = True
-            self.start()
-            self.change_page(1)
-            print("show")
+        pass
 
     def draw(self, screen):
         screen.fill((90, 90, 90))
@@ -170,7 +169,6 @@ class LevelChooseStage(Stage):
         pygame.draw.rect(screen, (100, 30, 0), (self.width // 3 * 2, 20, self.WIDTH_BLOCK, self.height - 40))
 
     def start(self):
-        self.work = True
         self.back_button.visible = True
         self.next_button.visible = True
         for ui in self.page2_ui_group:
@@ -179,11 +177,9 @@ class LevelChooseStage(Stage):
             ui.visible = True
 
     def end(self):
-        self.work = False
         self.back_button.visible = False
         self.next_button.visible = False
         for ui in self.page2_ui_group:
             ui.visible = False
         for ui in self.page1_ui_group:
             ui.visible = False
-
