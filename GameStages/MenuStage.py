@@ -12,6 +12,9 @@ class MenuStage(Stage):
     def init(self):
         self.ui_manager = self.gm.ui_manager
         self.background = pygame.Surface((self.width, self.height))
+        self.init_gui()
+        self.gui_off()
+
         return self
 
     def draw(self, screen):
@@ -39,6 +42,7 @@ class MenuStage(Stage):
     def stage_launch(self):
         self.all_sprites = pygame.sprite.Group()
         self.timer = 30
+        self.gui_on()
 
     def update(self):
         if self.timer == 0:
@@ -56,13 +60,25 @@ class MenuStage(Stage):
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 # если нажата кнопка выбора уровня
                 if event.ui_element == self.choose_lvl:
-                    pass
+                    self.gm.change_stage('choose_lvl')
+                    self.gui_off()
                 # кнопка настроек
                 if event.ui_element == self.settings:
                     pass
                 # кнопка выхода
                 if event.ui_element == self.leave_game:
-                    running = False
+                    self.gui_off()
+                    self.gm.run = False
+
+    def gui_on(self):
+        self.leave_game.visible = True
+        self.choose_lvl.visible = True
+        self.settings.visible = True
+
+    def gui_off(self):
+        self.leave_game.visible = False
+        self.choose_lvl.visible = False
+        self.settings.visible = False
 
 
 class Bomb(pygame.sprite.Sprite):
