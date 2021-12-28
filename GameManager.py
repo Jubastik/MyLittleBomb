@@ -36,8 +36,9 @@ class GameManager:
         stage.stage_launch()
 
     def loop(self):
+        self.run = True
         clock = pygame.time.Clock()
-        while True:
+        while self.run:
             frame_time = clock.tick(self.fps)
             time_delta = min(frame_time / 1000.0, 0.1)
             stage = self.stages[self.current_stage]
