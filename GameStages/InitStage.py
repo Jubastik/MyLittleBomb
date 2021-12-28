@@ -17,4 +17,4 @@ class InitStage(Stage):
     def update(self):
         self.timer -= 1
         if self.timer == 0:
-            self.gm.change_stage("choose_lvl")
+            self.gm.change_stage("menu")

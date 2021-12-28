@@ -18,7 +18,7 @@ class GameManager:
         self.ui_manager.preload_fonts([{'name': 'fira_code', 'point_size': 10, 'style': 'bold'},
                                        {'name': 'fira_code', 'point_size': 10, 'style': 'regular'},
                                        {'name': 'fira_code', 'point_size': 14, 'style': 'bold'}])
-        self.current_stage = 'menu'
+        self.current_stage = 'init'
         self.screen = screen
         self.fps = fps
         self.stages = {

@@ -12,6 +12,7 @@ class MenuStage(Stage):
     def init(self):
         self.ui_manager = self.gm.ui_manager
         self.background = pygame.Surface((self.width, self.height))
+        return self
 
     def draw(self, screen):
         self.background.fill((255, 255, 255))
