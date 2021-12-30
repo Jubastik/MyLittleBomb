@@ -13,6 +13,6 @@ class WiresModule(BobmModule):
 
     def generate(self):
         pass
-    
-    def get_wire(self, pos):
+
+    def click_LKM(self, x, y):
         pass

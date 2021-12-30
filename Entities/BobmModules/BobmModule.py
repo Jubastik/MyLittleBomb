@@ -5,11 +5,9 @@ class BobmModule:
     """Материнский класс модуля бомбы, так же является затычкой"""
 
     def __init__(self, cords):
-        '''crods - координаты модуля'''
+        '''cords - координаты модуля'''
         self.x, self.y, self.x2, self.y2 = cords
-    
-    def on_click(self, pos):
-        pass
+        self.isdefused = False
     
     def draw(self):
         pass

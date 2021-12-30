@@ -10,13 +10,32 @@ COUNT_MODULES_X = 3
 COUNT_MODULES_Y = 2
 
 # Характеристики бомбы
-BOMB_BORDER = 30  # 15 - длина border-а бомбы + 15 - длина border-а модуля
 BOMB_W = (COUNT_MODULES_X * MODULE_W) + (((COUNT_MODULES_X * 2) - 2) * MODULE_BORDER)
 BOMB_H = (COUNT_MODULES_Y * MODULE_W) + (((COUNT_MODULES_Y * 2) - 2) * MODULE_BORDER)
 BOMB_X = (WIDTH // 2) - (BOMB_W // 2)  # Центрирование бомбы по X
 BOMB_Y = (HEIGHT // 2) - (BOMB_H // 2)  # Центрирование бомбы по Y
 BOMB_X2 = BOMB_X + BOMB_W
 BOMB_Y2 = BOMB_Y + BOMB_H
+
+# Характеристики картинки бомбы
+BOMB_IMG_W = 990
+BOMB_IMG_H = 795
+BOMB_IMG_X = BOMB_X - (BOMB_W - BOMB_IMG_W)
+BOMB_IMG_Y = BOMB_Y - (BOMB_H - BOMB_IMG_H)
+BOMB_IMG_X2 = BOMB_IMG_X + BOMB_IMG_H
+BOMB_IMG_Y2 = BOMB_IMG_Y + BOMB_IMG_H
+
+# Характеристики надписи с серийником.
+SERIAL_NUM_IMG_FONT = r"Resources\\Other\\impact.ttf"
+SERIAL_NUM_IMG_FONT_SIZE = 48
+SERIAL_NUM_IMG_X = BOMB_IMG_X + 315 + 5
+SERIAL_NUM_IMG_Y = BOMB_IMG_Y + 45 + 5
+SERIAL_NUM_IMG_X2 = BOMB_IMG_X2 + 945 - 5
+SERIAL_NUM_IMG_Y2 = BOMB_IMG_Y2 + 105 - 5
+SERIAL_NUM_IMG_W = SERIAL_NUM_IMG_X2 - SERIAL_NUM_IMG_X
+SERIAL_NUM_IMG_H = SERIAL_NUM_IMG_Y2 - SERIAL_NUM_IMG_Y
+# 315x45, 945x105 (относительно бомбы)
+
 
 # Расчёт координат модулей
 # Порядок модулей:

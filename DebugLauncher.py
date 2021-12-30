@@ -6,7 +6,7 @@ import ctypes
 
 
 def launch():
-    """Запускает игру"""
+    """Запускает игру, дебаг версия. Творим здесь что хотим :)"""
 
     ctypes.windll.user32.SetProcessDPIAware()  # игнорирование масштабирования Windows
     pygame.init()
