@@ -59,7 +59,8 @@ class GameStage(Stage):
         self.time = FPS * 300
 
     def set_level(self, level):
-        self.bomb = Bomb(self, level)
+        print(level)
+        # self.bomb = Bomb(self, level)
 
     def pause(self):
         pass

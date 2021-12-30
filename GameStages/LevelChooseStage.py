@@ -97,7 +97,8 @@ class LevelChooseStage(Stage):
     def start_first_lvl(self):
         print("Старт 1го уровня")  # переключение стейджа и запуск 1го уровня
         self.end()
-        self.gm.change_stage("menu")
+        self.gm.stages["game"].set_level("хай")
+        self.gm.change_stage("game")
 
     def start_second_lvl(self):
         print("Старт 2го уровня")

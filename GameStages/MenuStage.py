@@ -82,7 +82,7 @@ class MenuStage(Stage):
 
 
 class Bomb(pygame.sprite.Sprite):
-    image = load_image('bomb.png')
+    image = load_image('bomb_menu.png')
     image_boom = load_image('boom.png')
 
     def __init__(self, group):
