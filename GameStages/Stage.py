@@ -1,6 +1,7 @@
 import pygame
 from CONSTANTS import WIDTH, HEIGHT
 
+
 class Stage:
     """Материнский класс стадии игры"""
 
@@ -19,4 +20,7 @@ class Stage:
         pass
 
     def update(self):
+        pass
+
+    def stage_launch(self):
         pass
