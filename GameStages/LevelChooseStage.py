@@ -44,6 +44,9 @@ class LevelChooseStage(Stage):
         elif event.ui_element == self.back_button:
             if self.page == 2:
                 self.change_page(1)
+        elif event.ui_element == self.menu_button:
+            self.end()
+            self.gm.change_stage("menu")
         elif event.ui_element == self.btn_first_lvl:
             self.start_first_lvl()
         elif event.ui_element == self.btn_second_lvl:
@@ -72,6 +75,10 @@ class LevelChooseStage(Stage):
         self.back_button = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((15, self.height // 2), (50, 100)),
             text='<',
+            manager=self.ui_manager)
+        self.menu_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect((15, 50), (75, 50)),
+            text='Меню',
             manager=self.ui_manager)
         self.own_lvl_gui()
         self.first_lvl_gui()
@@ -171,6 +178,7 @@ class LevelChooseStage(Stage):
         screen.blit(self.background_lvl, (self.width // 3 * 2, 20))
 
     def start(self):
+        self.menu_button.visible = True
         self.back_button.visible = True
         self.next_button.visible = True
         for ui in self.page2_ui_group:
@@ -181,6 +189,7 @@ class LevelChooseStage(Stage):
     def end(self):
         self.back_button.visible = False
         self.next_button.visible = False
+        self.menu_button.visible = False
         for ui in self.page2_ui_group:
             ui.visible = False
         for ui in self.page1_ui_group:
