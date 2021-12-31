@@ -1,5 +1,5 @@
 import pygame
-from BobmModules import BobmModule
+from Entities.BobmModules.BobmModule import BobmModule
 
 
 class NoneModule(BobmModule):
@@ -9,7 +9,7 @@ class NoneModule(BobmModule):
         self.isdefused = True
         return self
     
-    def draw(self):
+    def draw(self, screen):
         pass
 
     def click_LKM(self, x, y):

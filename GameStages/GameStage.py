@@ -34,7 +34,9 @@ class GameStage(Stage):
     def on_click_LKM(self, pos):
         x, y = pos
         if BOMB_X <= x <= BOMB_X2 and BOMB_Y <= y <= BOMB_Y2:
+            print('bomb >>>')
             self.bomb.click_LKM(x, y)
+            
 
     def update(self):
         self.time -= 1
@@ -57,10 +59,10 @@ class GameStage(Stage):
         self.lose = False
         self.mistakes = 0
         self.time = FPS * 300
+    
+    def set_bomb(self, bomb):
+        self.bomb = bomb
 
-    def set_level(self, level):
-        print(level)
-        # self.bomb = Bomb(self, level)
 
     def pause(self):
         pass

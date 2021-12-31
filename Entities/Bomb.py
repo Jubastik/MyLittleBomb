@@ -6,28 +6,30 @@ from CONSTANTS import BOMB_IMG_X, BOMB_IMG_Y, SERIAL_NUM_IMG_FONT_SIZE, SERIAL_N
 class Bomb:
     """Класс бомбы"""
 
-    def __init__(self, stage, level):
-        self.serial_number = level.serial_number
-        self.modules = level.modules
+    def __init__(self, stage):
         self.stage = stage
         self.bomb_image = load_image(r"bomb.png")
+    
+    def load_level(self, level):
+        self.serial_number = level.serial_number
+        self.modules = level.modules
 
-    def draw(self):
-        self.draw_bomb()
-        self.draw_serial_number()
-        self.draw_modules()
+    def draw(self, screen):
+        self.draw_bomb(screen)
+        self.draw_serial_number(screen)
+        self.draw_modules(screen)
 
     def draw_bomb(self, screen):
-        screen.blit(self.background, (BOMB_IMG_X, BOMB_IMG_Y))
+        screen.blit(self.bomb_image, (BOMB_IMG_X, BOMB_IMG_Y))
 
     def draw_serial_number(self, screen):
         font = pygame.font.Font(SERIAL_NUM_IMG_FONT, SERIAL_NUM_IMG_FONT_SIZE)
-        text = font.render("Hello, Pygame!", True, (100, 255, 100))
+        text = font.render('-'.join(self.serial_number), True, (255, 255, 255))
         screen.blit(text, (SERIAL_NUM_IMG_X, SERIAL_NUM_IMG_Y))
 
-    def draw_modules(self):
+    def draw_modules(self, screen):
         for module in self.modules:
-            module.draw()
+            module.draw(screen)
 
     def update(self):
         for module in self.modules:

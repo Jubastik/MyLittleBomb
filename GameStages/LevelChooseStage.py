@@ -2,6 +2,8 @@ import pygame
 import pygame_gui
 from GameStages.Stage import Stage
 from image_loader import load_image
+from Levels.Level1 import Level1
+from Entities.Bomb import Bomb
 
 
 class LevelChooseStage(Stage):
@@ -143,21 +145,29 @@ class LevelChooseStage(Stage):
         print("Старт своего уровня")
 
     def start_first_lvl(self):
-        print("Старт 1го уровня")  # переключение стейджа и запуск 1го уровня
+        '''переключение стейджа и запуск уровня'''
         self.end()
-        self.gm.stages["game"].set_level("хай")
+        bomb = Bomb(self.gm.stages["game"])
+        level = Level1(bomb)
+        bomb.load_level(level)
+        self.gm.stages["game"].stage_launch()
+        self.gm.stages["game"].set_bomb(bomb)
         self.gm.change_stage("game")
 
     def start_second_lvl(self):
+        '''переключение стейджа и запуск уровня'''
         print("Старт 2го уровня")
 
     def start_third_lvl(self):
+        '''переключение стейджа и запуск уровня'''
         print("Старт 3го уровня")
 
     def start_fourth_lvl(self):
+        '''переключение стейджа и запуск уровня'''
         print("Старт 5го уровня")
 
     def start_fifth_lvl(self):
+        '''переключение стейджа и запуск уровня'''
         print("Старт 5го уровня")
 
     # ------------------------------------------------------------------------------------------------------------------

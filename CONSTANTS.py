@@ -20,13 +20,13 @@ BOMB_Y2 = BOMB_Y + BOMB_H
 # Характеристики картинки бомбы
 BOMB_IMG_W = 990
 BOMB_IMG_H = 795
-BOMB_IMG_X = BOMB_X - (BOMB_W - BOMB_IMG_W)
-BOMB_IMG_Y = BOMB_Y - (BOMB_H - BOMB_IMG_H)
+BOMB_IMG_X = BOMB_X - 15
+BOMB_IMG_Y = BOMB_Y - 150
 BOMB_IMG_X2 = BOMB_IMG_X + BOMB_IMG_H
 BOMB_IMG_Y2 = BOMB_IMG_Y + BOMB_IMG_H
 
 # Характеристики надписи с серийником.
-SERIAL_NUM_IMG_FONT = r"Resources\\Other\\impact.ttf"
+SERIAL_NUM_IMG_FONT = r"Resources\impact.ttf"
 SERIAL_NUM_IMG_FONT_SIZE = 48
 SERIAL_NUM_IMG_X = BOMB_IMG_X + 315 + 5
 SERIAL_NUM_IMG_Y = BOMB_IMG_Y + 45 + 5

@@ -1,5 +1,5 @@
 import pygame
-from BobmModules import BobmModule
+from Entities.BobmModules.BobmModule import BobmModule
 
 
 class WiresModule(BobmModule):
@@ -8,7 +8,7 @@ class WiresModule(BobmModule):
     def init(self):
         return self
     
-    def draw(self):
+    def draw(self, screen):
         pass
 
     def generate(self):

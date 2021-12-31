@@ -1,5 +1,6 @@
 import pygame
-from Entities.BobmModules import BobmModule
+from Entities.BobmModules.BobmModule import BobmModule
+from image_loader import load_image
 from CONSTANTS import FPS
 
 
@@ -7,15 +8,14 @@ class TimerModule(BobmModule):
     """Моудуль бомбы с таймером"""
 
     def init(self):
+        self.module_image = load_image(r"timer.png")
         return self
     
-    def draw(self):
-        pass
+    def draw(self, screen):
+        screen.blit(self.module_image, (self.x, self.y))
 
     def update(self):
-        self.timer -= 1
-        if self.timer <= 0:
-            pass
+        pass
     
     def click_LKM(self, x, y):
         pass
