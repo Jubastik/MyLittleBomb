@@ -24,3 +24,4 @@ class Stage:
 
     def stage_launch(self):
         pass
+

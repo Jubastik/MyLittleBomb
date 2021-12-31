@@ -18,3 +18,6 @@ class InitStage(Stage):
         self.timer -= 1
         if self.timer == 0:
             self.gm.change_stage("menu")
+
+    def process_event(self, event):
+        pass

@@ -1,11 +1,10 @@
 import pygame
 from pygame_gui import UIManager
-
 from CONSTANTS import *
 from GameStages.SettingsStage import SettingsStage
 from GameStages.MenuStage import MenuStage
 from GameStages.LevelChooseStage import LevelChooseStage
-from GameStages.LevelStage import LevelStage
+from GameStages.GameStage import GameStage
 from GameStages.InitStage import InitStage
 from GameStages.EndStage import EndStage
 
@@ -13,12 +12,12 @@ from GameStages.EndStage import EndStage
 class GameManager:
     '''Осуществляет управление игрой'''
 
-    def __init__(self, screen, fps):
+    def __init__(self, screen, fps, current_stage='init'):
         self.ui_manager = UIManager(screen.get_size(), "Resources/ui_theme.json")
         self.ui_manager.preload_fonts([{'name': 'fira_code', 'point_size': 10, 'style': 'bold'},
                                        {'name': 'fira_code', 'point_size': 10, 'style': 'regular'},
                                        {'name': 'fira_code', 'point_size': 14, 'style': 'bold'}])
-        self.current_stage = 'init'
+        self.current_stage = current_stage
         self.screen = screen
         self.fps = fps
         self.stages = {
@@ -26,7 +25,7 @@ class GameManager:
             'menu': MenuStage(self).init(),
             'settings': SettingsStage(self).init(),
             'choose_lvl': LevelChooseStage(self).init(),
-            'game': LevelStage(self).init(),
+            'game': GameStage(self).init(),
             'result': EndStage(self).init(),
         }
 

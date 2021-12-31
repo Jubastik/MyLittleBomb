@@ -7,3 +7,6 @@ class EndStage(Stage):
 
     def init(self):
         return self
+    
+    def process_event(self, event):
+        pass
