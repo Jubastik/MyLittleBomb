@@ -9,7 +9,8 @@ class LevelChooseStage(Stage):
 
     def init(self):
         self.ui_manager = self.gm.ui_manager
-        self.background_lvl = load_image("level_selection.png")
+        self.background_lvl_active = load_image("level_selection.png")
+        self.background_lvl_inactive = load_image("level_selection_2.png")
         self.WIDTH_BLOCK = (self.width - 200 - 20 * 3) // 3
         self.page = 1
         self.page1_ui_group = []
@@ -21,9 +22,41 @@ class LevelChooseStage(Stage):
     def stage_launch(self):
         self.start()
         self.change_page(1)
+        self.sprite_time = 0
+
+        self.sprite_own = self.background_lvl_inactive
+        self.sprite_first = self.background_lvl_inactive
+        self.sprite_second = self.background_lvl_inactive
+        self.sprite_third = self.background_lvl_inactive
+        self.sprite_fourth = self.background_lvl_inactive
+        self.sprite_fifth = self.background_lvl_inactive
 
     def update(self):
-        pass
+        try:
+            if self.page == 1:
+                if self.rect_own.collidepoint(pygame.mouse.get_pos()):
+                    self.sprite_time += 1
+                    if self.sprite_time == 30:
+                        self.sprite_time = 0
+                        self.sprite_own = self.background_changing(self.sprite_own)
+                elif self.rect_first.collidepoint(pygame.mouse.get_pos()):
+                    self.sprite_time += 1
+                    if self.sprite_time == 30:
+                        self.sprite_time = 0
+                        self.sprite_first = self.background_changing(self.sprite_first)
+                elif self.rect_second.collidepoint(pygame.mouse.get_pos()):
+                    self.sprite_time += 1
+                    if self.sprite_time == 30:
+                        self.sprite_time = 0
+                        self.sprite_second = self.background_changing(self.sprite_second)
+            elif self.page == 2:
+                if self.rect_third.collidepoint(pygame.mouse.get_pos()):
+                    self.sprite_time += 1
+                    if self.sprite_time == 30:
+                        self.sprite_time = 0
+                        self.sprite_third = self.background_changing(self.sprite_third)
+        except:
+            print("err")
 
     def draw(self, screen):
         screen.fill((90, 90, 90))
@@ -36,6 +69,12 @@ class LevelChooseStage(Stage):
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 self.button_processing(event)
+
+    def background_changing(self, background):
+        if background == self.background_lvl_inactive:
+            return self.background_lvl_active
+        else:
+            return self.background_lvl_inactive
 
     def button_processing(self, event):
         if event.ui_element == self.next_button:
@@ -160,22 +199,22 @@ class LevelChooseStage(Stage):
     # ------------------------------------------------------------------------------------------------------------------
 
     def draw_own_lvl(self, screen):
-        screen.blit(self.background_lvl, (100, 20))
+        self.rect_own = screen.blit(self.sprite_own, (100, 20))
 
     def draw_first_lvl(self, screen):
-        screen.blit(self.background_lvl, (self.width // 3 + 50, 20))
+        self.rect_first = screen.blit(self.sprite_first, (self.width // 3 + 50, 20))
 
     def draw_second_lvl(self, screen):
-        screen.blit(self.background_lvl, (self.width // 3 * 2, 20))
+        self.rect_second = screen.blit(self.sprite_second, (self.width // 3 * 2, 20))
 
     def draw_third_lvl(self, screen):
-        screen.blit(self.background_lvl, (100, 20))
+        self.rect_third = screen.blit(self.sprite_third, (100, 20))
 
     def draw_fourth_lvl(self, screen):
-        screen.blit(self.background_lvl, (self.width // 3 + 50, 20))
+        self.rect_fourth = screen.blit(self.sprite_fourth, (self.width // 3 + 50, 20))
 
     def draw_fifth_lvl(self, screen):
-        screen.blit(self.background_lvl, (self.width // 3 * 2, 20))
+        self.rect_fifth = screen.blit(self.sprite_fifth, (self.width // 3 * 2, 20))
 
     def start(self):
         self.menu_button.visible = True
