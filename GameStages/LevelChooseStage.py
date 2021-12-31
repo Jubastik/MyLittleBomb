@@ -1,6 +1,7 @@
 import pygame
 import pygame_gui
 from GameStages.Stage import Stage
+from image_loader import load_image
 
 
 class LevelChooseStage(Stage):
@@ -8,6 +9,7 @@ class LevelChooseStage(Stage):
 
     def init(self):
         self.ui_manager = self.gm.ui_manager
+        self.background_lvl = load_image("level_selection.png")
         self.WIDTH_BLOCK = (self.width - 200 - 20 * 3) // 3
         self.page = 1
         self.page1_ui_group = []
@@ -117,10 +119,10 @@ class LevelChooseStage(Stage):
         pass
 
     def first_lvl_gui(self):
-        self.btn_first_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((850, 950), (250, 50)),
+        self.btn_first_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((850, 944), (231, 35)),
                                                           text='1 уровень',
                                                           manager=self.ui_manager)
-        self.lbl_first_lvl = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((800, 200), (300, 50)),
+        self.lbl_first_lvl = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((800, 100), (300, 50)),
                                                          text='Перые шаги',
                                                          manager=self.ui_manager,
                                                          object_id="#game_title")
@@ -151,22 +153,22 @@ class LevelChooseStage(Stage):
     # ------------------------------------------------------------------------------------------------------------------
 
     def draw_own_lvl(self, screen):
-        pygame.draw.rect(screen, (0, 0, 0), (100, 20, self.WIDTH_BLOCK, self.height - 40))  # ширина 550pt
+        screen.blit(self.background_lvl, (100, 20))
 
     def draw_first_lvl(self, screen):
-        pygame.draw.rect(screen, (0, 20, 0), (self.width // 3 + 50, 20, self.WIDTH_BLOCK, self.height - 40))
+        screen.blit(self.background_lvl, (self.width // 3 + 50, 20))
 
     def draw_second_lvl(self, screen):
-        pygame.draw.rect(screen, (0, 30, 0), (self.width // 3 * 2, 20, self.WIDTH_BLOCK, self.height - 40))
+        screen.blit(self.background_lvl, (self.width // 3 * 2, 20))
 
     def draw_third_lvl(self, screen):
-        pygame.draw.rect(screen, (100, 0, 0), (100, 20, self.WIDTH_BLOCK, self.height - 40))
+        screen.blit(self.background_lvl, (100, 20))
 
     def draw_fourth_lvl(self, screen):
-        pygame.draw.rect(screen, (100, 20, 0), (self.width // 3 + 50, 20, self.WIDTH_BLOCK, self.height - 40))
+        screen.blit(self.background_lvl, (self.width // 3 + 50, 20))
 
     def draw_fifth_lvl(self, screen):
-        pygame.draw.rect(screen, (100, 30, 0), (self.width // 3 * 2, 20, self.WIDTH_BLOCK, self.height - 40))
+        screen.blit(self.background_lvl, (self.width // 3 * 2, 20))
 
     def start(self):
         self.back_button.visible = True
