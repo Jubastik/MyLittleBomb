@@ -13,9 +13,8 @@ class LevelChooseStage(Stage):
         self.ui_manager = self.gm.ui_manager
         self.background_lvl_active = load_image("level_selection.png")
         self.background_lvl_inactive = load_image("level_selection_2.png")
-        self.WIDTH_BLOCK = (self.width - 200 - 20 * 3) // 3
         self.page = 1
-        self.page1_ui_group = []
+        self.page1_ui_group = []  # Список всего gui страницы
         self.page2_ui_group = []
         self.init_gui()
         self.end()
@@ -24,8 +23,9 @@ class LevelChooseStage(Stage):
     def stage_launch(self):
         self.start()
         self.change_page(1)
-        self.sprite_time = 0
+        self.sprite_time = 0  # Время нахождения курсора мыши на спрайте уровня
 
+        # Текущие спрайты бэкграунда выбора уровня
         self.sprite_own = self.background_lvl_inactive
         self.sprite_first = self.background_lvl_inactive
         self.sprite_second = self.background_lvl_inactive
@@ -35,30 +35,37 @@ class LevelChooseStage(Stage):
 
     def update(self):
         try:
+            # Обновление бэкграунда (мигание лампочки)
             if self.page == 1:
                 if self.rect_own.collidepoint(pygame.mouse.get_pos()):
                     self.sprite_time += 1
-                    if self.sprite_time == 30:
+                    if self.sprite_time == 20:
                         self.sprite_time = 0
                         self.sprite_own = self.background_changing(self.sprite_own)
                 elif self.rect_first.collidepoint(pygame.mouse.get_pos()):
                     self.sprite_time += 1
-                    if self.sprite_time == 30:
+                    if self.sprite_time == 20:
                         self.sprite_time = 0
                         self.sprite_first = self.background_changing(self.sprite_first)
                 elif self.rect_second.collidepoint(pygame.mouse.get_pos()):
                     self.sprite_time += 1
-                    if self.sprite_time == 30:
+                    if self.sprite_time == 20:
                         self.sprite_time = 0
                         self.sprite_second = self.background_changing(self.sprite_second)
             elif self.page == 2:
                 if self.rect_third.collidepoint(pygame.mouse.get_pos()):
                     self.sprite_time += 1
-                    if self.sprite_time == 30:
+                    if self.sprite_time == 20:
                         self.sprite_time = 0
                         self.sprite_third = self.background_changing(self.sprite_third)
-        except:
-            print("err")
+        except AttributeError:
+            pass
+
+    def background_changing(self, background):
+        if background == self.background_lvl_inactive:
+            return self.background_lvl_active
+        else:
+            return self.background_lvl_inactive
 
     def draw(self, screen):
         screen.fill((90, 90, 90))
@@ -72,13 +79,8 @@ class LevelChooseStage(Stage):
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 self.button_processing(event)
 
-    def background_changing(self, background):
-        if background == self.background_lvl_inactive:
-            return self.background_lvl_active
-        else:
-            return self.background_lvl_inactive
-
     def button_processing(self, event):
+        # Обработка нажатий на кнопки
         if event.ui_element == self.next_button:
             if self.page == 1:
                 self.change_page(2)
@@ -96,6 +98,7 @@ class LevelChooseStage(Stage):
             self.start_third_lvl()
 
     def change_page(self, page):
+        # Активация и деактивация gui связанного с уровнями
         self.page = page
         if page == 1:
             for ui in self.page2_ui_group:
@@ -109,6 +112,7 @@ class LevelChooseStage(Stage):
                 ui.visible = False
 
     def init_gui(self):
+        # Первичная инициализация всего gui из библиотеки pygame_gui
         self.next_button = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((self.width - 75, self.height // 2), (50, 100)),
             text='>',
@@ -125,7 +129,7 @@ class LevelChooseStage(Stage):
         self.first_lvl_gui()
         self.second_lvl_gui()
         self.third_lvl_gui()
-        self.change_page(1)
+        self.change_page(self.page)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -171,7 +175,7 @@ class LevelChooseStage(Stage):
         print("Старт 5го уровня")
 
     # ------------------------------------------------------------------------------------------------------------------
-
+    # первичная инициализация gui по уровням
     def own_lvl_gui(self):
         pass
 
@@ -208,7 +212,7 @@ class LevelChooseStage(Stage):
         pass
 
     # ------------------------------------------------------------------------------------------------------------------
-
+    # Отрисовка уровня
     def draw_own_lvl(self, screen):
         self.rect_own = screen.blit(self.sprite_own, (100, 20))
 
@@ -227,7 +231,10 @@ class LevelChooseStage(Stage):
     def draw_fifth_lvl(self, screen):
         self.rect_fifth = screen.blit(self.sprite_fifth, (self.width // 3 * 2, 20))
 
+    # ------------------------------------------------------------------------------------------------------------------
+
     def start(self):
+        # Активация всего gui
         self.menu_button.visible = True
         self.back_button.visible = True
         self.next_button.visible = True
@@ -237,6 +244,7 @@ class LevelChooseStage(Stage):
             ui.visible = True
 
     def end(self):
+        # Деактивация всего gui
         self.back_button.visible = False
         self.next_button.visible = False
         self.menu_button.visible = False

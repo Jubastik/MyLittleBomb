@@ -50,4 +50,14 @@ class GameManager:
             self.ui_manager.update(time_delta)
             stage.draw(self.screen)
             self.ui_manager.draw_ui(self.screen)
+            self.update_fps(clock)
             pygame.display.flip()
+
+    # ----------------------------------------------------------------------------------------------------------------------
+    # Служебная часть
+
+    def update_fps(self, clock):
+        font = pygame.font.SysFont("Arial", 30)
+        fps = str(int(clock.get_fps()))
+        fps_text = font.render(fps, 1, pygame.Color("coral"))
+        self.screen.blit(fps_text, (10, 0))
