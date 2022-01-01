@@ -6,8 +6,9 @@ class WiresModule(BobmModule):
     """Моудуль бомбы с проводами"""
 
     def init(self):
+        self.isdefused = False
         return self
-    
+
     def draw(self, screen):
         pass
 

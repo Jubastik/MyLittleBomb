@@ -1,15 +1,22 @@
 import pygame
 from image_loader import load_image
-from CONSTANTS import BOMB_IMG_X, BOMB_IMG_Y, SERIAL_NUM_IMG_FONT_SIZE, SERIAL_NUM_IMG_FONT, SERIAL_NUM_IMG_X, SERIAL_NUM_IMG_Y
+from CONSTANTS import (
+    BOMB_IMG_X,
+    BOMB_IMG_Y,
+    SERIAL_NUM_IMG_FONT_SIZE,
+    SERIAL_NUM_IMG_FONT,
+    SERIAL_NUM_IMG_X,
+    SERIAL_NUM_IMG_Y,
+)
 
 
 class Bomb:
     """Класс бомбы"""
 
-    def __init__(self, stage):
-        self.stage = stage
+    def __init__(self, gs):
+        self.gs = gs
         self.bomb_image = load_image(r"bomb.png")
-    
+
     def load_level(self, level):
         self.serial_number = level.serial_number
         self.modules = level.modules
@@ -24,7 +31,7 @@ class Bomb:
 
     def draw_serial_number(self, screen):
         font = pygame.font.Font(SERIAL_NUM_IMG_FONT, SERIAL_NUM_IMG_FONT_SIZE)
-        text = font.render('-'.join(self.serial_number), True, (255, 255, 255))
+        text = font.render("-".join(self.serial_number), True, (255, 255, 255))
         screen.blit(text, (SERIAL_NUM_IMG_X, SERIAL_NUM_IMG_Y))
 
     def draw_modules(self, screen):
@@ -34,6 +41,11 @@ class Bomb:
     def update(self):
         for module in self.modules:
             module.update()
+        for module in self.modules:
+            if not module.isdefused:
+                break
+        else:
+            self.gs.win()
 
     def click_LKM(self, x, y):
         """Определяем модуль и перенаправляем инфу в модуль

@@ -8,7 +8,7 @@ class InitStage(Stage):
 
     def init(self):
         self.background = load_image('ScreenSelector.bmp')
-        self.timer = 90
+        self.timer = 30 # Временно давайте секунду, по 100 раз запускаться не кайф (было 90)
         return self
 
     def draw(self, screen):

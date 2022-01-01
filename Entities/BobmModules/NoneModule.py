@@ -1,5 +1,6 @@
 import pygame
 from Entities.BobmModules.BobmModule import BobmModule
+from image_loader import load_image
 
 
 class NoneModule(BobmModule):
@@ -7,10 +8,11 @@ class NoneModule(BobmModule):
 
     def init(self):
         self.isdefused = True
+        self.module_image = load_image(r"none.png")
         return self
     
     def draw(self, screen):
-        pass
+        screen.blit(self.module_image, (self.x, self.y))
 
     def click_LKM(self, x, y):
         pass

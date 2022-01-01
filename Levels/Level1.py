@@ -4,7 +4,10 @@ from Entities.BobmModules.TimerModule import TimerModule
 from Entities.BobmModules.WiresModule import WiresModule
 from Entities.BobmModules.NoneModule import NoneModule
 from CONSTANTS import MODULES_COORDS
-from Resources.BombGenerateInfo.BombSerialNum import SERIAL_NUMBERS_FIRST_SECTOR, SERIAL_NUMBERS_THIRD_SECTOR
+from Resources.BombGenerateInfo.BombSerialNum import (
+    SERIAL_NUMBERS_FIRST_SECTOR,
+    SERIAL_NUMBERS_THIRD_SECTOR,
+)
 
 
 class Level1:
