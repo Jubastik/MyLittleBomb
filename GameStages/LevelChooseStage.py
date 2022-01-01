@@ -150,8 +150,8 @@ class LevelChooseStage(Stage):
         bomb = Bomb(self.gm.stages["game"])
         level = Level1(bomb)
         bomb.load_level(level)
-        self.gm.stages["game"].stage_launch()
         self.gm.stages["game"].set_bomb(bomb)
+        self.gm.stages["game"].stage_launch()
         self.gm.change_stage("game")
 
     def start_second_lvl(self):

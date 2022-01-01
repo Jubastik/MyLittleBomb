@@ -2,8 +2,8 @@ import pygame
 from Entities.BobmModules.BobmModule import BobmModule
 
 
-class WiresModule(BobmModule):
-    """Модуль бомбы с проводами"""
+class BigButtonModule(BobmModule):
+    """Моудуль бомбы с большой кнопкой"""
 
     def init(self):
         self.isdefused = False

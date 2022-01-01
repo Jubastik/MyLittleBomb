@@ -11,7 +11,8 @@ from CONSTANTS import (
 
 
 class Bomb:
-    """Класс бомбы"""
+    """Класс бомбы. Перед использованием обязательно передаём объект бомбы через метод self.load_level(level).
+    Подробнее в файле с GameStage"""
 
     def __init__(self, gs):
         self.gs = gs
@@ -22,6 +23,7 @@ class Bomb:
         self.modules = level.modules
 
     def draw(self, screen):
+        # Картинка рисуется послойно
         self.draw_bomb(screen)
         self.draw_serial_number(screen)
         self.draw_modules(screen)
@@ -35,12 +37,14 @@ class Bomb:
         screen.blit(text, (SERIAL_NUM_IMG_X, SERIAL_NUM_IMG_Y))
 
     def draw_modules(self, screen):
+        '''Запрос на отрисовку модулям'''
         for module in self.modules:
             module.draw(screen)
 
     def update(self):
         for module in self.modules:
             module.update()
+        # Проверка на победу
         for module in self.modules:
             if not module.isdefused:
                 break
@@ -48,8 +52,7 @@ class Bomb:
             self.gs.win()
 
     def click_LKM(self, x, y):
-        """Определяем модуль и перенаправляем инфу в модуль
-        pos - координаты клика относительно начала координат"""
+        """Определяем модуль и перенаправляем инфу в модуль"""
         res_module = None
         for module in self.modules:
             if module.x <= x <= module.x2 and module.y <= y <= module.y2:
