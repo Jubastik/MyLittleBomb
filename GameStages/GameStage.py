@@ -6,7 +6,7 @@ from CONSTANTS import BOMB_X, BOMB_Y, BOMB_X2, BOMB_Y2, FPS
 
 
 class GameStage(Stage):
-    """Игровая стадия. Чтобы объект класса был готов к работе надо обязательно использовать метод 'set_level'"""
+    """Игровая стадия."""
 
     def init(self):
         self.ispause = False
@@ -34,14 +34,12 @@ class GameStage(Stage):
     def on_click_LKM(self, pos):
         x, y = pos
         if BOMB_X <= x <= BOMB_X2 and BOMB_Y <= y <= BOMB_Y2:
-            print('bomb >>>')
             self.bomb.click_LKM(x, y)
-            
 
     def update(self):
         self.time -= 1
         if self.time <= 0:
-            self.gm.change_stage('result')
+            self.lose()
         if self.ispause:
             pass
         else:
@@ -54,15 +52,17 @@ class GameStage(Stage):
         screen.fill((0, 0, 0))
 
     def stage_launch(self):
-        self.pause = False
-        self.win = False
-        self.lose = False
         self.mistakes = 0
         self.time = FPS * 300
-    
+
+    def lose(self):
+        pass
+
+    def win(self):
+        pass
+
     def set_bomb(self, bomb):
         self.bomb = bomb
-
 
     def pause(self):
         pass
