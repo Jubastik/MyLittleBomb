@@ -34,11 +34,11 @@ class TimerModule(BobmModule):
     def draw_sections(self, screen):
         # Ошибки
         if self.bomb.gs.mistakes == 0:
-            screen.blit(self.mistake_gray, (self.section3_x, self.section3_y))
+            screen.blit(self.mistake_gray, (self.section1_x, self.section1_y))
         if self.bomb.gs.mistakes <= 1:
             screen.blit(self.mistake_gray, (self.section2_x, self.section2_y))
         if self.bomb.gs.mistakes <= 2:
-            screen.blit(self.mistake_gray, (self.section1_x, self.section1_y))
+            screen.blit(self.mistake_gray, (self.section3_x, self.section3_y))
         # Время
         time = self.bomb.gs.time // FPS  # Получаем оставшееся время в секундах
         minutes = str(time // 60)
