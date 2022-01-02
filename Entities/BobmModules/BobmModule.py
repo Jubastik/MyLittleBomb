@@ -2,7 +2,7 @@ import pygame
 
 
 class BobmModule:
-    """Материнский класс модуля бомбы, так же является затычкой"""
+    """Родительский класс модуля бомбы"""
 
     def __init__(self, bomb, cords):
         """cords - координаты модуля"""
@@ -14,4 +14,7 @@ class BobmModule:
         pass
 
     def update(self):
+        pass
+
+    def click_LKM(self, x, y):
         pass
