@@ -1,6 +1,8 @@
+import random
+
 import pygame
 import pygame_gui
-import random
+
 from CONSTANTS import WIDTH, HEIGHT
 from GameStages.Stage import Stage
 from image_loader import load_image
@@ -130,4 +132,3 @@ class Bomb(pygame.sprite.Sprite):
             self.image = self.image_boom
             self.rect.x -= 25
             self.rect.y -= 20
-

@@ -1,12 +1,12 @@
 import pygame
 from pygame_gui import UIManager
-from CONSTANTS import *
-from GameStages.SettingsStage import SettingsStage
-from GameStages.MenuStage import MenuStage
-from GameStages.LevelChooseStage import LevelChooseStage
+
+from GameStages.EndStage import EndStage
 from GameStages.GameStage import GameStage
 from GameStages.InitStage import InitStage
-from GameStages.EndStage import EndStage
+from GameStages.LevelChooseStage import LevelChooseStage
+from GameStages.MenuStage import MenuStage
+from GameStages.SettingsStage import SettingsStage
 
 
 class GameManager:

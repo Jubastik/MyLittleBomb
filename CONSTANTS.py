@@ -26,7 +26,7 @@ BOMB_IMG_X2 = BOMB_IMG_X + BOMB_IMG_H
 BOMB_IMG_Y2 = BOMB_IMG_Y + BOMB_IMG_H
 
 # Характеристики надписи с серийником.
-SERIAL_NUM_IMG_FONT = r"Resources\impact.ttf"
+SERIAL_NUM_IMG_FONT = r"Resources/impact.ttf"
 SERIAL_NUM_IMG_FONT_SIZE = 48
 SERIAL_NUM_IMG_X = BOMB_IMG_X + 315 + 5
 SERIAL_NUM_IMG_Y = BOMB_IMG_Y + 45

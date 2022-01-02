@@ -1,16 +1,18 @@
-import pygame
-from CONSTANTS import *
-from GameManager import GameManager
-from CONSTANTS import FPS, WIDTH, HEIGHT
 import ctypes
+import os
+
+import pygame
+
+from CONSTANTS import FPS, WIDTH, HEIGHT
+from GameManager import GameManager
 
 
 def launch():
     '''Запускает игру'''
-
-    ctypes.windll.user32.SetProcessDPIAware() # игнорирование масштабирования Windows
+    if os.name == 'nt':
+        ctypes.windll.user32.SetProcessDPIAware()  # игнорирование масштабирования Windows
     pygame.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT)) # pygame.FULLSCREEN
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))  # pygame.FULLSCREEN
     pygame.display.set_caption("Voice neutralization")
     gm = GameManager(screen, FPS)
     gm.loop()

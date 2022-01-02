@@ -1,7 +1,8 @@
 import pygame
+
+from CONSTANTS import FPS
 from Entities.BobmModules.BobmModule import BobmModule
 from image_loader import load_image
-from CONSTANTS import FPS
 
 
 class TimerModule(BobmModule):
@@ -9,9 +10,9 @@ class TimerModule(BobmModule):
 
     def init(self):
         self.isdefused = True
-        self.module_image = load_image(r"Bomb\timer.png")
-        self.mistake_red = load_image(r"Bomb\mistake_red.png")
-        self.mistake_gray = load_image(r"Bomb\mistake_gray.png")
+        self.module_image = load_image(r"Bomb/timer.png")
+        self.mistake_red = load_image(r"Bomb/mistake_red.png")
+        self.mistake_gray = load_image(r"Bomb/mistake_gray.png")
         # Ошибки
         self.section1_x = self.x + 65
         self.section1_y = self.y + 40
@@ -50,6 +51,6 @@ class TimerModule(BobmModule):
             seconds = '0' + seconds
 
         txt = f'{minutes} : {seconds}'
-        font = pygame.font.Font(r'Resources\Pixeboy.ttf', 60)
+        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)
         res = font.render(txt, True, (255, 0, 0))
         screen.blit(res, (self.section4_x, self.section4_y))
