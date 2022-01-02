@@ -11,8 +11,8 @@ class LevelChooseStage(Stage):
 
     def init(self):
         self.ui_manager = self.gm.ui_manager
-        self.background_lvl_active = load_image("level_selection.png")
-        self.background_lvl_inactive = load_image("level_selection_2.png")
+        self.background_lvl_active = load_image("level_selection.png").convert()
+        self.background_lvl_inactive = load_image("level_selection_2.png").convert()
         self.page = 1
         self.page1_ui_group = []  # Список всего gui страницы
         self.page2_ui_group = []
