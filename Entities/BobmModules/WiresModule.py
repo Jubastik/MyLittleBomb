@@ -8,7 +8,7 @@ class WiresModule(BobmModule):
 
     def init(self):
         self.isdefused = False
-        self.module_background = load_image(r"wires_background.png")
+        self.module_background = load_image(r"Bomb\wires_background.png")
         # Координаты проводов
         self.wire1_x, self.wire1_y = self.x + 50, self.y + 47
         self.wire2_x, self.wire2_y = self.x + 50, self.y + 78
@@ -16,9 +16,9 @@ class WiresModule(BobmModule):
         self.wire4_x, self.wire4_y = self.x + 50, self.y + 144
         self.wire5_x, self.wire5_y = self.x + 50, self.y + 178
         self.wire6_x, self.wire6_y = self.x + 50, self.y + 214
-        self.wire1_img = load_image(r"wire1.png")
-        self.wire2_img = load_image(r"wire2.png")
-        self.wire3_img = load_image(r"wire3.png")
+        self.wire1_img = load_image(r"Bomb\wire1.png")
+        self.wire2_img = load_image(r"Bomb\wire2.png")
+        self.wire3_img = load_image(r"Bomb\wire3.png")
         # self.wire4_img = load_image(r"wire4.png")
         # self.wire5_img = load_image(r"wire5.png")
         # self.wire6_img = load_image(r"wire6.png")

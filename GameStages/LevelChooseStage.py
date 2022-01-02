@@ -1,9 +1,10 @@
 import pygame
 import pygame_gui
-from GameStages.Stage import Stage
-from image_loader import load_image
-from Levels.Level1 import Level1
+
 from Entities.Bomb import Bomb
+from GameStages.Stage import Stage
+from Levels.Level1 import Level1
+from image_loader import load_image
 
 
 class LevelChooseStage(Stage):

@@ -8,7 +8,7 @@ class NoneModule(BobmModule):
 
     def init(self):
         self.isdefused = True
-        self.module_image = load_image(r"none.png")
+        self.module_image = load_image(r"Bomb\none.png")
         return self
     
     def draw(self, screen):
