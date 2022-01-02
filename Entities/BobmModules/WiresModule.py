@@ -1,4 +1,5 @@
 import pygame
+from random import randint, choice
 from Entities.BobmModules.BobmModule import BobmModule
 from image_loader import load_image
 
@@ -8,20 +9,9 @@ class WiresModule(BobmModule):
 
     def init(self):
         self.isdefused = False
-        self.module_background = load_image(r"Bomb\wires_background.png")
-        # Координаты проводов
-        self.wire1_x, self.wire1_y = self.x + 50, self.y + 47
-        self.wire2_x, self.wire2_y = self.x + 50, self.y + 78
-        self.wire3_x, self.wire3_y = self.x + 50, self.y + 110
-        self.wire4_x, self.wire4_y = self.x + 50, self.y + 144
-        self.wire5_x, self.wire5_y = self.x + 50, self.y + 178
-        self.wire6_x, self.wire6_y = self.x + 50, self.y + 214
-        self.wire1_img = load_image(r"Bomb\wire1.png")
-        self.wire2_img = load_image(r"Bomb\wire2.png")
-        self.wire3_img = load_image(r"Bomb\wire3.png")
-        # self.wire4_img = load_image(r"wire4.png")
-        # self.wire5_img = load_image(r"wire5.png")
-        # self.wire6_img = load_image(r"wire6.png")
+        self.module_img_off = load_image(r"Bomb/wires_module/wiremodule_off.png")
+        self.module_img_on = load_image(r"Bomb/wires_module/wiremodule_on.png")
+        self.wires, self.answer = self.generate()
         return self
 
     def draw(self, screen):
@@ -29,15 +19,118 @@ class WiresModule(BobmModule):
         self.draw_wires(screen)
 
     def draw_background(self, screen):
-        screen.blit(self.module_background, (self.x, self.y))
-    
+        if self.isdefused:
+            screen.blit(self.module_img_off, (self.x, self.y))
+        else:
+            screen.blit(self.module_img_on, (self.x, self.y))
+
     def draw_wires(self, screen):
-        screen.blit(self.wire1_img, (self.wire1_x, self.wire1_y))
-        screen.blit(self.wire2_img, (self.wire2_x, self.wire2_y))
-        screen.blit(self.wire3_img, (self.wire3_x, self.wire3_y))
+        for wire in self.wires:
+            wire.draw(screen)
 
     def generate(self):
-        pass
+        # Расчёт координат проводов
+        # WH провода: 175x25
+        # Цифры - положение провода относительно модуля
+        position = [
+            [self.x + 65, self.y + 75],
+            [self.x + 65, self.y + 115],
+            [self.x + 65, self.y + 155],
+            [self.x + 65, self.y + 195],
+            [self.x + 65, self.y + 235],
+        ]
+        # Генерация бомбы
+        wire_count = randint(4, 5)
+        wires = []
+        for i in range(wire_count):
+            color = choice(COLORS)
+            form = choice(FORMS)
+            wires.append(Wire(color, form, position[i], i))
+
+        # Поиск верного ответа
+        answer = None
+        if wire_count == 4:
+            # Считаем провода по цветам
+            red_count = 0
+            blue_count = 0
+            yellow_count = 0
+            for wire in wires:
+                if wire.color == 'red':
+                    red_count += 1
+                elif wire.color == 'blue':
+                    blue_count += 1
+                elif wire.color == 'yellow':
+                    yellow_count += 1
+    
+            # Проверяем по условиям 
+            if red_count > 1 and (int(self.bomb.serial_number[3]) % 2) == 1:
+                red = None
+                for wire in wires:
+                    if wire.color == 'red':
+                        red = wire.num
+            elif wires[-1].color == 'yellow'and red_count == 0:
+                answer = 0
+            elif blue_count == 1:
+                answer = 0
+            elif yellow_count > 1:
+                answer = 3
+            else:
+                answer = 1
+        else:
+            # Считаем провода по цветам
+            red_count = 0
+            blue_count = 0
+            yellow_count = 0
+            black_count = 0
+            for wire in wires:
+                if wire.color == 'red':
+                    red_count += 1
+                elif wire.color == 'blue':
+                    blue_count += 1
+                elif wire.color == 'yellow':
+                    yellow_count += 1
+                elif wire.color == 'black':
+                    black_count += 1
+
+            # Проверяем по условиям
+            if wires[-1].color == 'black' and (int(self.bomb.serial_number[3]) % 2) == 1:
+                answer = 3
+            elif red_count == 1 and yellow_count > 1:
+                answer = 0
+            elif black_count == 0:
+                answer = 1
+            else:
+                answer = 0
+        return wires, answer
 
     def click_LKM(self, x, y):
-        pass
+        # Получаем провод по которому кликнули
+        answer = None
+        # Проверяем
+        if answer == self.answer:
+            self.isdefused = True
+        else:
+            self.bomb.gs.mistakes += 1
+            if self.bomb.gs.mistakes >= 3:
+                self.bomb.gs.lose()
+
+
+class Wire:
+    def __init__(self, color, form, pos, num):
+        self.wire_img_full = load_image(rf"Bomb/wire_{form}_{color}_full.png")
+        self.wire_img_cut = load_image(rf"Bomb/wire_{form}_{color}_full.png")
+        self.color = color
+        self.x, self.y = pos
+        self.num = num # порядковый номер в модуле
+        self.iscut = False
+        return self
+
+    def draw(self, screen):
+        if self.iscut:
+            screen.blit(self.wire_img_cut, (self.x, self.y))
+        else:
+            screen.blit(self.wire_img_full, (self.x, self.y))
+
+
+COLORS = ["red", "yellow", "blue", "black"]
+FORMS = ["standart"]
