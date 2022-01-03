@@ -18,8 +18,9 @@ class KeyboardModule(BobmModule):
         return self
 
     def choose_set(self):
-        self.image_set = random.randint(1, 1)  # Добавить групп
+        self.image_set = random.randint(1, 1)  # Выбор группы с картинками
         image_numbers = [1, 2, 3, 4, 5, 6, 7]
+        # Выбираем из серии 4 изображения (изображения имеют названия от 1 до 7)
         random.shuffle(image_numbers)
         self.img_1 = image_numbers.pop()
         random.shuffle(image_numbers)
@@ -29,6 +30,7 @@ class KeyboardModule(BobmModule):
         random.shuffle(image_numbers)
         self.img_4 = image_numbers.pop()
 
+        # Обезвреживать необходимо кнопки с наименьшим числом
         self.answer = sorted([self.img_1, self.img_2, self.img_3, self.img_4])
 
     def generate(self):
@@ -51,11 +53,15 @@ class KeyboardModule(BobmModule):
         self.btn_correct = load_image("Bomb/keyboard_module/key_correct.png").convert()
         self.btn_mistake = load_image("Bomb/keyboard_module/key_mistake.png").convert()
 
+        """ img_1, first_btn, first_btn_img взаимосвязаны 
+        img_1 - показывает номер картинки которая загружается в first_btn_img, 
+        а так же отвечает за изменения бэкграунда, то есть first_btn на ошибочный (btn_mistake) """
         self.first_btn = self.btn_standard
         self.second_btn = self.btn_standard
         self.third_btn = self.btn_standard
         self.fourth_btn = self.btn_standard
 
+        # Словарь: номер кнопки — сколько кадров она показывала ошибку
         self.is_mistake = {
             "1": None,
             "2": None,
@@ -85,6 +91,7 @@ class KeyboardModule(BobmModule):
         if self.blocks_defused == 4:
             self.module_img = self.module_img_off
 
+        # Возврат кнопки с ошибкой в нейтральное состояние
         for num, time in self.is_mistake.items():
             if time is not None:
                 self.is_mistake[num] += 1
@@ -104,6 +111,7 @@ class KeyboardModule(BobmModule):
                 self.is_mistake[num] = None
 
     def click_LKM(self, x, y):
+        # Проверка на нажатие по кнопкам
         if self.first_btn_rect.collidepoint((x, y)) and self.first_btn != self.btn_correct:
             if self.answer[0] == self.img_1:
                 self.blocks_defused += 1
