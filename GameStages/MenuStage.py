@@ -45,6 +45,7 @@ class MenuStage(Stage):
     def stage_launch(self):
         # включаем кнопки, создаем группу для спрайтов
         self.all_sprites = pygame.sprite.Group()
+        self.one_sprite = pygame.sprite.Group()
         self.timer = 30
         self.gui_on()
 
@@ -52,9 +53,11 @@ class MenuStage(Stage):
         # когда проходит 2 сек создаем 16 бомб в рандомных местах
         if self.timer == 0:
             for _ in range(16):
-                Bomb(self.all_sprites)
+                bomb = Bomb(self.one_sprite)
+                if pygame.sprite.spritecollideany(bomb, self.all_sprites) is None:
+                    self.all_sprites.add(bomb)
                 # обнуляем таймер
-                self.timer = 30
+            self.timer = 30
         # обновляем положение всех спрайтов
         self.all_sprites.update()
         self.timer -= 1
@@ -117,8 +120,6 @@ class Bomb(pygame.sprite.Sprite):
                 or self.fortune % 7 == 0:
             if self.rect.y == HEIGHT - self.r:
                 self.image = self.image_boom
-                self.rect.x -= 25
-                self.rect.y -= 20
         # когда спрайт опустился за экран, удаляем спрайт
         if self.rect.y >= 1120:
             self.kill()
@@ -130,4 +131,3 @@ class Bomb(pygame.sprite.Sprite):
             self.image = self.image_boom
             self.rect.x -= 25
             self.rect.y -= 20
-
