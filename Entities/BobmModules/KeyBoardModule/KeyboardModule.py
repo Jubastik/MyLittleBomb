@@ -147,7 +147,7 @@ class KeyboardModule(BobmModule):
                 if self.bomb.gs.mistakes >= 3:
                     self.bomb.gs.lose()
 
-        elif self.fourth_btn_rect.collidepoint((x, y)) and self.third_btn != self.btn_correct:
+        elif self.fourth_btn_rect.collidepoint((x, y)) and self.fourth_btn != self.btn_correct:
             if self.answer[0] == self.img_4:
                 self.blocks_defused += 1
                 self.fourth_btn = self.btn_correct

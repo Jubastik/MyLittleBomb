@@ -30,7 +30,7 @@ class GameManager:
             'result': EndStage(self).init(),
         }
         self.music_manager = MusicManager()
-        self.music_manager.change_volume(-50)
+        self.music_manager.change_volume(-80)
 
     def change_stage(self, name):
         self.current_stage = name
