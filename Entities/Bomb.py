@@ -49,7 +49,7 @@ class Bomb:
         if self.lightning_now == 0:
             screen.blit(self.bomb_image_on, (BOMB_IMG_X, BOMB_IMG_Y))
         else:
-            screen.blit(self.bomb_image_off, (BOMB_IMG_X, BOMB_IMG_Y))
+            screen.blit(self.bomb_image_on, (BOMB_IMG_X, BOMB_IMG_Y))
         self.timer -= 1
 
     def draw_serial_number(self, screen):
