@@ -1,6 +1,7 @@
 import pygame
 from random import randint, choice
 from Entities.BobmModules.BobmModule import BobmModule
+from Entities.BobmModules.WiresModule.Wire import Wire
 from image_loader import load_image
 
 
@@ -10,8 +11,8 @@ class WiresModule(BobmModule):
     def init(self):
         self.isdefused = False
         self.module_img_off = load_image(r"Bomb\wires_module\wiremodule_off.png")
-        self.module_img_on = load_image(r"Bomb\wires_module\wiremodule_off.png")
-        self.wires, self.answer = self.generate()
+        self.module_img_on = load_image(r"Bomb\wires_module\wiremodule_on.png")
+        self.wires_group, self.wires, self.answer = self.generate()
         return self
 
     def draw(self, screen):
@@ -24,9 +25,15 @@ class WiresModule(BobmModule):
         else:
             screen.blit(self.module_img_on, (self.x, self.y))
 
-    def draw_wires(self, screen):
+    def draw_wires(self, screen):  
+        pos = pygame.mouse.get_pos()
         for wire in self.wires:
-            wire.draw(screen)
+            x, y = pos
+            if wire.check_click(x, y):
+                screen.blit(
+                    wire.wire_img_lightning, (wire.lightning_x, wire.lightning_y)
+                )
+        self.wires_group.draw(screen)
 
     def generate(self):
         # Расчёт координат проводов
@@ -42,10 +49,11 @@ class WiresModule(BobmModule):
         # Генерация бомбы
         wire_count = randint(4, 5)
         wires = []
+        wires_group = pygame.sprite.Group()
         for i in range(wire_count):
             color = choice(COLORS)
             form = choice(FORMS)
-            wire = Wire(color, form, position[i], i)
+            wire = Wire(wires_group, color, form, position[i], i)
             wires.append(wire)
 
         # Поиск верного ответа
@@ -80,14 +88,11 @@ class WiresModule(BobmModule):
         else:
             # Считаем провода по цветам
             red_count = 0
-            blue_count = 0
             yellow_count = 0
             black_count = 0
             for wire in wires:
                 if wire.color == "red":
                     red_count += 1
-                elif wire.color == "blue":
-                    blue_count += 1
                 elif wire.color == "yellow":
                     yellow_count += 1
                 elif wire.color == "black":
@@ -105,40 +110,25 @@ class WiresModule(BobmModule):
                 answer = 1
             else:
                 answer = 0
-        return wires, answer
+        return wires_group, wires, answer
 
     def click_LKM(self, x, y):
-        # Получаем провод по которому кликнули
-        answer = None
+        # Получаем номер провода по месту клика
+        answer = 'on bomb'
+        for wire in self.wires:
+            if wire.check_click(x, y):
+                answer = wire.num
+                break
         # Проверяем
-        if answer == "on module":
-            pass
+        if answer == "on bomb":
+            return
         elif answer == self.answer:
-            self.isdefused = True        
+            self.isdefused = True
         else:
             self.bomb.gs.mistakes += 1
             if self.bomb.gs.mistakes >= 3:
                 self.bomb.gs.lose()
-
-
-class Wire:
-    def __init__(self, color, form, pos, num):
-        self.wire_img_full = load_image(
-            rf"Bomb\wires_module\wire_{form}_{color}_full.png"
-        )
-        self.wire_img_cut = load_image(
-            rf"Bomb\wires_module\wire_{form}_{color}_full.png"
-        )
-        self.color = color
-        self.x, self.y = pos
-        self.num = num  # порядковый номер в модуле
-        self.iscut = False
-
-    def draw(self, screen):
-        if self.iscut:
-            screen.blit(self.wire_img_cut, (self.x, self.y))
-        else:
-            screen.blit(self.wire_img_full, (self.x, self.y))
+        self.wires[answer].cut()
 
 
 COLORS = ["red", "yellow", "blue", "black"]

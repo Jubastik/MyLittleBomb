@@ -1,8 +1,8 @@
 import pygame
 from random import choice, randint
-from Entities.BobmModules.TimerModule import TimerModule
-from Entities.BobmModules.WiresModule import WiresModule
-from Entities.BobmModules.NoneModule import NoneModule
+from Entities.BobmModules.TimerModule.TimerModule import TimerModule
+from Entities.BobmModules.WiresModule.WiresModule import WiresModule
+from Entities.BobmModules.NoneModule.NoneModule import NoneModule
 from CONSTANTS import MODULES_COORDS
 from Resources.BombGenerateInfo.BombSerialNum import (
     SERIAL_NUMBERS_FIRST_SECTOR,
