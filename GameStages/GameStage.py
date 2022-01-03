@@ -1,4 +1,5 @@
 import pygame
+import pygame_menu
 from GameStages.Stage import Stage
 from Entities.Bomb import Bomb
 from image_loader import load_image
@@ -17,10 +18,13 @@ class GameStage(Stage):
     Перед использованием класс обязательно передаём объект бомбы в self.set_bomb"""
 
     def init(self):
+        self.pause_check = False
         return self
 
     def draw(self, screen):
         screen.fill((0, 0, 0))
+        if self.pause_check:
+            self.pause(screen)
         self.draw_background(screen)
         self.draw_hud(screen)
         self.bomb.draw(screen)
@@ -29,7 +33,7 @@ class GameStage(Stage):
 
     def process_event(self, event):
         if self.ispause:
-            self.pause()
+            self.pause_check = True
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 self.on_click_LKM(event.pos)
@@ -77,6 +81,12 @@ class GameStage(Stage):
     def set_bomb(self, bomb):
         self.bomb = bomb
 
-    def pause(self):
-        # Паузы наверное не будет, пока что просто существует.
-        pass
+    def pause(self, screen):
+        menu = pygame_menu.Menu('Меню', 800, 500,
+                                theme=pygame_menu.themes.THEME_DARK)
+
+        menu.add.button('Вернуться', self.draw_background(screen))
+        menu.add.button('Настройки')
+        menu.add.button('Выход', pygame_menu.events.EXIT)
+
+        menu.mainloop(screen)
