@@ -18,6 +18,17 @@ BOMB_X2 = BOMB_X + BOMB_W
 BOMB_Y2 = BOMB_Y + BOMB_H
 
 # Характеристики картинки бомбы
+LIGHTNING_SPEED = [
+    [40, 10],
+    [50, 10],
+    [60, 10],
+    [70, 10],
+    [80, 10],
+    [90, 10],
+    [100, 10],
+    [110, 10],
+    [120, 10],
+]
 BOMB_IMG_W = 990
 BOMB_IMG_H = 795
 BOMB_IMG_X = BOMB_X - 15
@@ -26,15 +37,14 @@ BOMB_IMG_X2 = BOMB_IMG_X + BOMB_IMG_H
 BOMB_IMG_Y2 = BOMB_IMG_Y + BOMB_IMG_H
 
 # Характеристики надписи с серийником.
-SERIAL_NUM_IMG_FONT = r"Resources/impact.ttf"
+SERIAL_NUM_IMG_FONT = r"Resources/PixeBoy.ttf"
 SERIAL_NUM_IMG_FONT_SIZE = 48
-SERIAL_NUM_IMG_X = BOMB_IMG_X + 315 + 5
-SERIAL_NUM_IMG_Y = BOMB_IMG_Y + 45
+SERIAL_NUM_IMG_X = BOMB_IMG_X + 520
+SERIAL_NUM_IMG_Y = BOMB_IMG_Y + 60
 SERIAL_NUM_IMG_X2 = BOMB_IMG_X2 + 945 - 5
 SERIAL_NUM_IMG_Y2 = BOMB_IMG_Y2 + 105 - 5
 SERIAL_NUM_IMG_W = SERIAL_NUM_IMG_X2 - SERIAL_NUM_IMG_X
 SERIAL_NUM_IMG_H = SERIAL_NUM_IMG_Y2 - SERIAL_NUM_IMG_Y
-
 
 # Расчёт координат модулей
 # Порядок модулей:

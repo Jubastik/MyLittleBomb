@@ -30,3 +30,9 @@ class Level1:
             NoneModule(bomb, MODULES_COORDS[5]).init(),
         ]
         return modules
+    
+    def generate_indicators(self):
+        return [randint(0, 1) == 0, randint(0, 1) == 0]
+    
+    def generate_battery(self):
+        return randint(1, 3)
