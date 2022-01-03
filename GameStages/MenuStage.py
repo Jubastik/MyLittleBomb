@@ -1,6 +1,8 @@
+import random
+
 import pygame
 import pygame_gui
-import random
+
 from CONSTANTS import WIDTH, HEIGHT
 from GameStages.Stage import Stage
 from image_loader import load_image
@@ -117,6 +119,8 @@ class Bomb(pygame.sprite.Sprite):
                 or self.fortune % 7 == 0:
             if self.rect.y == HEIGHT - self.r:
                 self.image = self.image_boom
+                self.rect.x -= 25
+                self.rect.y -= 20
         # когда спрайт опустился за экран, удаляем спрайт
         if self.rect.y >= 1120:
             self.kill()
@@ -126,4 +130,5 @@ class Bomb(pygame.sprite.Sprite):
         if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                 self.rect.collidepoint(args[0].pos):
             self.image = self.image_boom
-
+            self.rect.x -= 25
+            self.rect.y -= 20
