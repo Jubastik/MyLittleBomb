@@ -19,8 +19,8 @@ class Bomb:
         self.bomb_image = load_image(r"Bomb\bomb.png")
 
     def load_level(self, level):
-        self.serial_number = level.serial_number
-        self.modules = level.modules
+        self.serial_number = level.generate_serial_number()
+        self.modules = level.generate_modules(self)
 
     def draw(self, screen):
         # Картинка рисуется послойно
