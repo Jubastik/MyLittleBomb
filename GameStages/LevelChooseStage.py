@@ -153,7 +153,7 @@ class LevelChooseStage(Stage):
         '''переключение стейджа и запуск уровня'''
         self.end()
         bomb = Bomb(self.gm.stages["game"])
-        level = Level1(bomb)
+        level = Level1()
         bomb.load_level(level)
         self.gm.stages["game"].set_bomb(bomb)
         self.gm.stages["game"].stage_launch()

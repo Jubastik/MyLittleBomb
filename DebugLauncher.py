@@ -1,8 +1,9 @@
-import pygame
-from CONSTANTS import *
-from GameManager import GameManager
-from CONSTANTS import FPS, WIDTH, HEIGHT
 import ctypes
+
+import pygame
+
+from CONSTANTS import FPS, WIDTH, HEIGHT
+from GameManager import GameManager
 
 
 def launch():

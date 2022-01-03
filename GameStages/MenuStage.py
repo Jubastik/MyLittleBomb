@@ -1,6 +1,8 @@
+import random
+
 import pygame
 import pygame_gui
-import random
+
 from CONSTANTS import WIDTH, HEIGHT
 from GameStages.Stage import Stage
 from image_loader import load_image
