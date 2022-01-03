@@ -6,13 +6,13 @@ class Wire(pygame.sprite.Sprite):
     def __init__(self, group, color, form, pos, num):
         super().__init__(group)
         self.wire_img_full = load_image(
-            rf"Bomb\wires_module\wire_{form}_{color}_full.png"
+            rf"Bomb/wires_module/wire_{form}_{color}_full.png"
         )
         self.wire_img_cut = load_image(
-            rf"Bomb\wires_module\wire_{form}_{color}_cut.png"
+            rf"Bomb/wires_module/wire_{form}_{color}_cut.png"
         )
         # Подстветка
-        self.wire_img_lightning = load_image(rf"Bomb\wires_module\wire_{form}_lightning.png")
+        self.wire_img_lightning = load_image(rf"Bomb/wires_module/wire_{form}_lightning.png")
         # Картинка подсветки на 20 пикселей больше чем картинка провода. 20 // 2 = 10
         self.lightning_x = pos[0] - 10
         self.lightning_y = pos[1] - 10
