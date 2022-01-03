@@ -1,15 +1,13 @@
 import ctypes
 import os
-
 import pygame
-
 from CONSTANTS import FPS, WIDTH, HEIGHT
 from GameManager import GameManager
 
 
 def launch():
-    '''Запускает игру'''
-    if os.name == 'nt':
+    """Запускает игру"""
+    if os.name == "nt":
         ctypes.windll.user32.SetProcessDPIAware()  # игнорирование масштабирования Windows
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))  # pygame.FULLSCREEN
