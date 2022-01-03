@@ -7,6 +7,7 @@ from GameStages.InitStage import InitStage
 from GameStages.LevelChooseStage import LevelChooseStage
 from GameStages.MenuStage import MenuStage
 from GameStages.SettingsStage import SettingsStage
+from MusicManager import MusicManager
 
 
 class GameManager:
@@ -28,11 +29,14 @@ class GameManager:
             'game': GameStage(self).init(),
             'result': EndStage(self).init(),
         }
+        self.music_manager = MusicManager()
+        self.music_manager.change_volume(-50)
 
     def change_stage(self, name):
         self.current_stage = name
         stage = self.stages[self.current_stage]
         stage.stage_launch()
+        self.music_manager.start_music(name)
 
     def loop(self):
         self.run = True
