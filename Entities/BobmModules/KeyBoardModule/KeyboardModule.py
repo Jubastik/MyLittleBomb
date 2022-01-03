@@ -95,7 +95,7 @@ class KeyboardModule(BobmModule):
         for num, time in self.is_mistake.items():
             if time is not None:
                 self.is_mistake[num] += 1
-            if time == 90:
+            if time == 75:
                 if num == "1":
                     if self.first_btn != self.btn_correct:
                         self.first_btn = self.btn_standard
