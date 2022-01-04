@@ -30,9 +30,9 @@ class Bomb:
 
     def load_level(self, level):
         self.serial_number = level.generate_serial_number()
-        self.modules = level.generate_modules(self)
         self.indicators = level.generate_indicators()
         self.batteries = level.generate_battery()
+        self.modules = level.generate_modules(self) # Запускать последним тк могут быть баги
 
     def draw(self, screen):
         # Картинка рисуется послойно
