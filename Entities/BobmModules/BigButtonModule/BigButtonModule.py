@@ -28,6 +28,7 @@ class BigButtonModule(BobmModule):
         if self.click:
             self.button = screen.blit(self.button_pressed, self.position_button)
         self.click = False
+        self.strip = screen.blit(self.strip_color, self.strip_position)
         # self.inscription = screen.blit(self.image_inscription, self.position_inscription)
         txt = self.button_words
         font = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)
@@ -44,7 +45,9 @@ class BigButtonModule(BobmModule):
     def generate(self):
         self.position_button = [self.x + 54, self.y + 99]
         self.position_inscription = [self.x + 50, self.y + 32]
+        self.strip_position = [self.x + 240, self.y + 135]
         self.button_color = choice(COLORS)
+        self.strip_color = load_image('Bomb/BigButton_module/BigButton_strip_black.png')
         self.button_default = load_image(
             f"Bomb/BigButton_module/button_default/BigButton_default_{self.button_color}.png")
         self.button_pressed = load_image(
