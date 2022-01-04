@@ -14,5 +14,5 @@ class NoneModule(BobmModule):
     def draw(self, screen):
         screen.blit(self.module_image, (self.x, self.y))
 
-    def click_LKM(self, x, y):
+    def LKM_down(self, x, y):
         pass

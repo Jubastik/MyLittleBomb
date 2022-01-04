@@ -19,6 +19,7 @@ class Bomb:
     Подробнее в файле с GameStage"""
 
     def __init__(self, gs):
+        self.pressed_module = None
         self.gs = gs
         self.bomb_image_on = load_image(r"Bomb/bomb_on.png")
         self.bomb_image_off = load_image(r"Bomb/bomb_off.png")
@@ -94,7 +95,7 @@ class Bomb:
         else:
             self.gs.win()
 
-    def click_LKM(self, x, y):
+    def LKM_down(self, x, y):
         """Определяем модуль и перенаправляем инфу в модуль"""
         res_module = None
         for module in self.modules:
@@ -103,4 +104,10 @@ class Bomb:
                 break
         else:
             return
-        res_module.click_LKM(x, y)
+        res_module.LKM_down(x, y)
+        self.pressed_module = res_module
+
+    def LKM_up(self, x, y):
+        if self.pressed_module is not None:
+            self.pressed_module.LKM_up(x, y)
+            self.pressed_module = None

@@ -15,5 +15,5 @@ class ButtonsModule(BobmModule):
     def generate(self):
         pass
 
-    def click_LKM(self, x, y):
+    def LKM_down(self, x, y):
         pass

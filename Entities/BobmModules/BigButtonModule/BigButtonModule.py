@@ -1,7 +1,8 @@
+from random import choice
+
 import pygame
-from random import randint, choice
+
 from Entities.BobmModules.BobmModule import BobmModule
-from Entities.Bomb import Bomb
 from image_loader import load_image
 
 
@@ -54,7 +55,7 @@ class BigButtonModule(BobmModule):
             f"Bomb/BigButton_module/button_pressed/BigButton_pressed_{self.button_color}.png")
         self.button_words = choice(WORDS)
 
-    def click_LKM(self, x, y):
+    def LKM_down(self, x, y):
         # Проверка на нажатие по кнопкам
         if self.button.collidepoint((x, y)) and self.module_img != self.module_img_off:
             if self.button_color == 'blue' and self.button_words == 'break':
@@ -76,6 +77,9 @@ class BigButtonModule(BobmModule):
             else:
                 print('conditional else')
             self.click = True
+
+    def LKM_up(self, x, y):
+        pass
 
 
 COLORS = ['red', 'yellow', 'green', 'blue']
