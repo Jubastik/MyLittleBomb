@@ -28,9 +28,11 @@ class BigButtonModule(BobmModule):
         if self.click:
             self.button = screen.blit(self.button_pressed, self.position_button)
         self.click = False
-        self.inscription = screen.blit(self.image_inscription, self.position_inscription)
-        if self.click:
-            pass
+        # self.inscription = screen.blit(self.image_inscription, self.position_inscription)
+        txt = self.button_words
+        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)
+        res = font.render(txt, True, (255, 255, 255))
+        screen.blit(res, self.position_inscription)
 
     def draw_background(self, screen):
         if self.isdefused:
@@ -41,33 +43,20 @@ class BigButtonModule(BobmModule):
 
     def generate(self):
         self.position_button = [self.x + 54, self.y + 99]
-        self.position_inscription = [self.x + 2, self.y - 120]
+        self.position_inscription = [self.x + 50, self.y + 32]
         self.button_color = choice(COLORS)
         self.button_default = load_image(
             f"Bomb/BigButton_module/button_default/BigButton_default_{self.button_color}.png")
         self.button_pressed = load_image(
             f"Bomb/BigButton_module/button_pressed/BigButton_pressed_{self.button_color}.png")
         self.button_words = choice(WORDS)
-        if self.button_words == 'прервать':
-            self.image_inscription = load_image(
-                "Bomb/BigButton_module/BigButton_inscription_prervat.png"
-            )
-        elif self.button_words == 'взорвать':
-            self.image_inscription = load_image(
-                "Bomb/BigButton_module/BigButton_inscription_vzorvat.png"
-            )
-        elif self.button_words == 'держать':
-            self.image_inscription = load_image(
-                "Bomb/BigButton_module/BigButton_inscription_derzat.png"
-            )
-            self.position_inscription = [self.x + 10, self.y + 10]
 
     def click_LKM(self, x, y):
         # Проверка на нажатие по кнопкам
         if self.button.collidepoint((x, y)) and self.module_img != self.module_img_off:
-            if self.button_color == 'blue' and self.button_words == 'прервать':
+            if self.button_color == 'blue' and self.button_words == 'break':
                 print('conditional 1')
-            elif self.button_words == 'взорвать':
+            elif self.button_words == 'boom':
                 print('conditionfl 2')
             elif self.button_color == 'green' and \
                     self.INDICATORS_COUNT[0] is True and \
@@ -79,7 +68,7 @@ class BigButtonModule(BobmModule):
                 print('conditional 4')
             elif self.button_color == 'yellow':
                 print('conditional 5')
-            elif self.button_color == 'red' and self.button_words == 'держать':
+            elif self.button_color == 'red' and self.button_words == 'hold':
                 print('conditional 6')
             else:
                 print('conditional else')
@@ -87,4 +76,4 @@ class BigButtonModule(BobmModule):
 
 
 COLORS = ['red', 'yellow', 'green', 'blue']
-WORDS = ['прервать', 'взорвать', 'держать']
+WORDS = ['break', 'boom', 'hold']
