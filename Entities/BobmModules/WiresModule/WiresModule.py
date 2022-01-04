@@ -112,7 +112,7 @@ class WiresModule(BobmModule):
                 answer = 0
         return wires_group, wires, answer
 
-    def click_LKM(self, x, y):
+    def LKM_down(self, x, y):
         # Получаем номер провода по месту клика
         answer = 'on bomb'
         for wire in self.wires:

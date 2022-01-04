@@ -32,16 +32,23 @@ class GameStage(Stage):
             self.pause()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                self.on_click_LKM(event.pos)
+                self.LKM_down(event.pos)
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:
+                self.LKM_up(event.pos)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 self.ispause = not self.ispause
 
-    def on_click_LKM(self, pos):
+    def LKM_down(self, pos):
         # Проверка места нажатия, если кликнули на бомбу, обработка будет продолжена в бомбе
         x, y = pos
         if BOMB_X <= x <= BOMB_X2 and BOMB_Y <= y <= BOMB_Y2:
-            self.bomb.click_LKM(x, y)
+            self.bomb.LKM_down(x, y)
+
+    def LKM_up(self, pos):
+        x, y = pos
+        self.bomb.LKM_up(x, y)
 
     def update(self):
         self.time -= 1

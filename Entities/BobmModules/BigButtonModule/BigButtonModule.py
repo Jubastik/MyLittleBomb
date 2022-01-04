@@ -15,5 +15,8 @@ class BigButtonModule(BobmModule):
     def generate(self):
         pass
 
-    def click_LKM(self, x, y):
+    def LKM_down(self, x, y):
+        pass
+
+    def LKM_up(self, x, y):
         pass

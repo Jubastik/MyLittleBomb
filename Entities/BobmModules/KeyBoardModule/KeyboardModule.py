@@ -113,7 +113,7 @@ class KeyboardModule(BobmModule):
                         self.fourth_btn = self.btn_standard
                 self.is_mistake[num] = None
 
-    def click_LKM(self, x, y):
+    def LKM_down(self, x, y):
         # Проверка на нажатие по кнопкам
         if self.first_btn_rect.collidepoint((x, y)) and self.first_btn != self.btn_correct:
             if self.answer[0] == self.img_1:
