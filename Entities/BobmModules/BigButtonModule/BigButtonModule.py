@@ -28,7 +28,6 @@ class BigButtonModule(BobmModule):
             self.button = screen.blit(self.button_default, self.position_button)
         if self.click:
             self.button = screen.blit(self.button_pressed, self.position_button)
-        self.click = False
         self.strip = screen.blit(self.strip_color, self.strip_position)
         # self.inscription = screen.blit(self.image_inscription, self.position_inscription)
         txt = self.button_words
@@ -56,6 +55,7 @@ class BigButtonModule(BobmModule):
         self.button_words = choice(WORDS)
 
     def LKM_down(self, x, y):
+        self.time = 0
         # Проверка на нажатие по кнопкам
         if self.button.collidepoint((x, y)) and self.module_img != self.module_img_off:
             if self.button_color == 'blue' and self.button_words == 'break':
@@ -79,7 +79,7 @@ class BigButtonModule(BobmModule):
             self.click = True
 
     def LKM_up(self, x, y):
-        pass
+        self.click = False
 
 
 COLORS = ['red', 'yellow', 'green', 'blue']
