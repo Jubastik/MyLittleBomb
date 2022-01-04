@@ -18,7 +18,7 @@ class KeyboardModule(BobmModule):
         return self
 
     def choose_set(self):
-        self.image_set = random.randint(1, 1)  # Выбор группы с картинками
+        self.image_set = random.randint(1, 6)  # Выбор группы с картинками
         image_numbers = [1, 2, 3, 4, 5, 6, 7]
         # Выбираем из серии 4 изображения (изображения имеют названия от 1 до 7)
         random.shuffle(image_numbers)
@@ -36,17 +36,17 @@ class KeyboardModule(BobmModule):
     def generate(self):
         # Цифры - положение бэкграунда (кнопки) относительно модуля
         self.position_btn = [
-            [self.x + 90, self.y + 90],
-            [self.x + 155, self.y + 90],
-            [self.x + 90, self.y + 155],
-            [self.x + 155, self.y + 155],
+            [self.x + 75, self.y + 95],
+            [self.x + 155, self.y + 95],
+            [self.x + 75, self.y + 175],
+            [self.x + 155, self.y + 175],
         ]
         # Цифры - положение изображения относительно модуля
         self.position_btn_img = [
-            [self.x + 95, self.y + 95],
-            [self.x + 160, self.y + 95],
-            [self.x + 95, self.y + 160],
-            [self.x + 160, self.y + 160],
+            [self.x + 85, self.y + 105],
+            [self.x + 165, self.y + 105],
+            [self.x + 85, self.y + 185],
+            [self.x + 165, self.y + 185],
         ]
 
         self.btn_standard = load_image("Bomb/keyboard_module/key_standard.png").convert()
@@ -90,6 +90,9 @@ class KeyboardModule(BobmModule):
     def update(self):
         if self.blocks_defused == 4:
             self.module_img = self.module_img_off
+            self.isdefused = True
+        if self.bomb.gs.mistakes >= 3:
+            self.bomb.gs.lose()
 
         # Возврат кнопки с ошибкой в нейтральное состояние
         for num, time in self.is_mistake.items():
@@ -121,8 +124,7 @@ class KeyboardModule(BobmModule):
                 self.first_btn = self.btn_mistake
                 self.is_mistake["1"] = 0
                 self.bomb.gs.mistakes += 1
-                if self.bomb.gs.mistakes >= 3:
-                    self.bomb.gs.lose()
+
         elif self.second_btn_rect.collidepoint((x, y)) and self.second_btn != self.btn_correct:
             if self.answer[0] == self.img_2:
                 self.blocks_defused += 1
@@ -132,8 +134,6 @@ class KeyboardModule(BobmModule):
                 self.second_btn = self.btn_mistake
                 self.is_mistake["2"] = 0
                 self.bomb.gs.mistakes += 1
-                if self.bomb.gs.mistakes >= 3:
-                    self.bomb.gs.lose()
 
         elif self.third_btn_rect.collidepoint((x, y)) and self.third_btn != self.btn_correct:
             if self.answer[0] == self.img_3:
@@ -144,8 +144,6 @@ class KeyboardModule(BobmModule):
                 self.third_btn = self.btn_mistake
                 self.is_mistake["3"] = 0
                 self.bomb.gs.mistakes += 1
-                if self.bomb.gs.mistakes >= 3:
-                    self.bomb.gs.lose()
 
         elif self.fourth_btn_rect.collidepoint((x, y)) and self.fourth_btn != self.btn_correct:
             if self.answer[0] == self.img_4:
@@ -156,5 +154,3 @@ class KeyboardModule(BobmModule):
                 self.fourth_btn = self.btn_mistake
                 self.is_mistake["4"] = 0
                 self.bomb.gs.mistakes += 1
-                if self.bomb.gs.mistakes >= 3:
-                    self.bomb.gs.lose()
