@@ -91,8 +91,6 @@ class KeyboardModule(BobmModule):
         if self.blocks_defused == 4:
             self.module_img = self.module_img_off
             self.isdefused = True
-        if self.bomb.gs.mistakes >= 3:
-            self.bomb.gs.lose()
 
         # Возврат кнопки с ошибкой в нейтральное состояние
         for num, time in self.is_mistake.items():
@@ -124,6 +122,8 @@ class KeyboardModule(BobmModule):
                 self.first_btn = self.btn_mistake
                 self.is_mistake["1"] = 0
                 self.bomb.gs.mistakes += 1
+                if self.bomb.gs.mistakes >= 3:
+                    self.bomb.gs.lose()
 
         elif self.second_btn_rect.collidepoint((x, y)) and self.second_btn != self.btn_correct:
             if self.answer[0] == self.img_2:
@@ -134,6 +134,8 @@ class KeyboardModule(BobmModule):
                 self.second_btn = self.btn_mistake
                 self.is_mistake["2"] = 0
                 self.bomb.gs.mistakes += 1
+                if self.bomb.gs.mistakes >= 3:
+                    self.bomb.gs.lose()
 
         elif self.third_btn_rect.collidepoint((x, y)) and self.third_btn != self.btn_correct:
             if self.answer[0] == self.img_3:
@@ -144,6 +146,8 @@ class KeyboardModule(BobmModule):
                 self.third_btn = self.btn_mistake
                 self.is_mistake["3"] = 0
                 self.bomb.gs.mistakes += 1
+                if self.bomb.gs.mistakes >= 3:
+                    self.bomb.gs.lose()
 
         elif self.fourth_btn_rect.collidepoint((x, y)) and self.fourth_btn != self.btn_correct:
             if self.answer[0] == self.img_4:
@@ -154,3 +158,5 @@ class KeyboardModule(BobmModule):
                 self.fourth_btn = self.btn_mistake
                 self.is_mistake["4"] = 0
                 self.bomb.gs.mistakes += 1
+                if self.bomb.gs.mistakes >= 3:
+                    self.bomb.gs.lose()
