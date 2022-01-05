@@ -59,13 +59,13 @@ class BigButtonModule(BobmModule):
         self.time = pygame.time.get_ticks()
         if self.button.collidepoint((x, y)) and self.module_img != self.module_img_off:
             if self.button_words == 'boom':
-                print('conditional 2')
+                pass
             elif self.BATTERY_COUNT > 2 and \
                     self.INDICATORS_COUNT[0] is False and \
                     self.INDICATORS_COUNT[1] is True:
-                print('conditional 4')
+                pass
             elif self.button_color == 'red' and self.button_words == 'hold':
-                print('conditional 6')
+                pass
             else:
                 self.strip_color = choice(COLORS_STRIP)
                 self.c = self.strip_color
@@ -131,7 +131,6 @@ class BigButtonModule(BobmModule):
                 if_hold = True
             if if_hold:
                 if self.c == 'blue':
-                    print('blue')
                     if '4' in digits:
                         print('win')
                         self.isdefused = True
