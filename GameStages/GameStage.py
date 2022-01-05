@@ -86,7 +86,7 @@ class GameStage(Stage):
                                 theme=pygame_menu.themes.THEME_DARK)
 
         menu.add.button('Вернуться', self.draw_background(screen))
-        menu.add.button('Настройки')
+        menu.add.button('Главное меню')
         menu.add.button('Выход', pygame_menu.events.EXIT)
 
         menu.mainloop(screen)
