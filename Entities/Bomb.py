@@ -48,7 +48,7 @@ class Bomb:
             self.lightning_now = (self.lightning_now + 1) % 2
             self.timer = LIGHTNING_SPEED[(self.gs.time // 1000) - 1][self.lightning_now]
         if self.lightning_now == 0:
-            screen.blit(self.bomb_image_on, (BOMB_IMG_X, BOMB_IMG_Y))
+            screen.blit(self.bomb_image_off, (BOMB_IMG_X, BOMB_IMG_Y))
         else:
             screen.blit(self.bomb_image_on, (BOMB_IMG_X, BOMB_IMG_Y))
         self.timer -= 1
