@@ -14,8 +14,8 @@ class BigButtonModule(BobmModule):
         self.click = False
         self.BATTERY_COUNT = self.bomb.batteries
         self.INDICATORS_COUNT = self.bomb.indicators
-        self.module_img_off = load_image(r"Bomb/BigButton_module/BigButton_module_img_off.png")
-        self.module_img_on = load_image(r"Bomb/BigButton_module/BigButton_module_img_on.png")
+        self.module_img_off = load_image(r"Bomb/BigButton_module/BigButton_module_img_off.png").convert()
+        self.module_img_on = load_image(r"Bomb/BigButton_module/BigButton_module_img_on.png").convert()
         self.module_img = self.module_img_on
         self.generate()
         return self
@@ -45,11 +45,11 @@ class BigButtonModule(BobmModule):
         self.strip_position = [self.x + 240, self.y + 135]
         self.button_color = choice(COLORS_BUTTON)
         self.strip_color = 'black'
-        self.strip_color = load_image(f'Bomb/BigButton_module/BigButton_strip_{self.strip_color}.png')
+        self.strip_color = load_image(f'Bomb/BigButton_module/BigButton_strip_{self.strip_color}.png').convert()
         self.button_default = load_image(
-            f"Bomb/BigButton_module/button_default/BigButton_default_{self.button_color}.png")
+            f"Bomb/BigButton_module/button_default/BigButton_default_{self.button_color}.png").convert()
         self.button_pressed = load_image(
-            f"Bomb/BigButton_module/button_pressed/BigButton_pressed_{self.button_color}.png")
+            f"Bomb/BigButton_module/button_pressed/BigButton_pressed_{self.button_color}.png").convert()
         self.button_words = choice(WORDS)
 
     def LKM_down(self, x, y):
