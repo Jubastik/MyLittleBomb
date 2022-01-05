@@ -104,8 +104,9 @@ class Bomb:
                 break
         else:
             return
-        res_module.LKM_down(x, y)
-        self.pressed_module = res_module
+        if not res_module.isdefused:
+            res_module.LKM_down(x, y)
+            self.pressed_module = res_module
 
     def LKM_up(self, x, y):
         if self.pressed_module is not None:
