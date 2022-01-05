@@ -81,11 +81,14 @@ class GameStage(Stage):
     def set_bomb(self, bomb):
         self.bomb = bomb
 
+    def continue_game(self):
+        self.ispause = False
+
     def pause(self, screen):
         menu = pygame_menu.Menu('Меню', 800, 500,
                                 theme=pygame_menu.themes.THEME_DARK)
 
-        menu.add.button('Вернуться', self.draw_background(screen))
+        menu.add.button('Продолжить', self.continue_game())
         menu.add.button('Главное меню')
         menu.add.button('Выход', pygame_menu.events.EXIT)
 
