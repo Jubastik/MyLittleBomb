@@ -53,8 +53,10 @@ class BigButtonModule(BobmModule):
         self.button_words = choice(WORDS)
 
     def LKM_down(self, x, y):
-        self.time = pygame.time.get_ticks()
         self.click = True
+        if self.isdefused:
+            return
+        self.time = pygame.time.get_ticks()
         if self.button.collidepoint((x, y)) and self.module_img != self.module_img_off:
             if self.button_words == 'boom':
                 print('conditional 2')
@@ -70,8 +72,10 @@ class BigButtonModule(BobmModule):
                 self.strip_color = load_image(f'Bomb/BigButton_module/BigButton_strip_{self.strip_color}.png')
 
     def LKM_up(self, x, y):
-        digits = ''
         self.click = False
+        if self.isdefused:
+            return
+        digits = ''
         if_hold = False
         current_time = self.bomb.gs.time
         minuts = round((current_time / 30) // 60)
