@@ -10,9 +10,9 @@ class TimerModule(BobmModule):
 
     def init(self):
         self.isdefused = True
-        self.module_image = load_image(r"Bomb/timer.png")
-        self.mistake_red = load_image(r"Bomb/mistake_red.png")
-        self.mistake_gray = load_image(r"Bomb/mistake_gray.png")
+        self.module_image = load_image(r"Bomb/timer.png").convert()
+        self.mistake_red = load_image(r"Bomb/mistake_red.png").convert()
+        self.mistake_gray = load_image(r"Bomb/mistake_gray.png").convert()
         # Ошибки
         self.section1_x = self.x + 65
         self.section1_y = self.y + 40
