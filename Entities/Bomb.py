@@ -21,13 +21,13 @@ class Bomb:
     def __init__(self, gs):
         self.pressed_module = None
         self.gs = gs
-        self.bomb_image_on = load_image(r"Bomb/bomb_on.png")
-        self.bomb_image_off = load_image(r"Bomb/bomb_off.png")
-        self.battery_image = load_image(r"Bomb/battery.png")
+        self.bomb_image_on = load_image(r"Bomb/bomb_on.png").convert()
+        self.bomb_image_off = load_image(r"Bomb/bomb_off.png").convert()
+        self.battery_image = load_image(r"Bomb/battery.png").convert()
         self.lightning_speed = LIGHTNING_SPEED[0]
         self.lightning_now = 0
         self.timer = -1
-        self.bomb_image = load_image(r"Bomb/bomb.png")
+        self.bomb_image = load_image(r"Bomb/bomb.png").convert()
 
     def load_level(self, level):
         self.serial_number = level.generate_serial_number()
