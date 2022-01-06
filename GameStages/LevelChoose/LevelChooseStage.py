@@ -46,7 +46,7 @@ class LevelChooseStage(Stage):
             # Обновление бэкграунда (мигание лампочки)
             x, y = pygame.mouse.get_pos()
             if OWN_LVL_X1 <= x <= OWN_LVL_X2 and OWN_LVL_Y1 <= y <= OWN_LVL_Y2:
-                self.OwnLevel.LKM_down(x, y)
+                self.OwnLevel.on_sprite()
             if self.page == 1:
                 if self.rect_first.collidepoint((x, y)):
                     self.sprite_time += 1
