@@ -106,7 +106,6 @@ class ButtonsModule(BobmModule):
             for color in show:
                 answ.append(trans[color])
             answer.append(answ)
-        print(answer)
         return answer, show
 
     def LKM_down(self, x, y):
@@ -154,8 +153,6 @@ class ButtonsModule(BobmModule):
                     self.show = self.info[: self.correct_answers + 1]
                     return
             else:
-                print(self.answer)
-                print(self.correct_answer)
                 if len(self.answer) == 4:  # 4 - длина полного правильного ответа
                     self.isdefused = True
                 elif len(self.answer) == self.correct_answers + 1:
