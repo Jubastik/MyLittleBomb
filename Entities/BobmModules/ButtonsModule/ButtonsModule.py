@@ -1,4 +1,3 @@
-from typing_extensions import ParamSpecKwargs
 import pygame
 from random import choice, shuffle
 from image_loader import load_image
