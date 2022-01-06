@@ -1,6 +1,6 @@
 from random import choice, randint
 
-from CONSTANTS import MODULES_COORDS
+from CONSTANTS import MODULES_COORDS, FPS
 from Entities.BobmModules.BigButtonModule.BigButtonModule import BigButtonModule
 from Entities.BobmModules.KeyBoardModule.KeyboardModule import KeyboardModule
 from Entities.BobmModules.NoneModule.NoneModule import NoneModule
@@ -10,11 +10,10 @@ from Entities.BobmModules.ButtonsModule.ButtonsModule import ButtonsModule
 from Resources.BombGenerateInfo.BombSerialNum import (
     SERIAL_NUMBERS_FIRST_SECTOR,
     SERIAL_NUMBERS_THIRD_SECTOR,
-    FPS,
 )
 
 
-class Level1:
+class Level3:
     """Уровень 1. Содержит универсальную информацию о уровне."""
 
     def __init__(self):
