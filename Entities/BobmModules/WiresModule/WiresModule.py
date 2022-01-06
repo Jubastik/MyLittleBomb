@@ -10,8 +10,8 @@ class WiresModule(BobmModule):
 
     def init(self):
         self.isdefused = False
-        self.module_img_off = load_image(r"Bomb/wires_module/wiremodule_off.png").convert()
-        self.module_img_on = load_image(r"Bomb/wires_module/wiremodule_on.png").convert()
+        self.module_img_off = load_image("Bomb/wires_module/wiremodule_off.png").convert()
+        self.module_img_on = load_image("Bomb/wires_module/wiremodule_on.png").convert()
         self.wires_group, self.wires, self.answer = self.generate()
         return self
 

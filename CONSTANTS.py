@@ -46,6 +46,22 @@ SERIAL_NUM_IMG_Y2 = BOMB_IMG_Y2 + 105 - 5
 SERIAL_NUM_IMG_W = SERIAL_NUM_IMG_X2 - SERIAL_NUM_IMG_X
 SERIAL_NUM_IMG_H = SERIAL_NUM_IMG_Y2 - SERIAL_NUM_IMG_Y
 
+
+# Модуль с 4 кнопками
+SYMBOLS = ["A", "E", "I", "O", "U"]
+TRANSLATE = [
+    [
+        {"r": "b", "b": "r", "g": "y", "y": "g"},
+        {"r": "y", "b": "g", "g": "b", "y": "r"},
+        {"r": "g", "b": "r", "g": "y", "y": "b"},
+    ],
+    [
+        {"r": "b", "b": "y", "g": "g", "y": "r"},
+        {"r": "r", "b": "b", "g": "y", "y": "g"},
+        {"r": "y", "b": "g", "g": "b", "y": "r"},
+    ],
+]
+COLORS = ["r", "b", "g", "y"]
 # Расчёт координат модулей
 # Порядок модулей:
 # 0 1 2
