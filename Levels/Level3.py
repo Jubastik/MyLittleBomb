@@ -1,6 +1,6 @@
 from random import choice, randint
 
-from CONSTANTS import MODULES_COORDS, FPS
+from CONSTANTS import MODULES_COORDS
 from Entities.BobmModules.BigButtonModule.BigButtonModule import BigButtonModule
 from Entities.BobmModules.KeyBoardModule.KeyboardModule import KeyboardModule
 from Entities.BobmModules.NoneModule.NoneModule import NoneModule
@@ -10,6 +10,7 @@ from Entities.BobmModules.ButtonsModule.ButtonsModule import ButtonsModule
 from Resources.BombGenerateInfo.BombSerialNum import (
     SERIAL_NUMBERS_FIRST_SECTOR,
     SERIAL_NUMBERS_THIRD_SECTOR,
+    FPS,
 )
 
 
@@ -32,8 +33,8 @@ class Level1:
         modules = [
             TimerModule(bomb, MODULES_COORDS[0]).init(),
             WiresModule(bomb, MODULES_COORDS[1]).init(),
-            NoneModule(bomb, MODULES_COORDS[2]).init(),
-            NoneModule(bomb, MODULES_COORDS[3]).init(),
+            KeyboardModule(bomb, MODULES_COORDS[2]).init(),
+            BigButtonModule(bomb, MODULES_COORDS[3]).init(),
             NoneModule(bomb, MODULES_COORDS[4]).init(),
             NoneModule(bomb, MODULES_COORDS[5]).init(),
         ]
