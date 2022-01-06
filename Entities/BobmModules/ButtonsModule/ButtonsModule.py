@@ -137,9 +137,7 @@ class ButtonsModule(BobmModule):
             return
         else:
             self.answer.append(answer)
-            correct_answer = self.correct_answer[self.bomb.gs.mistakes][
-                : self.correct_answers + 1
-            ]
+            correct_answer = self.correct_answer[self.bomb.gs.mistakes][: self.correct_answers + 1]
             for i in range(self.answer_step):
                 if correct_answer[i] != self.answer[i]:
                     self.answer = []
