@@ -1,9 +1,9 @@
 from typing_extensions import ParamSpecKwargs
 import pygame
-from random import choice
+from random import choice, shuffle
 from image_loader import load_image
 from Entities.BobmModules.BobmModule import BobmModule
-from CONSTANTS import SYMBOLS, TRANSLATE, COLORS
+from CONSTANTS import SYMBOLS, TRANSLATE, COLORS, FPS
 
 
 class ButtonsModule(BobmModule):
@@ -13,14 +13,14 @@ class ButtonsModule(BobmModule):
         self.isdefused = False
         self.correct_answer, self.info = self.generate()  # info - все цвета
         # Анимация
-        self.show = [self.info[0]]  #  show - все цвета которые показываем сейчас
+        self.show = [self.info[0]]  # show - все цвета которые показываем сейчас
         self.button_now = [self.info[0], 30, None]  # 0 - номер кнопки, 30 - таймер
         self.step = 0
         # Логика
         self.correct_answers = 0  # Количество полных правильных оветов
         self.answer_step = 1  # Текущий ответ (отсчёт с 1)
         self.answer = []  # Отивет игрока на текущей стадии
-        # Картиночки и цыганская магия
+        # Картиночки и цыганская магия x2
         path = lambda p: f"Bomb/Buttons_module/{p}.png"
         image = lambda p: load_image(path(p)).convert()  # Так красивше
         self.module_img_red_on = image("module_red_on")
@@ -31,6 +31,7 @@ class ButtonsModule(BobmModule):
         self.button_img_blue = image("button_blue")
         self.button_img_green = image("button_green")
         self.button_img_yellow = image("button_yellow")
+        # Циферки взяты с картинки
         self.button_red_x, self.button_red_y = self.x + 80, self.y + 80
         self.button_blue_x, self.button_blue_y = self.x + 160, self.y + 80
         self.button_green_x, self.button_green_y = self.x + 80, self.y + 160
@@ -57,7 +58,7 @@ class ButtonsModule(BobmModule):
             screen.blit(self.module_img_gray_on, (self.x, self.y))
 
     def draw_buttons(self, screen):
-        if self.button_now[2] == "pause":
+        if self.button_now[2] == "pause" or self.isdefused:
             self.button_now[1] -= 1
             # fmt: off
             screen.blit(self.button_img_red, (self.button_red_x, self.button_red_y))
@@ -72,6 +73,7 @@ class ButtonsModule(BobmModule):
             if self.button_now[1] <= 0:
                 self.step = (self.step + 1) % len(self.show)
                 self.button_now = [self.show[self.step], 30, "pause"]
+                self.draw_buttons(screen)
             # fmt: off
             if self.button_now[0] != "r":
                 screen.blit(self.button_img_red, (self.button_red_x, self.button_red_y))
@@ -95,22 +97,19 @@ class ButtonsModule(BobmModule):
         else:
             translate = TRANSLATE[1]
         # Создаём последовательность
-        show = [choice(COLORS), choice(COLORS), choice(COLORS), choice(COLORS)]
+        show = COLORS[:]
+        shuffle(show)
         # Находим для неё ответ
-        res = []
+        answer = []
         for trans in translate:
             answ = []
             for color in show:
                 answ.append(trans[color])
-            res.append(answ)
-        # Преобразуем
-        answer = []
-        for i in range(1, len(res) + 1):
-            answer.append(res[:i])
+            answer.append(answ)
+        print(answer)
         return answer, show
 
     def LKM_down(self, x, y):
-        print(x, y)
         # Получаем ответ
         answer = "on module"
         # Циферки взяты с картинки
@@ -140,7 +139,9 @@ class ButtonsModule(BobmModule):
             return
         else:
             self.answer.append(answer)
-            correct_answer = self.correct_answer[self.correct_answers]
+            correct_answer = self.correct_answer[self.bomb.gs.mistakes][
+                : self.correct_answers + 1
+            ]
             for i in range(self.answer_step):
                 if correct_answer[i] != self.answer[i]:
                     self.answer = []
@@ -149,9 +150,13 @@ class ButtonsModule(BobmModule):
                     self.bomb.gs.mistakes += 1
                     if self.bomb.gs.mistakes >= 3:
                         self.bomb.gs.lose()
+                    self.module_img_red_on_timer += FPS // 2
+                    self.show = self.info[: self.correct_answers + 1]
                     return
             else:
-                if len(self.answer) == len(self.correct_answer):
+                print(self.answer)
+                print(self.correct_answer)
+                if len(self.answer) == 4:  # 4 - длина полного правильного ответа
                     self.isdefused = True
                 elif len(self.answer) == self.correct_answers + 1:
                     self.answer = []
@@ -159,3 +164,5 @@ class ButtonsModule(BobmModule):
                     self.answer_step = 1
                 else:
                     self.answer_step += 1
+                self.module_img_green_on_timer += FPS // 2
+                self.show = self.info[: self.correct_answers + 1]
