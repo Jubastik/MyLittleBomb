@@ -30,7 +30,6 @@ class Bomb:
         self.bomb_image = load_image(r"Bomb/bomb.png").convert()
 
     def load_level(self, level):
-        self.level = level
         self.serial_number = level.generate_serial_number()
         self.indicators = level.generate_indicators()
         self.batteries = level.generate_battery()

@@ -13,7 +13,7 @@ from Resources.BombGenerateInfo.BombSerialNum import (
 )
 
 
-class Level1:
+class Level4:
     """Уровень 1. Содержит универсальную информацию о уровне."""
 
     def __init__(self):
@@ -32,9 +32,9 @@ class Level1:
         modules = [
             TimerModule(bomb, MODULES_COORDS[0]).init(),
             WiresModule(bomb, MODULES_COORDS[1]).init(),
-            NoneModule(bomb, MODULES_COORDS[2]).init(),
-            NoneModule(bomb, MODULES_COORDS[3]).init(),
-            NoneModule(bomb, MODULES_COORDS[4]).init(),
+            KeyboardModule(bomb, MODULES_COORDS[2]).init(),
+            BigButtonModule(bomb, MODULES_COORDS[3]).init(),
+            ButtonsModule(bomb, MODULES_COORDS[4]).init(),
             NoneModule(bomb, MODULES_COORDS[5]).init(),
         ]
         return modules

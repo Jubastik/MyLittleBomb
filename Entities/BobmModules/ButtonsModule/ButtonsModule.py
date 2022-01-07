@@ -1,3 +1,4 @@
+from typing_extensions import ParamSpecKwargs
 import pygame
 from random import choice, shuffle
 from image_loader import load_image
@@ -113,23 +114,23 @@ class ButtonsModule(BobmModule):
         answer = "on module"
         # Циферки взяты с картинки
         if (
-                self.button_red_x <= x <= self.x + 135
-                and self.button_red_y <= y <= self.y + 135
+            self.button_red_x <= x <= self.x + 135
+            and self.button_red_y <= y <= self.y + 135
         ):
             answer = "r"
         elif (
-                self.button_blue_x <= x <= self.x + 215
-                and self.button_blue_y <= y <= self.y + 135
+            self.button_blue_x <= x <= self.x + 215
+            and self.button_blue_y <= y <= self.y + 135
         ):
             answer = "b"
         elif (
-                self.button_green_x <= x <= self.x + 135
-                and self.button_green_y <= y <= self.y + 215
+            self.button_green_x <= x <= self.x + 135
+            and self.button_green_y <= y <= self.y + 215
         ):
             answer = "g"
         elif (
-                self.button_yellow_x <= x <= self.x + 215
-                and self.button_yellow_y <= y <= self.y + 215
+            self.button_yellow_x <= x <= self.x + 215
+            and self.button_yellow_y <= y <= self.y + 215
         ):
             answer = "y"
 
@@ -139,8 +140,8 @@ class ButtonsModule(BobmModule):
         else:
             self.answer.append(answer)
             correct_answer = self.correct_answer[self.bomb.gs.mistakes][
-                             : self.correct_answers + 1
-                             ]
+                : self.correct_answers + 1
+            ]
             for i in range(self.answer_step):
                 if correct_answer[i] != self.answer[i]:
                     self.answer = []

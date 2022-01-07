@@ -4,6 +4,9 @@ import pygame_gui
 from Entities.Bomb import Bomb
 from GameStages.Stage import Stage
 from Levels.Level1 import Level1
+from Levels.Level2 import Level2
+from Levels.Level3 import Level3
+from Levels.Level4 import Level4
 from image_loader import load_image
 
 
@@ -97,6 +100,10 @@ class LevelChooseStage(Stage):
             self.start_second_lvl()
         elif event.ui_element == self.btn_third_lvl:
             self.start_third_lvl()
+        elif event.ui_element == self.btn_fourth_lvl:
+            self.start_fourth_lvl()
+        elif event.ui_element == self.btn_fifth_lvl:
+            self.start_fifth_lvl()
 
     def change_page(self, page):
         # Активация и деактивация gui связанного с уровнями
@@ -130,6 +137,8 @@ class LevelChooseStage(Stage):
         self.first_lvl_gui()
         self.second_lvl_gui()
         self.third_lvl_gui()
+        self.fourth_lvl_gui()
+        self.fifth_lvl_gui()
         self.change_page(self.page)
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -156,20 +165,31 @@ class LevelChooseStage(Stage):
         level = Level1()
         bomb.load_level(level)
         self.gm.stages["game"].set_bomb(bomb)
-        self.gm.stages["game"].stage_launch()
         self.gm.change_stage("game")
 
     def start_second_lvl(self):
-        '''переключение стейджа и запуск уровня'''
-        print("Старт 2го уровня")
+        self.end()
+        bomb = Bomb(self.gm.stages["game"])
+        level = Level2()
+        bomb.load_level(level)
+        self.gm.stages["game"].set_bomb(bomb)
+        self.gm.change_stage("game")
 
     def start_third_lvl(self):
-        '''переключение стейджа и запуск уровня'''
-        print("Старт 3го уровня")
+        self.end()
+        bomb = Bomb(self.gm.stages["game"])
+        level = Level3()
+        bomb.load_level(level)
+        self.gm.stages["game"].set_bomb(bomb)
+        self.gm.change_stage("game")
 
     def start_fourth_lvl(self):
-        '''переключение стейджа и запуск уровня'''
-        print("Старт 5го уровня")
+        self.end()
+        bomb = Bomb(self.gm.stages["game"])
+        level = Level4()
+        bomb.load_level(level)
+        self.gm.stages["game"].set_bomb(bomb)
+        self.gm.change_stage("game")
 
     def start_fifth_lvl(self):
         '''переключение стейджа и запуск уровня'''
@@ -207,10 +227,16 @@ class LevelChooseStage(Stage):
         self.page2_ui_group.extend([self.btn_third_lvl])
 
     def fourth_lvl_gui(self):
-        pass
+        self.btn_fourth_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((850, 950), (250, 50)),
+                                                          text='4 уровень',
+                                                          manager=self.ui_manager)
+        self.page2_ui_group.extend([self.btn_fourth_lvl])
 
     def fifth_lvl_gui(self):
-        pass
+        self.btn_fifth_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((1450, 950), (250, 50)),
+                                                          text='5 уровень',
+                                                          manager=self.ui_manager)
+        self.page2_ui_group.extend([self.btn_fifth_lvl])
 
     # ------------------------------------------------------------------------------------------------------------------
     # Отрисовка уровня
