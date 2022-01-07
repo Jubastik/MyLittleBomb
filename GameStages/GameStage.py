@@ -75,12 +75,12 @@ class GameStage(Stage):
 
     def lose(self):
         # Соединение с EndStage
-        self.gm.stages['result'].load_data(False, self.time)
+        self.gm.stages['result'].load_data(False, self.time, self.mistakes)
         self.gm.change_stage('result')
 
     def win(self):
         # Соединение с EndStage
-        self.gm.stages['result'].load_data(True, self.time)
+        self.gm.stages['result'].load_data(True, self.time, self.mistakes)
         self.gm.change_stage('result')
 
     def set_bomb(self, bomb):

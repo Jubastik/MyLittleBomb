@@ -19,10 +19,11 @@ class EndStage(Stage):
 
         return self
 
-    def load_data(self, is_win, time):
+    def load_data(self, is_win, time, mistakes):
         self.is_win = is_win
         minuts = round((time / 30) // 60)
         sec = (time / 30) % 60
+        self.mistakes = mistakes
         self.time = f'{int(minuts)}:{int(sec)}'
 
     def draw(self, screen):
@@ -43,6 +44,10 @@ class EndStage(Stage):
         font = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
         res = font.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 440))
+        txt = f'| {self.mistakes} mistakes |'
+        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 35)
+        res = font.render(txt, True, (0, 0, 0))
+        screen.blit(res, (WIDTH / 2 - 75, 470))
 
         txt = '3. Result'
         font = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
@@ -54,7 +59,7 @@ class EndStage(Stage):
         else:
             txt = 'EXPLODED'
             res = font.render(txt, True, (255, 0, 0))
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 55)
+        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 65)
         screen.blit(res, (WIDTH / 2 - 100, 550))
 
         txt = 'Time left'
