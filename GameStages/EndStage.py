@@ -19,7 +19,11 @@ class EndStage(Stage):
 
         return self
 
-    def load_data(self, is_win, time, mistakes):
+    def load_data(self, is_win, time, mistakes, all_time, modules_count):
+        minuts = round((all_time / 30) // 60)
+        sec = (all_time / 30) % 60
+        self.all_time = f'{int(minuts)}:{int(sec)}'
+        self.modules_count = modules_count
         self.is_win = is_win
         minuts = round((time / 30) // 60)
         sec = (time / 30) % 60
@@ -44,10 +48,10 @@ class EndStage(Stage):
         font = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
         res = font.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 440))
-        txt = f'| {self.mistakes} mistakes |'
+        txt = f'{self.all_time}0 | {self.modules_count} moduls | {self.mistakes} mistakes'
         font = pygame.font.Font(r'Resources/Pixeboy.ttf', 35)
         res = font.render(txt, True, (0, 0, 0))
-        screen.blit(res, (WIDTH / 2 - 75, 470))
+        screen.blit(res, (WIDTH / 2 - 100, 473))
 
         txt = '3. Result'
         font = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
@@ -65,22 +69,22 @@ class EndStage(Stage):
         txt = 'Time left'
         font = pygame.font.Font(r'Resources/Pixeboy.ttf', 40)
         res = font.render(txt, True, (0, 0, 0))
-        screen.blit(res, (WIDTH / 2 - 80, 600))
+        screen.blit(res, (WIDTH / 2 - 50, 600))
         txt = f'{self.time}'
         font = pygame.font.Font(r'Resources/Pixeboy.ttf', 55)
         res = font.render(txt, True, (0, 0, 0))
-        screen.blit(res, (WIDTH / 2 - 45, 640))
+        screen.blit(res, (WIDTH / 2 - 15, 640))
 
     def init_gui(self):
         # создание кнопки "выбор уровня"
         self.choose_lvl = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((750, 800), (190, 60)),
+            relative_rect=pygame.Rect((780, 770), (190, 60)),
             text='Вернуться',
             manager=self.ui_manager
         )
         # создание кнопки "заново"
         self.repeat = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((950, 800), (190, 60)),
+            relative_rect=pygame.Rect((1000, 770), (190, 60)),
             text='Зановово',
             manager=self.ui_manager
         )
