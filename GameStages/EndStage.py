@@ -19,7 +19,8 @@ class EndStage(Stage):
 
         return self
 
-    def load_data(self, is_win, time, mistakes, all_time, modules_count):
+    def load_data(self, is_win, time, mistakes, all_time, modules_count, name_lvl):
+        print(name_lvl)
         # загружаем инф об уровне
         minuts = round((all_time / 30) // 60)
         sec = (all_time / 30) % 60

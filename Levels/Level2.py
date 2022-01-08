@@ -17,6 +17,7 @@ class Level2:
     """Уровень 1. Содержит универсальную информацию о уровне."""
 
     def __init__(self):
+        self.name = "2"
         self.mistakes = 0
         self.time = 300 * FPS
 
