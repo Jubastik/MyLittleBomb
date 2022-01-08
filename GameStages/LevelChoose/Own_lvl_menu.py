@@ -109,7 +109,6 @@ class OwnLevel:
             self.sprite_time = 0
 
     def time_reduce(self):
-        print("time -1")
         if self.lvl_time - 30 >= 30:
             self.lvl_time -= 30
 
