@@ -4,7 +4,7 @@ from pygame_gui import UIManager
 from GameStages.EndStage import EndStage
 from GameStages.GameStage import GameStage
 from GameStages.InitStage import InitStage
-from GameStages.LevelChooseStage import LevelChooseStage
+from GameStages.LevelChoose.LevelChooseStage import LevelChooseStage
 from GameStages.MenuStage import MenuStage
 from GameStages.SettingsStage import SettingsStage
 from MusicManager import MusicManager
