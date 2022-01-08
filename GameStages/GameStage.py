@@ -76,23 +76,24 @@ class GameStage(Stage):
 
     def lose(self):
         # Соединение с EndStage
-        time = self.bomb.level.time
-        modules_count = 6
-        for module in self.bomb.modules:
-            if isinstance(module, NoneModule):
-                modules_count -= 1
-        self.gm.stages['result'].load_data(False, self.time, self.mistakes, time, modules_count)
-        self.gm.change_stage('result')
-
-    def win(self):
-        # Соединение с EndStage
-        time = self.bomb.level.time
+        all_time = self.bomb.level.time
         name_lvl = self.bomb.name_lvl
         modules_count = 6
         for module in self.bomb.modules:
             if isinstance(module, NoneModule):
                 modules_count -= 1
-        self.gm.stages['result'].load_data(True, self.time, self.mistakes, time, modules_count, name_lvl)
+        self.gm.stages['result'].load_data(False, self.time, self.mistakes, all_time, modules_count, name_lvl)
+        self.gm.change_stage('result')
+
+    def win(self):
+        # Соединение с EndStage
+        all_time = self.bomb.level.time
+        name_lvl = self.bomb.name_lvl
+        modules_count = 6
+        for module in self.bomb.modules:
+            if isinstance(module, NoneModule):
+                modules_count -= 1
+        self.gm.stages['result'].load_data(True, self.time, self.mistakes, all_time, modules_count, name_lvl)
         self.gm.change_stage('result')
 
     def set_bomb(self, bomb):

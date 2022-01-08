@@ -20,7 +20,7 @@ class EndStage(Stage):
         return self
 
     def load_data(self, is_win, time, mistakes, all_time, modules_count, name_lvl):
-        print(name_lvl)
+        self.name_lvl = name_lvl
         # загружаем инф об уровне
         minuts = round((all_time / 30) // 60)
         sec = (all_time / 30) % 60
@@ -46,6 +46,11 @@ class EndStage(Stage):
         font = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
         res = font.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 360))
+        full_lvl_name = LEVELS[self.name_lvl]
+        txt = f'{full_lvl_name} level'
+        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 38)
+        res = font.render(txt, True, (0, 0, 0))
+        screen.blit(res, (WIDTH / 2 - 100, 390))
 
         txt = '2. Bomb parameters'
         font = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
@@ -141,11 +146,10 @@ class EndStage(Stage):
                 if event.ui_element == self.choose_lvl:
                     self.gm.change_stage('choose_lvl')
                     self.gui_off()
-                # кнопка настроек
+                # кнопка овтора уровня
                 if event.ui_element == self.repeat:
-                    self.gm.change_stage("game")
+                    self.restart_lvl()
                     self.gui_off()
-                # кнопка выхода
 
     # включаем кнопки (делаем их доступными)
     def gui_on(self):
@@ -156,6 +160,20 @@ class EndStage(Stage):
     def gui_off(self):
         self.choose_lvl.visible = False
         self.repeat.visible = False
+
+    def restart_lvl(self):
+        if self.name_lvl == '1':
+            self.gm.stages["choose_lvl"].start_first_lvl()
+        elif self.name_lvl == '2':
+            self.gm.stages["choose_lvl"].start_second_lvl()
+        elif self.name_lvl == '3':
+            self.gm.stages["choose_lvl"].start_third_lvl()
+        elif self.name_lvl == '4':
+            self.gm.stages["choose_lvl"].start_fourth_lvl()
+        elif self.name_lvl == '5':
+            self.gm.stages["choose_lvl"].start_fifth_lvl()
+        else:
+            pass
 
 
 # класс спрайтов при обезвреживаниии бомбы
@@ -177,6 +195,7 @@ class Vin(pygame.sprite.Sprite):
         # когда спрайт опустился за экран, удаляем спрайт
         if self.rect.y >= 1120:
             self.kill()
+
 
 # класс спрайтов при зрыве бомбы
 class Lose(pygame.sprite.Sprite):
@@ -212,3 +231,6 @@ class Lose(pygame.sprite.Sprite):
         if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                 self.rect.collidepoint(args[0].pos):
             self.image = self.image_boom
+
+
+LEVELS = {'1': 'First', '2': 'Second', '3': 'Third', '4': 'Fourth', '5': 'Fifth'}
