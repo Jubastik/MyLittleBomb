@@ -20,10 +20,11 @@ class EndStage(Stage):
         return self
 
     def load_data(self, is_win, time, mistakes, all_time, modules_count):
+        # загружаем инф об уровне
         minuts = round((all_time / 30) // 60)
         sec = (all_time / 30) % 60
         self.all_time = f'{int(minuts)}:{int(sec)}'
-        self.modules_count = modules_count
+        self.modules_count = modules_count - 1
         self.is_win = is_win
         minuts = round((time / 30) // 60)
         sec = (time / 30) % 60
@@ -31,6 +32,7 @@ class EndStage(Stage):
         self.time = f'{int(minuts)}:{int(sec)}'
 
     def draw(self, screen):
+        # выводим информацию на экран
         self.background.fill((255, 255, 255))
         self.all_sprites.draw(self.background)
         screen.blit(self.background, (0, 0))
@@ -48,8 +50,17 @@ class EndStage(Stage):
         font = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
         res = font.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 440))
-        txt = f'{self.all_time}0 | {self.modules_count} moduls | {self.mistakes} mistakes'
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 35)
+        if self.modules_count > 1:
+            if self.mistakes > 1 or self.mistakes == 0:
+                txt = f'{self.all_time}0 | {self.modules_count} moduls | {self.mistakes} mistakes'
+            else:
+                txt = f'{self.all_time}0 | {self.modules_count} moduls | {self.mistakes} mistake'
+        else:
+            if self.mistakes > 1 or self.mistakes == 0:
+                txt = f'{self.all_time}0 | {self.modules_count} modul | {self.mistakes} mistakes'
+            else:
+                txt = f'{self.all_time}0 | {self.modules_count} modul | {self.mistakes} mistake'
+        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 38)
         res = font.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 473))
 
@@ -59,11 +70,12 @@ class EndStage(Stage):
         screen.blit(res, (WIDTH / 2 - 100, 520))
         if self.is_win:
             txt = 'DEFUSED'
+            font = pygame.font.Font(r'Resources/Pixeboy.ttf', 38)
             res = font.render(txt, True, (0, 255, 0))
         else:
             txt = 'EXPLODED'
+            font = pygame.font.Font(r'Resources/Pixeboy.ttf', 38)
             res = font.render(txt, True, (255, 0, 0))
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 65)
         screen.blit(res, (WIDTH / 2 - 100, 550))
 
         txt = 'Time left'
@@ -78,13 +90,13 @@ class EndStage(Stage):
     def init_gui(self):
         # создание кнопки "выбор уровня"
         self.choose_lvl = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((780, 770), (190, 60)),
+            relative_rect=pygame.Rect((780, 770), (190, 50)),
             text='Вернуться',
             manager=self.ui_manager
         )
         # создание кнопки "заново"
         self.repeat = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((1000, 770), (190, 60)),
+            relative_rect=pygame.Rect((1000, 770), (190, 50)),
             text='Зановово',
             manager=self.ui_manager
         )
@@ -101,6 +113,7 @@ class EndStage(Stage):
         if self.timer == 0:
             for _ in range(16):
                 # //////////////////////////////////////////////////////
+                # загружаем разный background в зависимомти от результата
                 if self.is_win:
                     bomb = Vin(self.one_sprite)
                 else:
@@ -144,6 +157,7 @@ class EndStage(Stage):
         self.repeat.visible = False
 
 
+# класс спрайтов при обезвреживаниии бомбы
 class Vin(pygame.sprite.Sprite):
     image = load_image('vin_cubok.png')
 
@@ -163,7 +177,7 @@ class Vin(pygame.sprite.Sprite):
         if self.rect.y >= 1120:
             self.kill()
 
-
+# класс спрайтов при зрыве бомбы
 class Lose(pygame.sprite.Sprite):
     image = load_image('girl_scelet3.png')
     image_boom = load_image('boy_scelet3.png')
