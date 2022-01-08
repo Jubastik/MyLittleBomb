@@ -8,4 +8,4 @@ class Level1:
     """Уровень 1. Содержит универсальную информацию о уровне."""
 
     def __init__(self):
-        pass
+        self.name = 'own'

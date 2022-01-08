@@ -233,4 +233,4 @@ class Lose(pygame.sprite.Sprite):
             self.image = self.image_boom
 
 
-LEVELS = {'1': 'First', '2': 'Second', '3': 'Third', '4': 'Fourth', '5': 'Fifth'}
+LEVELS = {'1': 'First', '2': 'Second', '3': 'Third', '4': 'Fourth', '5': 'Fifth', 'own': 'Own'}
