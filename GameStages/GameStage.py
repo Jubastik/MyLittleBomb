@@ -1,6 +1,7 @@
 import pygame
 from GameStages.Stage import Stage
 from Entities.Bomb import Bomb
+from Entities.BobmModules.NoneModule.NoneModule import NoneModule
 from image_loader import load_image
 from CONSTANTS import BOMB_X, BOMB_Y, BOMB_X2, BOMB_Y2, FPS
 
@@ -70,14 +71,30 @@ class GameStage(Stage):
 
     def stage_launch(self):
         self.ispause = False
+        self.mistakes = 0
+        self.time = FPS * 300
 
     def lose(self):
         # Соединение с EndStage
-        print("lose")
+        all_time = self.bomb.level.time
+        name_lvl = self.bomb.name_lvl
+        modules_count = 6
+        for module in self.bomb.modules:
+            if isinstance(module, NoneModule):
+                modules_count -= 1
+        self.gm.stages['result'].load_data(False, self.time, self.mistakes, all_time, modules_count, name_lvl)
+        self.gm.change_stage('result')
 
     def win(self):
         # Соединение с EndStage
-        print("win")
+        all_time = self.bomb.level.time
+        name_lvl = self.bomb.name_lvl
+        modules_count = 6
+        for module in self.bomb.modules:
+            if isinstance(module, NoneModule):
+                modules_count -= 1
+        self.gm.stages['result'].load_data(True, self.time, self.mistakes, all_time, modules_count, name_lvl)
+        self.gm.change_stage('result')
 
     def set_bomb(self, bomb):
         self.bomb = bomb

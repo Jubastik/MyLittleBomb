@@ -21,22 +21,21 @@ class Bomb:
     def __init__(self, gs):
         self.pressed_module = None
         self.gs = gs
-        self.bomb_image = load_image(r"Bomb/bomb.png").convert()
         self.bomb_image_on = load_image(r"Bomb/bomb_on.png").convert()
         self.bomb_image_off = load_image(r"Bomb/bomb_off.png").convert()
         self.battery_image = load_image(r"Bomb/battery.png").convert()
         self.lightning_speed = LIGHTNING_SPEED[0]
         self.lightning_now = 0
         self.timer = -1
+        self.bomb_image = load_image(r"Bomb/bomb.png").convert()
 
     def load_level(self, level):
-        self.gs.mistakes = level.mistakes
-        self.gs.time = level.time
+        self.name_lvl = level.name
+        self.level = level
         self.serial_number = level.generate_serial_number()
         self.indicators = level.generate_indicators()
         self.batteries = level.generate_battery()
-        # self.modules всегда запускать последним во избежание багов
-        self.modules = level.generate_modules(self)
+        self.modules = level.generate_modules(self) # Запускать последним тк могут быть баги
 
     def draw(self, screen):
         # Картинка рисуется послойно
