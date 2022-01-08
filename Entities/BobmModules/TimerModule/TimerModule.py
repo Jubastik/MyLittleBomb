@@ -25,6 +25,8 @@ class TimerModule(BobmModule):
         self.section4_y = self.y + 142
         return self
 
+    # ------------------------------------------------------------------------------------------------------------------
+
     def draw(self, screen):
         self.draw_module(screen)
         self.draw_sections(screen)
@@ -46,11 +48,11 @@ class TimerModule(BobmModule):
         seconds = str(time % 60)
         # Если однозначное число минут/секунд докидываем 0 перед числом (для красоты)
         if len(minutes) == 1:
-            minutes = '0' + minutes
+            minutes = "0" + minutes
         if len(seconds) == 1:
-            seconds = '0' + seconds
+            seconds = "0" + seconds
 
-        txt = f'{minutes} : {seconds}'
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)
+        txt = f"{minutes} : {seconds}"
+        font = pygame.font.Font(r"Resources/Pixeboy.ttf", 60)
         res = font.render(txt, True, (255, 0, 0))
         screen.blit(res, (self.section4_x, self.section4_y))

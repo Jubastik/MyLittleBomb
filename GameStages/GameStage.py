@@ -20,13 +20,25 @@ class GameStage(Stage):
     def init(self):
         return self
 
-    def draw(self, screen):
-        screen.fill((0, 0, 0))
-        self.draw_background(screen)
-        self.draw_hud(screen)
-        self.bomb.draw(screen)
+    def stage_launch(self):
+        self.ispause = False
+        self.mistakes = 0
+        self.time = FPS * 300
+
+    def set_bomb(self, bomb):
+        self.bomb = bomb
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def update(self):
+        self.time -= 1
+        # Проверка на поражение по времени
+        if self.time <= 0:
+            self.lose()
+        # Паузы наверное не будет, пока что просто существует.
         if self.ispause:
             pass
+        else:
+            self.bomb.update()
 
     def process_event(self, event):
         if self.ispause:
@@ -51,16 +63,15 @@ class GameStage(Stage):
         x, y = pos
         self.bomb.LKM_up(x, y)
 
-    def update(self):
-        self.time -= 1
-        # Проверка на поражение по времени
-        if self.time <= 0:
-            self.lose()
-        # Паузы наверное не будет, пока что просто существует.
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def draw(self, screen):
+        screen.fill((0, 0, 0))
+        self.draw_background(screen)
+        self.draw_hud(screen)
+        self.bomb.draw(screen)
         if self.ispause:
             pass
-        else:
-            self.bomb.update()
 
     def draw_hud(self, screen):
         # Возможно не нужно, пока что просто существует
@@ -69,10 +80,7 @@ class GameStage(Stage):
     def draw_background(self, screen):
         screen.fill((0, 0, 0))
 
-    def stage_launch(self):
-        self.ispause = False
-        self.mistakes = 0
-        self.time = FPS * 300
+    # ------------------------------------------------------------------------------------------------------------------
 
     def lose(self):
         # Соединение с EndStage
@@ -82,8 +90,10 @@ class GameStage(Stage):
         for module in self.bomb.modules:
             if isinstance(module, NoneModule):
                 modules_count -= 1
-        self.gm.stages['result'].load_data(False, self.time, self.mistakes, all_time, modules_count, name_lvl)
-        self.gm.change_stage('result')
+        self.gm.stages["result"].load_data(
+            False, self.time, self.mistakes, all_time, modules_count, name_lvl
+        )
+        self.gm.change_stage("result")
 
     def win(self):
         # Соединение с EndStage
@@ -93,11 +103,12 @@ class GameStage(Stage):
         for module in self.bomb.modules:
             if isinstance(module, NoneModule):
                 modules_count -= 1
-        self.gm.stages['result'].load_data(True, self.time, self.mistakes, all_time, modules_count, name_lvl)
-        self.gm.change_stage('result')
+        self.gm.stages["result"].load_data(
+            True, self.time, self.mistakes, all_time, modules_count, name_lvl
+        )
+        self.gm.change_stage("result")
 
-    def set_bomb(self, bomb):
-        self.bomb = bomb
+    # ------------------------------------------------------------------------------------------------------------------
 
     def pause(self):
         # Паузы наверное не будет, пока что просто существует.

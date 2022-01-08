@@ -31,6 +31,7 @@ class ButtonsModule(BobmModule):
         self.button_img_blue = image("button_blue")
         self.button_img_green = image("button_green")
         self.button_img_yellow = image("button_yellow")
+        # Координаты кнопок
         # Циферки взяты с картинки
         self.button_red_x, self.button_red_y = self.x + 80, self.y + 80
         self.button_blue_x, self.button_blue_y = self.x + 160, self.y + 80
@@ -40,6 +41,30 @@ class ButtonsModule(BobmModule):
         self.module_img_red_on_timer = 0
         self.module_img_green_on_timer = 0
         return self
+
+    def generate(self):
+        # Выбираем перевод
+        serial_num = self.bomb.serial_number
+        symb = list(serial_num[0] + serial_num[2])
+        translate = None
+        for s in SYMBOLS:
+            if s in symb:
+                translate = TRANSLATE[0]
+        else:
+            translate = TRANSLATE[1]
+        # Создаём последовательность
+        show = COLORS[:]
+        shuffle(show)
+        # Находим для неё ответ
+        answer = []
+        for trans in translate:
+            answ = []
+            for color in show:
+                answ.append(trans[color])
+            answer.append(answ)
+        return answer, show
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def draw(self, screen):
         self.draw_module(screen)
@@ -66,13 +91,14 @@ class ButtonsModule(BobmModule):
             screen.blit(self.button_img_green, (self.button_green_x, self.button_green_y))
             screen.blit(self.button_img_yellow, (self.button_yellow_x, self.button_yellow_y))
             # fmt: on
+            # Анимация кнопок:
             if self.button_now[1] <= 0:
-                self.button_now[1] = 30
+                self.button_now[1] = 1 * FPS
                 self.button_now[2] = None  # Выкл паузу
         else:
             if self.button_now[1] <= 0:
                 self.step = (self.step + 1) % len(self.show)
-                self.button_now = [self.show[self.step], 30, "pause"]
+                self.button_now = [self.show[self.step], 1 * FPS, "pause"]
                 self.draw_buttons(screen)
             # fmt: off
             if self.button_now[0] != "r":
@@ -86,28 +112,7 @@ class ButtonsModule(BobmModule):
             self.button_now[1] -= 1
             # fmt: on
 
-    def generate(self):
-        # Выбираем перевод
-        serial_num = self.bomb.serial_number
-        symb = list(serial_num[0] + serial_num[2])
-        translate = None
-        for s in SYMBOLS:
-            if s in symb:
-                translate = TRANSLATE[0]
-        else:
-            translate = TRANSLATE[1]
-        # Создаём последовательность
-        show = COLORS[:]
-        shuffle(show)
-        # Находим для неё ответ
-        answer = []
-        for trans in translate:
-            answ = []
-            for color in show:
-                answ.append(trans[color])
-            answer.append(answ)
-        print(answer)
-        return answer, show
+    # ------------------------------------------------------------------------------------------------------------------
 
     def LKM_down(self, x, y):
         # Получаем ответ
@@ -144,6 +149,7 @@ class ButtonsModule(BobmModule):
             ]
             for i in range(self.answer_step):
                 if correct_answer[i] != self.answer[i]:
+                    # Сброс
                     self.answer = []
                     self.answer_step = 1
                     self.correct_answers = 0
@@ -154,15 +160,16 @@ class ButtonsModule(BobmModule):
                     self.show = self.info[: self.correct_answers + 1]
                     return
             else:
-                print(self.answer)
-                print(self.correct_answer)
                 if len(self.answer) == 4:  # 4 - длина полного правильного ответа
                     self.isdefused = True
                 elif len(self.answer) == self.correct_answers + 1:
+                    # Следующий этап разминирования
                     self.answer = []
                     self.correct_answers += 1
                     self.answer_step = 1
                 else:
+                    # Следующий этап разминирования текущего этапа
                     self.answer_step += 1
-                self.module_img_green_on_timer += FPS // 2
+                # Общие действия при правильном ответе
+                self.module_img_green_on_timer += FPS // 2 # Использую деление тк умножение может давать не целые числа
                 self.show = self.info[: self.correct_answers + 1]
