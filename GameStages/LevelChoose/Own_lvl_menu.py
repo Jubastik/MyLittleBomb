@@ -10,6 +10,7 @@ MODULES_INCREASE_BTN_POS = (371, 644)
 TIME_POS = (226, 518)
 MODULES_POS = (260, 658)
 BANANA_POS = (98, 812)
+START_BTN_POS = (336, 812)
 
 
 class OwnLevel:
@@ -19,6 +20,7 @@ class OwnLevel:
         self.y = y
         self.pos = (x, y)
         self.init_img()
+        self.init_start_btn()
         self.sprite_time = 0
         self.banana_time = 0
         self.lamp_on = False
@@ -35,6 +37,10 @@ class OwnLevel:
         self.banana_right = load_image("LevelChooseImg/banana2.png")
         self.banana = self.banana_left
 
+    def init_start_btn(self):
+        self.all = pygame.sprite.Group()
+        self.start_btn = StartBtn(self, self.all, self.x, self.y)
+
     def draw(self, screen):
         screen.blit(self.main_images, self.pos)
         if self.lamp_on:
@@ -43,6 +49,7 @@ class OwnLevel:
         self.draw_time(screen)
         self.draw_modules(screen)
         screen.blit(self.banana, (self.x + BANANA_POS[0], self.y + BANANA_POS[1]))
+        self.all.draw(screen)
 
     def draw_btn(self, screen):
         self.random_btn_rect = screen.blit(self.random_btn, (self.x + RANDOM_BTN_POS[0], self.y + RANDOM_BTN_POS[1]))
@@ -87,9 +94,13 @@ class OwnLevel:
             self.modules_reduce()
         if self.modules_increase_rect.collidepoint((x, y)):
             self.modules_increase()
+        self.start_btn.check((x, y))
 
     def start_random_mode(self):
         print("random mode")
+
+    def start_game(self):
+        print("ПУСК")
 
     def on_sprite(self):
         self.sprite_time += 1
@@ -113,3 +124,33 @@ class OwnLevel:
     def modules_increase(self):
         if self.lvl_modules + 1 <= 5:
             self.lvl_modules += 1
+
+
+class StartBtn(pygame.sprite.Sprite):
+    image = {
+        "red": load_image("LevelChooseImg/start_button_red.png"),
+    }
+
+    def __init__(self, OL, group, x, y):
+        super().__init__(group)
+        self.OL = OL
+        self.color = "red"
+        self.image = StartBtn.image[self.color]
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = START_BTN_POS[0] + x
+        self.rect.y = START_BTN_POS[1] + y
+
+    def update(self):
+        pass
+
+    def start(self):
+        self.OL.start_game()
+
+    def check(self, pos):
+        try:
+            if self.mask.get_at((pos[0] - self.rect.x, pos[1] - self.rect.y)):
+                self.start()
+                return True
+        except IndexError:
+            pass
