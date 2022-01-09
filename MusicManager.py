@@ -4,11 +4,14 @@ import pygame
 class MusicManager:
     '''Осуществляет управление музыкой'''
 
-    def __init__(self):
+    def __init__(self, GM):
+        self.GM = GM
         self.music_list = {
             "menu": "Resources/Music/MenuMusic.mp3",
             "result": "Resources/Music/MenuMusic.mp3",
             "game": "Resources/Music/GameStart.mp3",
+            "win": "Resources/Music/win.mp3",
+            "explosion": "Resources/Music/explosion.mp3",
         }
         self.volume = 1.0
 
@@ -17,12 +20,19 @@ class MusicManager:
             if music == "menu" and not pygame.mixer.music.get_busy():
                 pygame.mixer.music.load(self.music_list[music])
                 pygame.mixer.music.play(-1)
-            elif music == "result":
-                pygame.mixer.music.load(self.music_list[music])
-                pygame.mixer.music.play(-1)
             elif music == "game":
                 pygame.mixer.music.load(self.music_list[music])
                 pygame.mixer.music.play()
+            elif music == "result":
+                try:
+                    if self.GM.stages["result"].is_win:
+                        pygame.mixer.music.load(self.music_list["win"])
+                    else:
+                        pygame.mixer.music.load(self.music_list["explosion"])
+                    pygame.mixer.music.play()
+                except Exception:
+                    print("err music manager")
+                pygame.mixer.music.queue(self.music_list[music])
 
     def change_volume(self, vol):
         # Изменить текущее значение громкости на кол пунктов (от -100, до 100)
