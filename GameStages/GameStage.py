@@ -21,7 +21,6 @@ class GameStage(Stage):
         return self
 
     def stage_launch(self):
-        self.ispause = False
         self.mistakes = 0
 
     def set_bomb(self, bomb):
@@ -33,16 +32,11 @@ class GameStage(Stage):
         # Проверка на поражение по времени
         if self.time <= 0:
             self.lose()
-        # Паузы наверное не будет, пока что просто существует.
-        if self.ispause:
-            pass
         else:
             self.bomb.update()
 
     def process_event(self, event):
-        if self.ispause:
-            self.pause()
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 self.LKM_down(event.pos)
         elif event.type == pygame.MOUSEBUTTONUP:
@@ -50,7 +44,7 @@ class GameStage(Stage):
                 self.LKM_up(event.pos)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-                self.ispause = not self.ispause
+                self.exit()
 
     def LKM_down(self, pos):
         # Проверка места нажатия, если кликнули на бомбу, обработка будет продолжена в бомбе
@@ -69,8 +63,6 @@ class GameStage(Stage):
         self.draw_background(screen)
         self.draw_hud(screen)
         self.bomb.draw(screen)
-        if self.ispause:
-            pass
 
     def draw_hud(self, screen):
         # Возможно не нужно, пока что просто существует
@@ -108,7 +100,5 @@ class GameStage(Stage):
         self.gm.change_stage("result")
 
     # ------------------------------------------------------------------------------------------------------------------
-
-    def pause(self):
-        # Паузы наверное не будет, пока что просто существует.
-        pass
+    def exit(self):
+        self.gm.change_stage("choose_lvl")

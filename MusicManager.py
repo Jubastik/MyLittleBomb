@@ -17,7 +17,7 @@ class MusicManager:
 
     def start_music(self, music):
         if music in self.music_list:
-            if music == "menu" and not pygame.mixer.music.get_busy():
+            if (music == "menu" or music == "choose_lvl") and not pygame.mixer.music.get_busy():
                 pygame.mixer.music.load(self.music_list[music])
                 pygame.mixer.music.play(-1)
             elif music == "game":
