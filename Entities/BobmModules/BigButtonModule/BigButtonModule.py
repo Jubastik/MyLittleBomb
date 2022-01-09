@@ -1,7 +1,7 @@
 from random import choice
 
 import pygame
-
+import CONSTANTS
 from Entities.BobmModules.BobmModule import BobmModule
 from image_loader import load_image
 

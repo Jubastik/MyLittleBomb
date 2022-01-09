@@ -104,3 +104,7 @@ MODULES_COORDS = {
         BOMB_Y + MODULE_H * 2 + MODULE_BORDER * 2,
     ],
 }
+# константы для модуля большой бомбы
+COLORS_BUTTON = ['red', 'yellow', 'green', 'blue']
+COLORS_STRIP = ['blue', 'violet', 'white', 'yellow']
+WORDS = ['break', 'boom', 'hold']
