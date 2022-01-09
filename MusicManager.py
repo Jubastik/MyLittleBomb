@@ -32,7 +32,7 @@ class MusicManager:
                     pygame.mixer.music.play()
                 except Exception:
                     print("err music manager")
-                pygame.mixer.music.queue(self.music_list[music])
+                pygame.mixer.music.queue(self.music_list[music], loops=-1)
 
     def change_volume(self, vol):
         # Изменить текущее значение громкости на кол пунктов (от -100, до 100)
