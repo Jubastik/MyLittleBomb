@@ -1,7 +1,7 @@
 from random import choice
 
 import pygame
-import CONSTANTS
+from CONSTANTS import COLORS_BUTTON, COLORS_STRIP, WORDS
 from Entities.BobmModules.BobmModule import BobmModule
 from image_loader import load_image
 
@@ -220,8 +220,3 @@ class BigButtonModule(BobmModule):
                         self.bomb.gs.mistakes += 1
                         if self.bomb.gs.mistakes >= 3:
                             self.bomb.gs.lose()
-
-
-COLORS_BUTTON = ['red', 'yellow', 'green', 'blue']
-COLORS_STRIP = ['blue', 'violet', 'white', 'yellow']
-WORDS = ['break', 'boom', 'hold']
