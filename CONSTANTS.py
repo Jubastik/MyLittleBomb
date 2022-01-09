@@ -108,3 +108,8 @@ MODULES_COORDS = {
 COLORS_BUTTON = ['red', 'yellow', 'green', 'blue']
 COLORS_STRIP = ['blue', 'violet', 'white', 'yellow']
 WORDS = ['break', 'boom', 'hold']
+# для модуля ахмеда
+DIGITS = [int(el) for el in range(1, 10)]
+DIGITS_FOR_LAST_DIGIT = [int(el) for el in range(2, 10)]
+PLUS_MINUS = ['+', '-']
+DIVIDE_MULTIPLY = ['*', '/']

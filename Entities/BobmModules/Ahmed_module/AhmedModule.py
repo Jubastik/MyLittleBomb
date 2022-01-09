@@ -1,7 +1,7 @@
 from random import choice
 
 import pygame
-
+from CONSTANTS import DIGITS, PLUS_MINUS, DIVIDE_MULTIPLY, SYMBOLS, DIGITS_FOR_LAST_DIGIT
 from Entities.BobmModules.BobmModule import BobmModule
 from image_loader import load_image
 
@@ -10,6 +10,7 @@ class AhmedModule(BobmModule):
     """Моудуль Ахмеда"""
 
     def init(self):
+        self.what_conditional = 0
         self.isdefused = False
         self.click = False
         # кол-во батареек на бомбе
@@ -88,20 +89,22 @@ class AhmedModule(BobmModule):
         screen.blit(res, self.position_answers[8])
 
     def check_conditional(self):
-        if self.BATTERY_COUNT >= 2:
+        self.what_conditional = 0
+        # проверяем условия
+        serial_num = self.bomb.serial_number
+        symb = list(serial_num[0] + serial_num[2])
+        translate = None
+        if self.BATTERY_COUNT == 3:
             self.what_conditional = 1
         elif self.INDICATORS_COUNT[0] is True and self.INDICATORS_COUNT[1] is False:
             self.what_conditional = 2
-        elif self.INDICATORS_COUNT[1] is True and self.INDICATORS_COUNT[0] is False and \
+        elif self.INDICATORS_COUNT[0] == False and self.INDICATORS_COUNT[1] == True and \
                 self.BATTERY_COUNT == 1:
             self.what_conditional = 3
-        elif 'A' not in self.bomb.serial_number[1] and 'E' not in self.bomb.serial_number[1] \
-                and 'I' not in self.bomb.serial_number[1] and 'O' not in self.bomb.serial_number[1] \
-                and 'U' not in self.bomb.serial_number[1]:
-            if 'A' not in self.bomb.serial_number[3] and 'E' not in self.bomb.serial_number[3] \
-                    and 'I' not in self.bomb.serial_number[3] and 'O' not in self.bomb.serial_number[3] \
-                    and 'U' not in self.bomb.serial_number[3]:
-                self.what_conditional = 4
+        elif self.what_conditional == 0:
+            for s in SYMBOLS:
+                if s in symb:
+                    self.what_conditional = 4
         else:
             self.what_conditional = 5
 
@@ -120,7 +123,7 @@ class AhmedModule(BobmModule):
         # рандомно выбираем цифры
         self.first_digit = choice(DIGITS)
         self.second_digit = choice(DIGITS)
-        self.third_digit = choice(DIGITS)
+        self.third_digit = choice(DIGITS_FOR_LAST_DIGIT)
 
         # рандомно выбираем символы
         self.first_operation = choice(PLUS_MINUS)
@@ -135,7 +138,8 @@ class AhmedModule(BobmModule):
         if int(eval(self.math_example)) == eval(self.math_example):
             self.math_example_1 = int(eval(self.math_example))
         else:
-            while int(eval(self.math_example)) != eval(self.math_example):
+            while int(eval(self.math_example)) != eval(self.math_example) or \
+                    (self.first_digit == 1 and self.second_digit == 1 and self.third_digit == 1):
                 self.generate_example()
         self.math_example_1 = eval(self.math_example)
         self.math_example = f'{self.first_digit} {self.first_operation} {self.second_digit}' \
@@ -387,8 +391,3 @@ class AhmedModule(BobmModule):
         self.seventh_btn = self.btn_standard
         self.eighth_btn = self.btn_standard
         self.ninth_btn = self.btn_standard
-
-
-DIGITS = [int(el) for el in range(1, 10)]
-PLUS_MINUS = ['+', '-']
-DIVIDE_MULTIPLY = ['*', '/']
