@@ -32,6 +32,8 @@ class Bomb:
     def load_level(self, level):
         self.name_lvl = level.name
         self.level = level
+        self.gs.time = level.time
+        self.gs.mistakes = level.mistakes
         self.serial_number = level.generate_serial_number()
         self.indicators = level.generate_indicators()
         self.batteries = level.generate_battery()

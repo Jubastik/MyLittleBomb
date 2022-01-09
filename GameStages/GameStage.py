@@ -23,7 +23,6 @@ class GameStage(Stage):
     def stage_launch(self):
         self.ispause = False
         self.mistakes = 0
-        self.time = FPS * 300
 
     def set_bomb(self, bomb):
         self.bomb = bomb
