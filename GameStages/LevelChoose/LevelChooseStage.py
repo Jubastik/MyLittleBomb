@@ -8,6 +8,7 @@ from Levels.Level1 import Level1
 from Levels.Level2 import Level2
 from Levels.Level3 import Level3
 from Levels.Level4 import Level4
+from Levels.Level5 import Level5
 from image_loader import load_image
 
 OWN_LVL_X1 = 100
@@ -200,7 +201,12 @@ class LevelChooseStage(Stage):
 
     def start_fifth_lvl(self):
         '''переключение стейджа и запуск уровня'''
-        print("Старт 5го уровня")
+        self.end()
+        bomb = Bomb(self.gm.stages["game"])
+        level = Level5()
+        bomb.load_level(level)
+        self.gm.stages["game"].set_bomb(bomb)
+        self.gm.change_stage("game")
 
     # ------------------------------------------------------------------------------------------------------------------
     # первичная инициализация gui по уровням
