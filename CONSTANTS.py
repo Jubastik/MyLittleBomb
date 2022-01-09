@@ -62,6 +62,10 @@ TRANSLATE = [
     ],
 ]
 COLORS = ["r", "b", "g", "y"]
+
+# Модуль с проводами
+WIRES_COLORS = ["red", "yellow", "blue", "black"]
+WIRES_FORMS = ["standart"]
 # Расчёт координат модулей
 # Порядок модулей:
 # 0 1 2

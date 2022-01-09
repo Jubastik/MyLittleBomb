@@ -32,10 +32,25 @@ class Bomb:
     def load_level(self, level):
         self.name_lvl = level.name
         self.level = level
+        self.gs.time = level.time
+        self.gs.mistakes = level.mistakes
         self.serial_number = level.generate_serial_number()
         self.indicators = level.generate_indicators()
         self.batteries = level.generate_battery()
-        self.modules = level.generate_modules(self) # Запускать последним тк могут быть баги
+        # self.modules запускать последним тк могут быть баги
+        self.modules = level.generate_modules(self)
+
+    def update(self):
+        for module in self.modules:
+            module.update()
+        # Проверка на победу
+        for module in self.modules:
+            if not module.isdefused:
+                break
+        else:
+            self.gs.win()
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def draw(self, screen):
         # Картинка рисуется послойно
@@ -87,15 +102,7 @@ class Bomb:
             screen.blit(self.battery_image, (x, y))
             y += 100
 
-    def update(self):
-        for module in self.modules:
-            module.update()
-        # Проверка на победу
-        for module in self.modules:
-            if not module.isdefused:
-                break
-        else:
-            self.gs.win()
+    # ------------------------------------------------------------------------------------------------------------------
 
     def LKM_down(self, x, y):
         """Определяем модуль и перенаправляем инфу в модуль"""

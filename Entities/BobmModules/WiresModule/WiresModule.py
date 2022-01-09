@@ -3,6 +3,7 @@ from random import randint, choice
 from Entities.BobmModules.BobmModule import BobmModule
 from Entities.BobmModules.WiresModule.Wire import Wire
 from image_loader import load_image
+from CONSTANTS import WIRES_COLORS as COLORS, WIRES_FORMS as FORMS
 
 
 class WiresModule(BobmModule):
@@ -10,30 +11,12 @@ class WiresModule(BobmModule):
 
     def init(self):
         self.isdefused = False
-        self.module_img_off = load_image("Bomb/wires_module/wiremodule_off.png").convert()
-        self.module_img_on = load_image("Bomb/wires_module/wiremodule_on.png").convert()
+        path = lambda p: f"Bomb/wires_module/{p}.png"
+        image = lambda p: load_image(path(p)).convert()
+        self.module_img_off = image("wiremodule_off")
+        self.module_img_on = image("wiremodule_on")
         self.wires_group, self.wires, self.answer = self.generate()
         return self
-
-    def draw(self, screen):
-        self.draw_background(screen)
-        self.draw_wires(screen)
-
-    def draw_background(self, screen):
-        if self.isdefused:
-            screen.blit(self.module_img_off, (self.x, self.y))
-        else:
-            screen.blit(self.module_img_on, (self.x, self.y))
-
-    def draw_wires(self, screen):  
-        pos = pygame.mouse.get_pos()
-        for wire in self.wires:
-            x, y = pos
-            if wire.check_click(x, y):
-                screen.blit(
-                    wire.wire_img_lightning, (wire.lightning_x, wire.lightning_y)
-                )
-        self.wires_group.draw(screen)
 
     def generate(self):
         # Расчёт координат проводов
@@ -112,9 +95,33 @@ class WiresModule(BobmModule):
                 answer = 0
         return wires_group, wires, answer
 
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def draw(self, screen):
+        self.draw_background(screen)
+        self.draw_wires(screen)
+
+    def draw_background(self, screen):
+        if self.isdefused:
+            screen.blit(self.module_img_off, (self.x, self.y))
+        else:
+            screen.blit(self.module_img_on, (self.x, self.y))
+
+    def draw_wires(self, screen):
+        pos = pygame.mouse.get_pos()
+        for wire in self.wires:
+            x, y = pos
+            if wire.check_click(x, y):
+                screen.blit(
+                    wire.wire_img_lightning, (wire.lightning_x, wire.lightning_y)
+                )
+        self.wires_group.draw(screen)
+
+    # ------------------------------------------------------------------------------------------------------------------
+
     def LKM_down(self, x, y):
         # Получаем номер провода по месту клика
-        answer = 'on bomb'
+        answer = "on bomb"
         for wire in self.wires:
             if wire.check_click(x, y):
                 answer = wire.num
@@ -131,5 +138,3 @@ class WiresModule(BobmModule):
         self.wires[answer].cut()
 
 
-COLORS = ["red", "yellow", "blue", "black"]
-FORMS = ["standart"]

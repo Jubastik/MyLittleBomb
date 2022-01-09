@@ -24,6 +24,7 @@ class OwnLevel:
         self.sprite_time = 0
         self.banana_time = 0
         self.lamp_on = False
+        self.hard_mode = False
         self.lvl_time = 300
         self.lvl_modules = 3
 
@@ -100,6 +101,9 @@ class OwnLevel:
         print("random mode")
 
     def start_game(self):
+        # self.hard_mode
+        # self.lvl_time
+        # self.lvl_modules
         print("ПУСК")
 
     def on_sprite(self):

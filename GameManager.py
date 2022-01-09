@@ -29,7 +29,7 @@ class GameManager:
             'game': GameStage(self).init(),
             'result': EndStage(self).init(),
         }
-        self.music_manager = MusicManager()
+        self.music_manager = MusicManager(self)
         self.music_manager.change_volume(-80)
 
     def change_stage(self, name):
