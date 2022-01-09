@@ -2,6 +2,7 @@ import pygame
 
 from image_loader import load_image
 
+# Позиции элементов относительно модуля
 RANDOM_BTN_POS = (385, 252)
 TIME_REDUCE_BTN_POS = (91, 504)
 TIME_INCREASE_BTN_POS = (371, 504)
@@ -16,19 +17,22 @@ START_BTN_POS = (336, 812)
 class OwnLevel:
     def __init__(self, x, y):
         self.font = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)
+        # Координаты блока настроек уровня
         self.x = x
         self.y = y
         self.pos = (x, y)
+
         self.init_img()
         self.init_start_btn()
-        self.sprite_time = 0
-        self.banana_time = 0
+        self.sprite_time = 0  # Время нахождения курсора на блоке
+        self.banana_time = 0  # Время нахождения банана в одном из состояний
         self.lamp_on = False
         self.hard_mode = False
         self.lvl_time = 300
         self.lvl_modules = 3
 
     def init_img(self):
+        # Инициализация изображений
         self.main_images = load_image("LevelChooseImg/own_lvl_main.png").convert()
         self.random_btn = load_image("LevelChooseImg/random_btn.png").convert()
         self.lamp_image = load_image("LevelChooseImg/own_lvl_lamp.png")
@@ -49,10 +53,10 @@ class OwnLevel:
         self.draw_btn(screen)
         self.draw_time(screen)
         self.draw_modules(screen)
-        screen.blit(self.banana, (self.x + BANANA_POS[0], self.y + BANANA_POS[1]))
         self.all.draw(screen)
 
     def draw_btn(self, screen):
+        # Отрисовка и сохранения прямоугольников кнопок
         self.random_btn_rect = screen.blit(self.random_btn, (self.x + RANDOM_BTN_POS[0], self.y + RANDOM_BTN_POS[1]))
         self.time_reduce_rect = screen.blit(
             self.reduce_btn, (self.x + TIME_REDUCE_BTN_POS[0], self.y + TIME_REDUCE_BTN_POS[1]))
@@ -62,6 +66,7 @@ class OwnLevel:
             self.reduce_btn, (self.x + MODULES_REDUCE_BTN_POS[0], self.y + MODULES_REDUCE_BTN_POS[1]))
         self.modules_increase_rect = screen.blit(
             self.increase_btn, (self.x + MODULES_INCREASE_BTN_POS[0], self.y + MODULES_INCREASE_BTN_POS[1]))
+        self.banana_rect = screen.blit(self.banana, (self.x + BANANA_POS[0], self.y + BANANA_POS[1]))
 
     def draw_time(self, screen):
         time = f'{self.lvl_time // 60}:{self.lvl_time % 60}'.ljust(4, "0")
@@ -85,6 +90,9 @@ class OwnLevel:
             self.banana = self.banana_left
 
     def LKM_down(self, x, y):
+        self.button_processing(x, y)
+
+    def button_processing(self, x, y):
         if self.random_btn_rect.collidepoint((x, y)):
             self.start_random_mode()
         if self.time_reduce_rect.collidepoint((x, y)):
@@ -95,6 +103,9 @@ class OwnLevel:
             self.modules_reduce()
         if self.modules_increase_rect.collidepoint((x, y)):
             self.modules_increase()
+        if self.banana_rect.collidepoint((x, y)):
+            self.hard_mode = not self.hard_mode
+            self.start_btn.hard_mode()
         self.start_btn.check((x, y))
 
     def start_random_mode(self):
@@ -107,6 +118,7 @@ class OwnLevel:
         print("ПУСК")
 
     def on_sprite(self):
+        # Изменение времени нахождения курсора на блоке
         self.sprite_time += 1
         if self.sprite_time == 20:
             self.lamp_on = not self.lamp_on
@@ -132,6 +144,7 @@ class OwnLevel:
 class StartBtn(pygame.sprite.Sprite):
     image = {
         "red": load_image("LevelChooseImg/start_button_red.png"),
+        "black": load_image("LevelChooseImg/start_button_black.png"),
     }
 
     def __init__(self, OL, group, x, y):
@@ -144,16 +157,20 @@ class StartBtn(pygame.sprite.Sprite):
         self.rect.x = START_BTN_POS[0] + x
         self.rect.y = START_BTN_POS[1] + y
 
-    def update(self):
-        pass
+    def hard_mode(self):
+        if self.color == "red":
+            self.color = "black"
+        else:
+            self.color = "red"
+        self.image = StartBtn.image[self.color]
 
     def start(self):
+        # При нажатии на кнопку активируется запуск  игры
         self.OL.start_game()
 
     def check(self, pos):
         try:
             if self.mask.get_at((pos[0] - self.rect.x, pos[1] - self.rect.y)):
                 self.start()
-                return True
         except IndexError:
             pass
