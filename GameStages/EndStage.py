@@ -1,5 +1,5 @@
 import random
-
+import sqlite3
 import pygame
 import pygame_gui
 
@@ -31,6 +31,14 @@ class EndStage(Stage):
         sec = (time / 30) % 60
         self.mistakes = mistakes
         self.time = f'{int(minuts)}:{int(sec)}'
+        self.font80 = pygame.font.Font(r'Resources/Pixeboy.ttf', 80)
+        self.font30 = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
+        self.font38 = pygame.font.Font(r'Resources/Pixeboy.ttf', 38)
+        self.font40 = pygame.font.Font(r'Resources/Pixeboy.ttf', 40)
+        self.font55 = pygame.font.Font(r'Resources/Pixeboy.ttf', 55)
+
+    def data_base(self):
+        pass
 
     def draw(self, screen):
         # выводим информацию на экран
@@ -38,23 +46,19 @@ class EndStage(Stage):
         self.all_sprites.draw(self.background)
         screen.blit(self.background, (0, 0))
         txt = 'Game over'
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 80)
-        res = font.render(txt, True, (0, 0, 0))
+        res = self.font80.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 130, 260))
 
         txt = '1. Identifier'
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
-        res = font.render(txt, True, (0, 0, 0))
+        res = self.font30.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 360))
         full_lvl_name = LEVELS[self.name_lvl]
         txt = f'{full_lvl_name} level'
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 38)
-        res = font.render(txt, True, (0, 0, 0))
+        res = self.font38.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 390))
 
         txt = '2. Bomb parameters'
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
-        res = font.render(txt, True, (0, 0, 0))
+        res = self.font30.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 440))
         if self.modules_count > 1:
             if self.mistakes > 1 or self.mistakes == 0:
@@ -66,31 +70,27 @@ class EndStage(Stage):
                 txt = f'{self.all_time}0 | {self.modules_count} modul | {self.mistakes} mistakes'
             else:
                 txt = f'{self.all_time}0 | {self.modules_count} modul | {self.mistakes} mistake'
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 38)
-        res = font.render(txt, True, (0, 0, 0))
+        res = self.font38.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 473))
 
         txt = '3. Result'
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
-        res = font.render(txt, True, (0, 0, 0))
+        res = self.font30.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 520))
         if self.is_win:
             txt = 'DEFUSED'
-            font = pygame.font.Font(r'Resources/Pixeboy.ttf', 38)
-            res = font.render(txt, True, (0, 255, 0))
+            res = self.font38.render(txt, True, (0, 255, 0))
         else:
             txt = 'EXPLODED'
-            font = pygame.font.Font(r'Resources/Pixeboy.ttf', 38)
-            res = font.render(txt, True, (255, 0, 0))
+            res = self.font38.render(txt, True, (255, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 550))
 
         txt = 'Time left'
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 40)
-        res = font.render(txt, True, (0, 0, 0))
+        res = self.font40.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 50, 600))
         txt = f'{self.time}'
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 55)
-        res = font.render(txt, True, (0, 0, 0))
+        if self.time == '0:0':
+            txt = '0:00'
+        res = self.font55.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 15, 640))
 
     def init_gui(self):

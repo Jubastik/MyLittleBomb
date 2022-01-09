@@ -7,6 +7,7 @@ from Entities.BobmModules.NoneModule.NoneModule import NoneModule
 from Entities.BobmModules.TimerModule.TimerModule import TimerModule
 from Entities.BobmModules.WiresModule.WiresModule import WiresModule
 from Entities.BobmModules.ButtonsModule.ButtonsModule import ButtonsModule
+from Entities.BobmModules.Ahmed_module.AhmedModule import AhmedModule
 from Resources.BombGenerateInfo.BombSerialNum import (
     SERIAL_NUMBERS_FIRST_SECTOR,
     SERIAL_NUMBERS_THIRD_SECTOR,
@@ -36,7 +37,7 @@ class Level1:
             NoneModule(bomb, MODULES_COORDS[2]).init(),
             NoneModule(bomb, MODULES_COORDS[3]).init(),
             NoneModule(bomb, MODULES_COORDS[4]).init(),
-            NoneModule(bomb, MODULES_COORDS[5]).init(),
+            AhmedModule(bomb, MODULES_COORDS[5]).init(),
         ]
         return modules
 
