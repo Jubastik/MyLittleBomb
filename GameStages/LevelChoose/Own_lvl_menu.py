@@ -1,3 +1,5 @@
+from random import randint
+
 import pygame
 
 from image_loader import load_image
@@ -17,7 +19,7 @@ START_BTN_POS = (336, 812)
 class OwnLevel:
     def __init__(self, x, y):
         self.font = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)
-        # Координаты блока настроек уровня
+        # Координаты блока
         self.x = x
         self.y = y
         self.pos = (x, y)
@@ -69,17 +71,19 @@ class OwnLevel:
         self.banana_rect = screen.blit(self.banana, (self.x + BANANA_POS[0], self.y + BANANA_POS[1]))
 
     def draw_time(self, screen):
+        # Отрисовка времени игры
         time = f'{self.lvl_time // 60}:{self.lvl_time % 60}'.ljust(4, "0")
         res = self.font.render(time, True, (255, 0, 0))
         screen.blit(res, (self.x + TIME_POS[0], self.y + TIME_POS[1]))
 
     def draw_modules(self, screen):
+        # Отрисовка количества модулей
         res = self.font.render(str(self.lvl_modules), True, (255, 0, 0))
         screen.blit(res, (self.x + MODULES_POS[0], self.y + MODULES_POS[1]))
 
     def update(self):
         self.banana_time += 1
-        if self.banana_time == 20:
+        if self.banana_time == 20:  # 20 просто число
             self.next_banana()
             self.banana_time = 0
 
@@ -109,7 +113,13 @@ class OwnLevel:
         self.start_btn.check((x, y))
 
     def start_random_mode(self):
-        print("random mode")
+        hard_mode, modules, time = self.random_bomb_generation()
+        time = (time // 30) * 30  # Округление времени
+        # Время на 1 модуль должно находиться в границах от 20 до 120 сек
+        if time // modules >= 20 and time // modules <= 120:
+            print("Запуск уровня с", hard_mode, modules, time)
+        else:
+            self.start_random_mode()
 
     def start_game(self):
         # self.hard_mode
@@ -139,6 +149,13 @@ class OwnLevel:
     def modules_increase(self):
         if self.lvl_modules + 1 <= 5:
             self.lvl_modules += 1
+
+    def random_bomb_generation(self):
+        if randint(0, 20) == 15:
+            hard_mode = True
+        else:
+            hard_mode = False
+        return hard_mode, randint(1, 6), randint(30, 570)
 
 
 class StartBtn(pygame.sprite.Sprite):
