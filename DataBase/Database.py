@@ -11,11 +11,17 @@ class DataBase:
         """, [level_id, minuts, seconds])
         self.con.commit()
 
-    def close(self):
-        self.con.close()
-
     def all_words(self):
         cur = self.con.cursor()
         return cur.execute("""
-        SELECT * FROM all_information
-        """).fetchall()
+                SELECT * FROM all_information
+                """).fetchall()
+
+    def music_valume(self, value):
+        cur = self.con.cursor()
+        return cur.execute("""
+                INSERT INTO music_valuem(valuem) VALUES(?)
+                """, [value]).fetchall()
+
+    def close(self):
+        self.con.close()
