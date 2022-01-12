@@ -3,6 +3,7 @@ import sqlite3
 import pygame
 import pygame_gui
 
+from DataBase.Database import DataBase
 from CONSTANTS import WIDTH, HEIGHT
 from GameStages.Stage import Stage
 from image_loader import load_image
@@ -12,30 +13,31 @@ class EndStage(Stage):
     """Подсчёт результатов"""
 
     def init(self):
+        self.db = DataBase('DataBase/PyGame.db')
         self.ui_manager = self.gm.ui_manager
         self.background = pygame.Surface((self.width, self.height))
         self.init_gui()
         self.gui_off()
-
         return self
 
     def load_data(self, is_win, time, mistakes, all_time, modules_count, name_lvl):
         self.name_lvl = name_lvl
         # загружаем инф об уровне
-        minuts = round((all_time / 30) // 60)
-        sec = (all_time / 30) % 60
-        self.all_time = f'{int(minuts)}:{int(sec)}'
+        self.minuts = round((all_time / 30) // 60)
+        self.sec = (all_time / 30) % 60
+        self.all_time = f'{int(self.minuts)}:{int(self.sec)}'
         self.modules_count = modules_count - 1
         self.is_win = is_win
-        minuts = round((time / 30) // 60)
-        sec = (time / 30) % 60
+        self.minuts = int((time / 30) // 60)
+        self.sec = int(time / 30) % 60
         self.mistakes = mistakes
-        self.time = f'{int(minuts)}:{int(sec)}'
+        self.time = f'{int(self.minuts)}:{int(self.sec)}'
         self.font80 = pygame.font.Font(r'Resources/Pixeboy.ttf', 80)
         self.font30 = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
         self.font38 = pygame.font.Font(r'Resources/Pixeboy.ttf', 38)
         self.font40 = pygame.font.Font(r'Resources/Pixeboy.ttf', 40)
         self.font55 = pygame.font.Font(r'Resources/Pixeboy.ttf', 55)
+        self.insert_into_db()
 
     def data_base(self):
         pass
@@ -173,6 +175,16 @@ class EndStage(Stage):
         elif self.name_lvl == '5':
             self.gm.stages["choose_lvl"].start_fifth_lvl()
         else:
+            pass
+
+    def insert_into_db(self):
+        try:
+            if self.name_lvl == 'own':
+                self.db.insert_words(6, self.minuts, self.sec)
+            else:
+                self.db.insert_words(int(self.name_lvl), self.minuts, self.sec)
+            self.db.close()
+        except Exception:
             pass
 
 
