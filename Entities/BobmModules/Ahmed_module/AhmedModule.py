@@ -96,9 +96,9 @@ class AhmedModule(BobmModule):
         translate = None
         if self.BATTERY_COUNT == 3:
             self.what_conditional = 1
-        elif self.INDICATORS_COUNT[0] is True and self.INDICATORS_COUNT[1] is False:
+        elif self.INDICATORS_COUNT[0] and not self.INDICATORS_COUNT[1]:
             self.what_conditional = 2
-        elif self.INDICATORS_COUNT[0] == False and self.INDICATORS_COUNT[1] == True and \
+        elif not self.INDICATORS_COUNT[0] and self.INDICATORS_COUNT[1] and \
                 self.BATTERY_COUNT == 1:
             self.what_conditional = 3
         elif self.what_conditional == 0:
@@ -201,6 +201,8 @@ class AhmedModule(BobmModule):
 
         # шестая кнопка
         self.six_answ = self.math_example_1 + 1
+        # если у нас совпадают цифры на кнопках, то мы прибавляем к цифре на кнопке 1
+        # пока число не станет уникальным
         c = 0
         if self.six_answ == self.math_example_1 or self.six_answ == self.conditional_one or \
                 self.six_answ == self.conditional_two or self.six_answ == self.conditional_three or \
