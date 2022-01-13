@@ -66,7 +66,6 @@ class ButtonsModule(BobmModule):
             for color in show:
                 answ.append(trans[color])
             answer.append(answ)
-        print(answer)
         return answer, show
 
     # ------------------------------------------------------------------------------------------------------------------
