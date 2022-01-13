@@ -7,12 +7,12 @@ class InitStage(Stage):
     """Загрузка игры"""
 
     def init(self):
-        self.background = load_image('ScreenSelector.bmp')
-        self.timer = 30 # Временно давайте секунду, по 100 раз запускаться не кайф (было 90)
+        self.background = load_image('image_1.png')
+        self.timer = 90 # Временно давайте секунду, по 100 раз запускаться не кайф (было 90)
         return self
 
     def draw(self, screen):
-        screen.blit(self.background, (self.width // 4 - 35, self.height // 4))
+        screen.blit(self.background, (0, 0))
 
     def update(self):
         self.timer -= 1

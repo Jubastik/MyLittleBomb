@@ -27,25 +27,19 @@ class MenuStage(Stage):
     def init_gui(self):
         # создание кнопки "выбор уровня"
         self.choose_lvl = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((880, 430), (170, 50)),
+            relative_rect=pygame.Rect((880, 440), (170, 50)),
             text='Выбор уровня',
             manager=self.ui_manager
         )
         # создание кнопки "настройки"
         self.settings = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((880, 490), (170, 50)),
+            relative_rect=pygame.Rect((880, 500), (170, 50)),
             text='Настройки',
-            manager=self.ui_manager
-        )
-        # создание кнопки "об авторах"
-        self.authors = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((880, 550), (170, 50)),
-            text='Об авторах',
             manager=self.ui_manager
         )
         # создание кнопки "выход"
         self.leave_game = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((880, 610), (170, 50)),
+            relative_rect=pygame.Rect((880, 560), (170, 50)),
             text='Выход',
             manager=self.ui_manager
         )
@@ -93,14 +87,12 @@ class MenuStage(Stage):
 
     # включаем кнопки (делаем их доступными)
     def gui_on(self):
-        self.authors.visible = True
         self.leave_game.visible = True
         self.choose_lvl.visible = True
         self.settings.visible = True
 
     # выключаем кнопки
     def gui_off(self):
-        self.authors.visible = False
         self.leave_game.visible = False
         self.choose_lvl.visible = False
         self.settings.visible = False
