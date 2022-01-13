@@ -1,8 +1,9 @@
 # from typing_extensions import ParamSpecKwargs
 import pygame
-from random import choice, shuffle
+from random import shuffle
 from image_loader import load_image
 from Entities.BobmModules.BobmModule import BobmModule
+from Entities.BobmModules.ButtonsModule.Button import Button
 from CONSTANTS import SYMBOLS, TRANSLATE, COLORS, FPS
 
 
@@ -14,12 +15,13 @@ class ButtonsModule(BobmModule):
         self.correct_answer, self.info = self.generate()  # info - все цвета
         # Анимация
         self.show = [self.info[0]]  # show - все цвета которые показываем сейчас
-        self.button_now = [self.info[0], 30, None]  # 0 - номер кнопки, 30 - таймер
+        # self.info[0] - текущий цвет кнопки; -1 - таймер до смены на другую кнопк; False - светится/не светится
+        self.button_now = [self.info[0], 30, False]
         self.step = 0
         # Логика
         self.correct_answers = 0  # Количество полных правильных оветов
         self.answer_step = 1  # Текущий ответ (отсчёт с 1)
-        self.answer = []  # Отивет игрока на текущей стадии
+        self.answer = []  # Ответ игрока на текущей стадии
         # Картиночки и цыганская магия x2
         path = lambda p: f"Bomb/Buttons_module/{p}.png"
         image = lambda p: load_image(path(p)).convert()  # Так красивше
@@ -27,19 +29,21 @@ class ButtonsModule(BobmModule):
         self.module_img_gray_on = image("module_gray_on")
         self.module_img_green_on = image("module_green_on")
         self.module_img_gray_off = image("module_gray_off")
-        self.button_img_red = image("button_red")
-        self.button_img_blue = image("button_blue")
-        self.button_img_green = image("button_green")
-        self.button_img_yellow = image("button_yellow")
-        # Координаты кнопок
+        # Создание спрайтов
         # Циферки взяты с картинки
-        self.button_red_x, self.button_red_y = self.x + 80, self.y + 80
-        self.button_blue_x, self.button_blue_y = self.x + 160, self.y + 80
-        self.button_green_x, self.button_green_y = self.x + 80, self.y + 160
-        self.button_yellow_x, self.button_yellow_y = self.x + 160, self.y + 160
-        # Анимация нажатия
-        self.module_img_red_on_timer = 0
-        self.module_img_green_on_timer = 0
+        positions = [
+            [self.x + 80, self.y + 80],
+            [self.x + 160, self.y + 80],
+            [self.x + 80, self.y + 160],
+            [self.x + 160, self.y + 160],
+        ]
+        self.buttons = {}
+        self.btn_group = pygame.sprite.Group()
+        for pos, color in zip(positions, COLORS):
+            self.buttons[color] = Button(self.btn_group, color, pos)
+        # Анимация реакции модуля на нажатие
+        self.module_img_red_timer = 0
+        self.module_img_green_timer = 0
         return self
 
     def generate(self):
@@ -62,7 +66,26 @@ class ButtonsModule(BobmModule):
             for color in show:
                 answ.append(trans[color])
             answer.append(answ)
+        print(answer)
         return answer, show
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def update(self):
+        # Обработка анимации
+        if self.isdefused:
+            for btn in self.buttons.values():
+                btn.change_image(islightning=False)
+        elif self.button_now[1] > 0:
+            self.button_now[1] -= 1
+        else:
+            if self.button_now[2]:
+                self.buttons[self.button_now[0]].change_image(islightning=False)
+                self.step = (self.step + 1) % len(self.show)
+                self.button_now = [self.show[self.step], (1 * FPS) - 1, False]
+            else:
+                self.button_now = [self.show[self.step], (1 * FPS) - 1, True]
+                self.buttons[self.button_now[0]].change_image(islightning=True)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -73,71 +96,28 @@ class ButtonsModule(BobmModule):
     def draw_module(self, screen):
         if self.isdefused:
             screen.blit(self.module_img_gray_off, (self.x, self.y))
-        elif self.module_img_green_on_timer > 0:  # Анимация верного ответа
+        elif self.module_img_green_timer > 0:  # Анимация верного ответа
             screen.blit(self.module_img_green_on, (self.x, self.y))
-            self.module_img_green_on_timer -= 1
-        elif self.module_img_red_on_timer > 0:  # Анимация неверного ответа
+            self.module_img_green_timer -= 1
+        elif self.module_img_red_timer > 0:  # Анимация неверного ответа
             screen.blit(self.module_img_red_on, (self.x, self.y))
-            self.module_img_red_on_timer -= 1
+            self.module_img_red_timer -= 1
         else:
             screen.blit(self.module_img_gray_on, (self.x, self.y))
 
     def draw_buttons(self, screen):
-        if self.button_now[2] == "pause" or self.isdefused:
-            self.button_now[1] -= 1
-            # fmt: off
-            screen.blit(self.button_img_red, (self.button_red_x, self.button_red_y))
-            screen.blit(self.button_img_blue, (self.button_blue_x, self.button_blue_y))
-            screen.blit(self.button_img_green, (self.button_green_x, self.button_green_y))
-            screen.blit(self.button_img_yellow, (self.button_yellow_x, self.button_yellow_y))
-            # fmt: on
-            # Анимация кнопок:
-            if self.button_now[1] <= 0:
-                self.button_now[1] = 1 * FPS
-                self.button_now[2] = None  # Выкл паузу
-        else:
-            if self.button_now[1] <= 0:
-                self.step = (self.step + 1) % len(self.show)
-                self.button_now = [self.show[self.step], 1 * FPS, "pause"]
-                self.draw_buttons(screen)
-            # fmt: off
-            if self.button_now[0] != "r":
-                screen.blit(self.button_img_red, (self.button_red_x, self.button_red_y))
-            if self.button_now[0] != "b":
-                screen.blit(self.button_img_blue, (self.button_blue_x, self.button_blue_y))
-            if self.button_now[0] != "g":
-                screen.blit(self.button_img_green, (self.button_green_x, self.button_green_y))
-            if self.button_now[0] != "y":
-                screen.blit(self.button_img_yellow, (self.button_yellow_x, self.button_yellow_y))
-            self.button_now[1] -= 1
-            # fmt: on
+        self.btn_group.draw(screen)
 
     # ------------------------------------------------------------------------------------------------------------------
 
     def LKM_down(self, x, y):
         # Получаем ответ
         answer = "on module"
-        # Циферки взяты с картинки
-        if (
-            self.button_red_x <= x <= self.x + 135
-            and self.button_red_y <= y <= self.y + 135
-        ):
-            answer = "r"
-        elif (
-            self.button_blue_x <= x <= self.x + 215
-            and self.button_blue_y <= y <= self.y + 135
-        ):
-            answer = "b"
-        elif (
-            self.button_green_x <= x <= self.x + 135
-            and self.button_green_y <= y <= self.y + 215
-        ):
-            answer = "g"
-        elif (
-            self.button_yellow_x <= x <= self.x + 215
-            and self.button_yellow_y <= y <= self.y + 215
-        ):
-            answer = "y"
+        
+        for btn in self.buttons.values():
+            if btn.check_click(x, y):
+                answer = btn.color
+                break
 
         # Проверяем ответ
         if answer == "on module":
@@ -156,7 +136,7 @@ class ButtonsModule(BobmModule):
                     self.bomb.gs.mistakes += 1
                     if self.bomb.gs.mistakes >= 3:
                         self.bomb.gs.lose()
-                    self.module_img_red_on_timer += FPS // 2
+                    self.module_img_red_timer += FPS // 2
                     self.show = self.info[: self.correct_answers + 1]
                     return
             else:
@@ -171,5 +151,7 @@ class ButtonsModule(BobmModule):
                     # Следующий этап разминирования текущего этапа
                     self.answer_step += 1
                 # Общие действия при правильном ответе
-                self.module_img_green_on_timer += FPS // 2 # Использую деление тк умножение может давать не целые числа
+                self.module_img_green_timer += (
+                    FPS // 2
+                )  # Использую деление тк умножение может давать не целые числа
                 self.show = self.info[: self.correct_answers + 1]
