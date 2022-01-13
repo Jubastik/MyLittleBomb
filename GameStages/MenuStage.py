@@ -1,6 +1,6 @@
 import random
-
 import webbrowser
+
 import pygame
 import pygame_gui
 
@@ -38,6 +38,7 @@ class MenuStage(Stage):
         screen.blit(res, (self.width - 225, self.height - 135))
 
     def init_gui(self):
+        self.init_music_block()
         # создание кнопки "выбор уровня"
         self.choose_lvl = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((880, 440), (170, 50)),
@@ -56,6 +57,7 @@ class MenuStage(Stage):
             text='Выход',
             manager=self.ui_manager
         )
+
     def init_music_block(self):
         self.volume_up = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((self.width - 100, self.height - 100), (50, 50)),
