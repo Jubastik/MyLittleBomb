@@ -1,6 +1,7 @@
 import pygame
 import pygame_gui
 
+from CONSTANTS import WIDTH
 from Entities.Bomb import Bomb
 from GameStages.LevelChoose.Own_lvl_menu import OwnLevel
 from GameStages.Stage import Stage
@@ -15,6 +16,15 @@ OWN_LVL_X1 = 100
 OWN_LVL_X2 = OWN_LVL_X1 + 553
 OWN_LVL_Y1 = 20
 OWN_LVL_Y2 = OWN_LVL_Y1 + 1036
+
+FIRST_BLOCK_POS = (100, 20)
+SECOND_BLOCK_POS = (WIDTH // 3 + 50, 20)
+THIRD_BLOCK_POS = (WIDTH // 3 * 2, 20)
+
+START_BUTTONS_POS = (161, 924)
+START_BUTTONS_SIZE = (231, 35)
+
+TITLE_POS = (60, 77)
 
 
 class LevelChooseStage(Stage):
@@ -45,13 +55,13 @@ class LevelChooseStage(Stage):
         self.sprite_fifth = self.background_lvl_inactive
 
     def update(self):
-        self.OwnLevel.update()
         try:
             # Обновление бэкграунда (мигание лампочки)
             x, y = pygame.mouse.get_pos()
             if OWN_LVL_X1 <= x <= OWN_LVL_X2 and OWN_LVL_Y1 <= y <= OWN_LVL_Y2:
                 self.OwnLevel.on_sprite()
             if self.page == 1:
+                self.OwnLevel.update()
                 if self.rect_first.collidepoint((x, y)):
                     self.sprite_time += 1
                     if self.sprite_time == 20:
@@ -89,7 +99,7 @@ class LevelChooseStage(Stage):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 x, y = event.pos
-                if OWN_LVL_X1 <= x <= OWN_LVL_X2 and OWN_LVL_Y1 <= y <= OWN_LVL_Y2:
+                if self.page == 1 and OWN_LVL_X1 <= x <= OWN_LVL_X2 and OWN_LVL_Y1 <= y <= OWN_LVL_Y2:
                     self.OwnLevel.LKM_down(x, y)
 
         if event.type == pygame.USEREVENT:
@@ -211,13 +221,17 @@ class LevelChooseStage(Stage):
     # ------------------------------------------------------------------------------------------------------------------
     # первичная инициализация gui по уровням
     def first_lvl_gui(self):
-        self.btn_first_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((850, 944), (231, 35)),
-                                                          text='1 уровень',
-                                                          manager=self.ui_manager)
-        self.lbl_first_lvl = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((800, 100), (300, 50)),
-                                                         text='Перые шаги',
-                                                         manager=self.ui_manager,
-                                                         object_id="#game_title")
+        self.btn_first_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(
+            (SECOND_BLOCK_POS[0] + START_BUTTONS_POS[0], SECOND_BLOCK_POS[1] + START_BUTTONS_POS[1]),
+            START_BUTTONS_SIZE),
+            text='1 уровень',
+            manager=self.ui_manager)
+        self.lbl_first_lvl = pygame_gui.elements.UILabel(
+            relative_rect=pygame.Rect((SECOND_BLOCK_POS[0] + TITLE_POS[0], SECOND_BLOCK_POS[1] + TITLE_POS[1]),
+                                      (337, 55)),
+            text=f'Первые шаги',
+            manager=self.ui_manager,
+            object_id="#game_title")
         self.txt_first_lvl = pygame_gui.elements.UITextBox(
             """<p>Первого уровня <strong>не будет</strong>, кодеры приняли <strong>ислам</strong></p>""",
             relative_rect=pygame.Rect((800, 300), (400, 50)),
@@ -225,45 +239,50 @@ class LevelChooseStage(Stage):
         self.page1_ui_group.extend([self.btn_first_lvl, self.lbl_first_lvl, self.txt_first_lvl])
 
     def second_lvl_gui(self):
-        self.btn_second_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((1450, 950), (250, 50)),
-                                                           text='2 уровень',
-                                                           manager=self.ui_manager)
+        self.btn_second_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(
+            (THIRD_BLOCK_POS[0] + START_BUTTONS_POS[0], THIRD_BLOCK_POS[1] + START_BUTTONS_POS[1]), START_BUTTONS_SIZE),
+            text='2 уровень',
+            manager=self.ui_manager)
         self.page1_ui_group.extend([self.btn_second_lvl])
 
     def third_lvl_gui(self):
-        self.btn_third_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((250, 950), (250, 50)),
-                                                          text='3 уровень',
-                                                          manager=self.ui_manager)
+        self.btn_third_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(
+            (FIRST_BLOCK_POS[0] + START_BUTTONS_POS[0], FIRST_BLOCK_POS[1] + START_BUTTONS_POS[1]), START_BUTTONS_SIZE),
+            text='3 уровень',
+            manager=self.ui_manager)
         self.page2_ui_group.extend([self.btn_third_lvl])
 
     def fourth_lvl_gui(self):
-        self.btn_fourth_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((850, 950), (250, 50)),
-                                                          text='4 уровень',
-                                                          manager=self.ui_manager)
+        self.btn_fourth_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(
+            (SECOND_BLOCK_POS[0] + START_BUTTONS_POS[0], SECOND_BLOCK_POS[1] + START_BUTTONS_POS[1]),
+            START_BUTTONS_SIZE),
+            text='4 уровень',
+            manager=self.ui_manager)
         self.page2_ui_group.extend([self.btn_fourth_lvl])
 
     def fifth_lvl_gui(self):
-        self.btn_fifth_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((1450, 950), (250, 50)),
-                                                          text='5 уровень',
-                                                          manager=self.ui_manager)
+        self.btn_fifth_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(
+            (THIRD_BLOCK_POS[0] + START_BUTTONS_POS[0], THIRD_BLOCK_POS[1] + START_BUTTONS_POS[1]), START_BUTTONS_SIZE),
+            text='5 уровень',
+            manager=self.ui_manager)
         self.page2_ui_group.extend([self.btn_fifth_lvl])
 
     # ------------------------------------------------------------------------------------------------------------------
     # Отрисовка уровня
     def draw_first_lvl(self, screen):
-        self.rect_first = screen.blit(self.sprite_first, (self.width // 3 + 50, 20))
+        self.rect_first = screen.blit(self.sprite_first, SECOND_BLOCK_POS)
 
     def draw_second_lvl(self, screen):
-        self.rect_second = screen.blit(self.sprite_second, (self.width // 3 * 2, 20))
+        self.rect_second = screen.blit(self.sprite_second, THIRD_BLOCK_POS)
 
     def draw_third_lvl(self, screen):
-        self.rect_third = screen.blit(self.sprite_third, (100, 20))
+        self.rect_third = screen.blit(self.sprite_third, FIRST_BLOCK_POS)
 
     def draw_fourth_lvl(self, screen):
-        self.rect_fourth = screen.blit(self.sprite_fourth, (self.width // 3 + 50, 20))
+        self.rect_fourth = screen.blit(self.sprite_fourth, SECOND_BLOCK_POS)
 
     def draw_fifth_lvl(self, screen):
-        self.rect_fifth = screen.blit(self.sprite_fifth, (self.width // 3 * 2, 20))
+        self.rect_fifth = screen.blit(self.sprite_fifth, THIRD_BLOCK_POS)
 
     # ------------------------------------------------------------------------------------------------------------------
 

@@ -35,14 +35,14 @@
   {
     "colours":
     {
-      "normal_text": "#EDA93B",
+      "normal_text": "#b72f2a",
       "dark_bg": "#FFFFFF00"
     },
     "font":
     {
-      "name": "montserrat",
-      "size": "40",
-      "regular_path": "Resources/Montserrat-Regular.ttf"
+      "name": "pix-font",
+      "size": "45",
+      "regular_path": "Resources/pix-font.otf"
     }
   }
 

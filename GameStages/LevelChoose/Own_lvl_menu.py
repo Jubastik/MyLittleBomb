@@ -166,7 +166,7 @@ class StartBtn(pygame.sprite.Sprite):
 
     def __init__(self, OL, group, x, y):
         super().__init__(group)
-        self.OL = OL
+        self.OL = OL  # Own_lvl
         self.color = "red"
         self.image = StartBtn.image[self.color]
         self.rect = self.image.get_rect()
