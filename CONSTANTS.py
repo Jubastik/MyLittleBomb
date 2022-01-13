@@ -28,6 +28,24 @@ LIGHTNING_SPEED = [
     [100, 40],
     [110, 40],
     [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
+    [120, 40],
 ]
 BOMB_IMG_W = 990
 BOMB_IMG_H = 795
@@ -105,11 +123,11 @@ MODULES_COORDS = {
     ],
 }
 # константы для модуля большой бомбы
-COLORS_BUTTON = ['red', 'yellow', 'green', 'blue']
-COLORS_STRIP = ['blue', 'violet', 'white', 'yellow']
-WORDS = ['break', 'boom', 'hold']
+COLORS_BUTTON = ["red", "yellow", "green", "blue"]
+COLORS_STRIP = ["blue", "violet", "white", "yellow"]
+WORDS = ["break", "boom", "hold"]
 # для модуля ахмеда
 DIGITS = [int(el) for el in range(1, 10)]
 DIGITS_FOR_LAST_DIGIT = [int(el) for el in range(2, 10)]
-PLUS_MINUS = ['+', '-']
-DIVIDE_MULTIPLY = ['*', '/']
+PLUS_MINUS = ["+", "-"]
+DIVIDE_MULTIPLY = ["*", "/"]
