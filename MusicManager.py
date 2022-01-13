@@ -13,7 +13,8 @@ class MusicManager:
             "win": "Resources/Music/win.mp3",
             "explosion": "Resources/Music/explosion.mp3",
         }
-        self.volume = 1.0
+        self.volume = self.GM.DATABASE.get_music_volume()[0] / 100
+        pygame.mixer.music.set_volume(self.volume)
 
     def start_music(self, music):
         if music in self.music_list:
@@ -42,3 +43,4 @@ class MusicManager:
         if self.volume < 0:
             self.volume = 0
         pygame.mixer.music.set_volume(self.volume)
+        self.GM.DATABASE.update_music_volume(self.volume * 100)

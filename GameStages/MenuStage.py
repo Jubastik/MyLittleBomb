@@ -16,15 +16,28 @@ class MenuStage(Stage):
         self.background = pygame.Surface((self.width, self.height))
         self.init_gui()
         self.gui_off()
-
+        self.volume_font = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)
+        self.volume_font_small = pygame.font.Font(r'Resources/Pixeboy.ttf', 50)
         return self
 
     def draw(self, screen):
         self.background.fill((255, 255, 255))
         self.all_sprites.draw(self.background)
         screen.blit(self.background, (0, 0))
+        self.draw_volume(screen)
+
+    def draw_volume(self, screen):
+        # Отрисовка блока громкости
+        volume = str(int(self.gm.music_manager.volume * 100))
+        res = self.volume_font.render(volume, True, (255, 0, 0))
+        screen.blit(res, (self.width - 180, self.height - 90))
+
+        txt = "volume"
+        res = self.volume_font_small.render(txt, True, (255, 0, 0))
+        screen.blit(res, (self.width - 225, self.height - 135))
 
     def init_gui(self):
+        self.init_music_block()
         # создание кнопки "выбор уровня"
         self.choose_lvl = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((880, 440), (170, 50)),
@@ -41,6 +54,17 @@ class MenuStage(Stage):
         self.leave_game = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((880, 560), (170, 50)),
             text='Выход',
+            manager=self.ui_manager
+        )
+    def init_music_block(self):
+        self.volume_up = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect((self.width - 100, self.height - 100), (50, 50)),
+            text='+',
+            manager=self.ui_manager
+        )
+        self.volume_down = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect((self.width - 250, self.height - 100), (50, 50)),
+            text='-',
             manager=self.ui_manager
         )
 
@@ -84,18 +108,26 @@ class MenuStage(Stage):
                 if event.ui_element == self.leave_game:
                     self.gui_off()
                     self.gm.run = False
+                if event.ui_element == self.volume_up:
+                    self.gm.music_manager.change_volume(+5)
+                if event.ui_element == self.volume_down:
+                    self.gm.music_manager.change_volume(-5)
 
     # включаем кнопки (делаем их доступными)
     def gui_on(self):
         self.leave_game.visible = True
         self.choose_lvl.visible = True
         self.settings.visible = True
+        self.volume_up.visible = True
+        self.volume_down.visible = True
 
     # выключаем кнопки
     def gui_off(self):
         self.leave_game.visible = False
         self.choose_lvl.visible = False
         self.settings.visible = False
+        self.volume_up.visible = False
+        self.volume_down.visible = False
 
 
 class Bomb(pygame.sprite.Sprite):

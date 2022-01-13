@@ -17,11 +17,22 @@ class DataBase:
                 SELECT * FROM all_information
                 """).fetchall()
 
-    def music_valume(self, value):
+    def get_music_volume(self):
         cur = self.con.cursor()
-        return cur.execute("""
-                INSERT INTO music_valuem(valuem) VALUES(?)
-                """, [value]).fetchall()
+        result = cur.execute("""
+                        SELECT volume FROM music_volume
+                        WHERE id = 1
+                        """).fetchone()
+        return result
+
+    def update_music_volume(self, volume):
+        cur = self.con.cursor()
+        cur.execute("""
+                UPDATE music_volume
+                SET volume = ?
+                WHERE id = 1
+                """, [volume]).fetchone()
+        self.con.commit()
 
     def close(self):
         self.con.close()
