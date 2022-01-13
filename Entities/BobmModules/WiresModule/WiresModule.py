@@ -98,10 +98,10 @@ class WiresModule(BobmModule):
     # ------------------------------------------------------------------------------------------------------------------
 
     def draw(self, screen):
-        self.draw_background(screen)
+        self.draw_module(screen)
         self.draw_wires(screen)
 
-    def draw_background(self, screen):
+    def draw_module(self, screen):
         if self.isdefused:
             screen.blit(self.module_img_off, (self.x, self.y))
         else:

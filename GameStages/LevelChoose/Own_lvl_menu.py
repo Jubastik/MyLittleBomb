@@ -1,7 +1,8 @@
 from random import randint
 
 import pygame
-
+from Levels.FreeGame import FreeLevel
+from Entities.Bomb import Bomb
 from image_loader import load_image
 
 # Позиции элементов относительно модуля
@@ -117,15 +118,25 @@ class OwnLevel:
         time = (time // 30) * 30  # Округление времени
         # Время на 1 модуль должно находиться в границах от 20 до 120 сек
         if time // modules >= 20 and time // modules <= 120:
-            print("Запуск уровня с", hard_mode, modules, time)
+            pass
+            # hard_mode, modules, time = self.hard_mode, self.lvl_time, self.lvl_modules
+            # bomb = Bomb(self.gm.stages["game"])
+            # level = FreeLevel(time, modules, hardmode=hard_mode)
+            # bomb.load_level(level)
+            # self.gm.stages["game"].set_bomb(bomb)
+            # self.gm.change_stage("game")
         else:
             self.start_random_mode()
 
     def start_game(self):
-        # self.hard_mode
-        # self.lvl_time
-        # self.lvl_modules
-        print("ПУСК")
+        pass
+        # hard_mode, modules, time = self.hard_mode, self.lvl_time, self.lvl_modules
+        # bomb = Bomb(self.gm.stages["game"])
+        # level = FreeLevel(time, modules, hardmode=hard_mode)
+        # bomb.load_level(level)
+        # self.gm.stages["game"].set_bomb(bomb)
+        # self.gm.change_stage("game")
+
 
     def on_sprite(self):
         # Изменение времени нахождения курсора на блоке

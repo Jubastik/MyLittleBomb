@@ -7,6 +7,7 @@ class BobmModule:
     def __init__(self, bomb, cords):
         """cords - координаты модуля"""
         self.x, self.y, self.x2, self.y2 = cords
+        self._cords = cords
         self.isdefused = False
         self.bomb = bomb
 
