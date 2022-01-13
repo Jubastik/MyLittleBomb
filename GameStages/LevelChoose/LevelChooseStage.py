@@ -42,7 +42,7 @@ class LevelChooseStage(Stage):
         return self
 
     def stage_launch(self):
-        self.OwnLevel = OwnLevel(100, 20)
+        self.OwnLevel = OwnLevel(self, 100, 20)
         self.start()
         self.change_page(1)
         self.sprite_time = 0  # Время нахождения курсора мыши на спрайте уровня

@@ -18,7 +18,9 @@ START_BTN_POS = (336, 812)
 
 
 class OwnLevel:
-    def __init__(self, x, y):
+    def __init__(self, LCS, x, y):
+        self.LCS = LCS
+        self.gm = self.LCS.gm
         self.font = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)
         # Координаты блока
         self.x = x
@@ -129,13 +131,13 @@ class OwnLevel:
             self.start_random_mode()
 
     def start_game(self):
-        pass
-        # hard_mode, modules, time = self.hard_mode, self.lvl_time, self.lvl_modules
-        # bomb = Bomb(self.gm.stages["game"])
-        # level = FreeLevel(time, modules, hardmode=hard_mode)
-        # bomb.load_level(level)
-        # self.gm.stages["game"].set_bomb(bomb)
-        # self.gm.change_stage("game")
+        self.LCS.end()
+        hard_mode, time, modules = self.hard_mode, self.lvl_time, self.lvl_modules
+        bomb = Bomb(self.gm.stages["game"])
+        level = FreeLevel(time, modules, hardmode=hard_mode)
+        bomb.load_level(level)
+        self.gm.stages["game"].set_bomb(bomb)
+        self.gm.change_stage("game")
 
 
     def on_sprite(self):
