@@ -33,4 +33,5 @@ class FreeLevel(Level):
         rand_modules = sample(self.types, self.modules_count)
         # Поясню: Есть список КЛАССОВ! не объектов, мы перебираем его в цикле и получаются разные модули.
         for m, module in zip(range(1, len(modules)), rand_modules):
-            modules[m] = module(bomb, module[m].cords)
+            modules[m] = module(bomb, modules[m]._cords).init()
+        return modules
