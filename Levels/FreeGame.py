@@ -16,7 +16,7 @@ class FreeLevel(Level):
     types = [BigButtonModule, KeyboardModule, WiresModule, ButtonsModule, AhmedModule]
 
     def __init__(self, time, modules_count, hardmode=False):
-        self.name = "FreeGame"
+        self.name = "own"
         self.time = time * FPS
         self.modules_count = modules_count  # от 1 до 5
         self.mistakes = 2 if hardmode else 0
