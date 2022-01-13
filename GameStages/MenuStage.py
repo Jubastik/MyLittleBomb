@@ -1,5 +1,6 @@
 import random
 
+import webbrowser
 import pygame
 import pygame_gui
 
@@ -31,10 +32,10 @@ class MenuStage(Stage):
             text='Выбор уровня',
             manager=self.ui_manager
         )
-        # создание кнопки "настройки"
-        self.settings = pygame_gui.elements.UIButton(
+        # создание кнопки "инструкция"
+        self.instruction = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((880, 500), (170, 50)),
-            text='Настройки',
+            text='Инструкция',
             manager=self.ui_manager
         )
         # создание кнопки "выход"
@@ -78,8 +79,10 @@ class MenuStage(Stage):
                     self.gm.change_stage('choose_lvl')
                     self.gui_off()
                 # кнопка настроек
-                if event.ui_element == self.settings:
-                    pass
+                if event.ui_element == self.instruction:
+                    webbrowser.open(
+                        'https://docs.google.com/document/d/10K39vNIL9V1iu4_iRRIUM3-GUT3xu5T9xGU2inMUlX4/edit#heading=h.e8v6mr9vk98s',
+                        new=1)
                 # кнопка выхода
                 if event.ui_element == self.leave_game:
                     self.gui_off()
@@ -89,13 +92,13 @@ class MenuStage(Stage):
     def gui_on(self):
         self.leave_game.visible = True
         self.choose_lvl.visible = True
-        self.settings.visible = True
+        self.instruction.visible = True
 
     # выключаем кнопки
     def gui_off(self):
         self.leave_game.visible = False
         self.choose_lvl.visible = False
-        self.settings.visible = False
+        self.instruction.visible = False
 
 
 class Bomb(pygame.sprite.Sprite):

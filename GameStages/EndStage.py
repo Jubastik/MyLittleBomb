@@ -104,7 +104,7 @@ class EndStage(Stage):
         # создание кнопки "заново"
         self.repeat = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((1000, 770), (190, 50)),
-            text='Зановово',
+            text='Заново',
             manager=self.ui_manager
         )
 
