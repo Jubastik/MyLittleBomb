@@ -1,6 +1,7 @@
 import pygame
 from pygame_gui import UIManager
 
+from DataBase.Database import DataBase
 from GameStages.EndStage import EndStage
 from GameStages.GameStage import GameStage
 from GameStages.InitStage import InitStage
@@ -14,6 +15,7 @@ class GameManager:
     '''Осуществляет управление игрой'''
 
     def __init__(self, screen, fps, current_stage='init'):
+        self.DATABASE = DataBase('DataBase/PyGame.db')
         self.ui_manager = UIManager(screen.get_size(), "Resources/ui_theme.json")
         self.ui_manager.preload_fonts([{'name': 'fira_code', 'point_size': 10, 'style': 'bold'},
                                        {'name': 'fira_code', 'point_size': 10, 'style': 'regular'},
@@ -30,7 +32,7 @@ class GameManager:
             'result': EndStage(self).init(),
         }
         self.music_manager = MusicManager(self)
-        self.music_manager.change_volume(-80)
+        self.music_manager.change_volume(-50)
 
     def change_stage(self, name):
         self.current_stage = name

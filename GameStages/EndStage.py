@@ -3,7 +3,6 @@ import sqlite3
 import pygame
 import pygame_gui
 
-from DataBase.Database import DataBase
 from CONSTANTS import WIDTH, HEIGHT
 from GameStages.Stage import Stage
 from image_loader import load_image
@@ -13,7 +12,7 @@ class EndStage(Stage):
     """Подсчёт результатов"""
 
     def init(self):
-        self.db = DataBase('DataBase/PyGame.db')
+        self.db = self.gm.DATABASE
         self.ui_manager = self.gm.ui_manager
         self.background = pygame.Surface((self.width, self.height))
         self.init_gui()
