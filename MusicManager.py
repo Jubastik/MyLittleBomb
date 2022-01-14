@@ -42,5 +42,6 @@ class MusicManager:
             self.volume = 1
         if self.volume < 0:
             self.volume = 0
+        self.volume = round(self.volume, 2)
         pygame.mixer.music.set_volume(self.volume)
         self.GM.DATABASE.update_music_volume(self.volume * 100)
