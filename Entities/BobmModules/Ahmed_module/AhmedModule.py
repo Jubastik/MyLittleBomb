@@ -91,8 +91,6 @@ class AhmedModule(BobmModule):
         if self.right_answer not in self.random_position_for_digits:
             self.random_position_for_digits.pop(-1)
             self.random_position_for_digits.append(self.right_answer)
-        print(self.what_conditional)
-        print(self.right_answer)
 
     def draw_background(self, screen):
         # проверка на то, разминирован модуль или нет
@@ -340,10 +338,8 @@ class AhmedModule(BobmModule):
         self.check_conditional()
 
     def LKM_down(self, x, y):
-        print(self.random_position_for_digits)
         # индекс позиции правильного элемента в списке
         ind = self.random_position_for_digits.index(self.right_answer)
-        print(ind)
         # кнопка нажата
         # проверка на нажатие по кнопкам
         if self.first_btn_rect.collidepoint((x, y)):
