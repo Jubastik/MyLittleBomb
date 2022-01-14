@@ -43,11 +43,12 @@ class LevelChooseStage(Stage):
         self.page2_ui_group = []
         self.init_gui()
         self.end()
+        self.OwnLevel = OwnLevel(self, 100, 20)
         return self
 
     def stage_launch(self):
         self.get_lvl_results()
-        self.OwnLevel = OwnLevel(self, 100, 20)
+
         self.start()
         self.change_page(1)
         self.sprite_time = 0  # Время нахождения курсора мыши на спрайте уровня

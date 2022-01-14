@@ -164,7 +164,9 @@ class EndStage(Stage):
         self.repeat.visible = False
 
     def restart_lvl(self):
-        if self.name_lvl == '1':
+        if self.name_lvl == "own":
+            self.gm.stages["choose_lvl"].OwnLevel.start_game()
+        elif self.name_lvl == '1':
             self.gm.stages["choose_lvl"].start_first_lvl()
         elif self.name_lvl == '2':
             self.gm.stages["choose_lvl"].start_second_lvl()
