@@ -25,6 +25,8 @@ START_BUTTONS_POS = (161, 924)
 START_BUTTONS_SIZE = (231, 35)
 
 TITLE_POS = (60, 77)
+BEST_TIME_TXT_POS = (55, 690)
+BEST_TIME_POS = (210, 770)
 
 
 class LevelChooseStage(Stage):
@@ -34,6 +36,8 @@ class LevelChooseStage(Stage):
         self.ui_manager = self.gm.ui_manager
         self.background_lvl_active = load_image("LevelChooseImg/level_selection.png").convert()
         self.background_lvl_inactive = load_image("LevelChooseImg/level_selection_2.png").convert()
+        self.font_best_time = pygame.font.Font(r'Resources/Pixeboy.ttf', 80)
+        self.font_best_time_txt = pygame.font.Font(r'Resources/pix-font.otf', 45)
         self.page = 1
         self.page1_ui_group = []  # Список всего gui страницы
         self.page2_ui_group = []
@@ -42,6 +46,7 @@ class LevelChooseStage(Stage):
         return self
 
     def stage_launch(self):
+        self.get_lvl_results()
         self.OwnLevel = OwnLevel(self, 100, 20)
         self.start()
         self.change_page(1)
@@ -78,6 +83,16 @@ class LevelChooseStage(Stage):
                     if self.sprite_time == 20:
                         self.sprite_time = 0
                         self.sprite_third = self.background_changing(self.sprite_third)
+                elif self.rect_fourth.collidepoint((x, y)):
+                    self.sprite_time += 1
+                    if self.sprite_time == 20:
+                        self.sprite_time = 0
+                        self.sprite_fourth = self.background_changing(self.sprite_fourth)
+                elif self.rect_fifth.collidepoint((x, y)):
+                    self.sprite_time += 1
+                    if self.sprite_time == 20:
+                        self.sprite_time = 0
+                        self.sprite_fifth = self.background_changing(self.sprite_fifth)
         except AttributeError:
             pass
 
@@ -89,7 +104,6 @@ class LevelChooseStage(Stage):
 
     def draw(self, screen):
         screen.fill((90, 90, 90))
-        self.OwnLevel.draw(screen)
         if self.page == 1:
             self.draw_first_page(screen)
         else:
@@ -163,9 +177,13 @@ class LevelChooseStage(Stage):
         self.fifth_lvl_gui()
         self.change_page(self.page)
 
+    def get_lvl_results(self):
+        self.lvl_results = self.gm.DATABASE.get_best_time()
+
     # ------------------------------------------------------------------------------------------------------------------
 
     def draw_first_page(self, screen):
+        self.OwnLevel.draw(screen)
         self.draw_first_lvl(screen)
         self.draw_second_lvl(screen)
 
@@ -270,19 +288,74 @@ class LevelChooseStage(Stage):
     # ------------------------------------------------------------------------------------------------------------------
     # Отрисовка уровня
     def draw_first_lvl(self, screen):
+        lvl = "first"
         self.rect_first = screen.blit(self.sprite_first, SECOND_BLOCK_POS)
 
+        res = self.font_best_time_txt.render("Лучшая попытка", True, (183, 47, 42))
+        screen.blit(res, (SECOND_BLOCK_POS[0] + BEST_TIME_TXT_POS[0], SECOND_BLOCK_POS[1] + BEST_TIME_TXT_POS[1]))
+
+        if lvl in self.lvl_results:
+            txt = f"{self.lvl_results[lvl][0]}:{self.lvl_results[lvl][1]}"
+        else:
+            txt = "NET"
+        res = self.font_best_time.render(txt, True, (255, 0, 0))
+        screen.blit(res, (SECOND_BLOCK_POS[0] + BEST_TIME_POS[0], SECOND_BLOCK_POS[1] + BEST_TIME_POS[1]))
+
     def draw_second_lvl(self, screen):
+        lvl = "second"
         self.rect_second = screen.blit(self.sprite_second, THIRD_BLOCK_POS)
 
+        res = self.font_best_time_txt.render("Лучшая попытка", True, (183, 47, 42))
+        screen.blit(res, (THIRD_BLOCK_POS[0] + BEST_TIME_TXT_POS[0], THIRD_BLOCK_POS[1] + BEST_TIME_TXT_POS[1]))
+
+        if lvl in self.lvl_results:
+            txt = f"{self.lvl_results[lvl][0]}:{self.lvl_results[lvl][1]}"
+        else:
+            txt = "NET"
+        res = self.font_best_time.render(txt, True, (255, 0, 0))
+        screen.blit(res, (THIRD_BLOCK_POS[0] + BEST_TIME_POS[0], THIRD_BLOCK_POS[1] + BEST_TIME_POS[1]))
+
     def draw_third_lvl(self, screen):
+        lvl = "third"
         self.rect_third = screen.blit(self.sprite_third, FIRST_BLOCK_POS)
 
+        res = self.font_best_time_txt.render("Лучшая попытка", True, (183, 47, 42))
+        screen.blit(res, (FIRST_BLOCK_POS[0] + BEST_TIME_TXT_POS[0], FIRST_BLOCK_POS[1] + BEST_TIME_TXT_POS[1]))
+
+        if lvl in self.lvl_results:
+            txt = f"{self.lvl_results[lvl][0]}:{self.lvl_results[lvl][1]}"
+        else:
+            txt = "NET"
+        res = self.font_best_time.render(txt, True, (255, 0, 0))
+        screen.blit(res, (FIRST_BLOCK_POS[0] + BEST_TIME_POS[0], FIRST_BLOCK_POS[1] + BEST_TIME_POS[1]))
+
     def draw_fourth_lvl(self, screen):
+        lvl = "fourth"
         self.rect_fourth = screen.blit(self.sprite_fourth, SECOND_BLOCK_POS)
 
+        res = self.font_best_time_txt.render("Лучшая попытка", True, (183, 47, 42))
+        screen.blit(res, (SECOND_BLOCK_POS[0] + BEST_TIME_TXT_POS[0], SECOND_BLOCK_POS[1] + BEST_TIME_TXT_POS[1]))
+
+        if lvl in self.lvl_results:
+            txt = f"{self.lvl_results[lvl][0]}:{self.lvl_results[lvl][1]}"
+        else:
+            txt = "NET"
+        res = self.font_best_time.render(txt, True, (255, 0, 0))
+        screen.blit(res, (SECOND_BLOCK_POS[0] + BEST_TIME_POS[0], SECOND_BLOCK_POS[1] + BEST_TIME_POS[1]))
+
     def draw_fifth_lvl(self, screen):
+        lvl = "fifth"
         self.rect_fifth = screen.blit(self.sprite_fifth, THIRD_BLOCK_POS)
+
+        res = self.font_best_time_txt.render("Лучшая попытка", True, (183, 47, 42))
+        screen.blit(res, (THIRD_BLOCK_POS[0] + BEST_TIME_TXT_POS[0], THIRD_BLOCK_POS[1] + BEST_TIME_TXT_POS[1]))
+
+        if lvl in self.lvl_results:
+            txt = f"{self.lvl_results[lvl][0]}:{self.lvl_results[lvl][1]}"
+        else:
+            txt = "NET"
+        res = self.font_best_time.render(txt, True, (255, 0, 0))
+        screen.blit(res, (THIRD_BLOCK_POS[0] + BEST_TIME_POS[0], THIRD_BLOCK_POS[1] + BEST_TIME_POS[1]))
 
     # ------------------------------------------------------------------------------------------------------------------
 

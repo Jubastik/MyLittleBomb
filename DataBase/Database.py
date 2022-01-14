@@ -5,33 +5,24 @@ class DataBase:
     def __init__(self, connection_string):
         self.con = sqlite3.connect(connection_string)
 
-    def best_time(self):
+    def get_best_time(self):
         cur = self.con.cursor()
         # словарь с уровнями и значениями лучшего времени
-        best_times_dict = {1: [], 2: [], 3: [], 4: [], 5: [], 6: []}
+        best_times_dict = {}
         # проходимся по всем значениям
-        for i in range(1, 7):
-            # берем результаты с одного уровня
-            values = cur.execute("""
-                SELECT * FROM all_information
-                WHERE level_id == ?
-                """, [i]).fetchall()
-            # усли результатов нет, то ничего не добавляем
-            if len(values) == 0:
-                pass
-            # если есть значения времени
+        values = cur.execute("""
+            SELECT l.level_name, a.minuts, a.seconds FROM all_information a
+            join levels l on a.level_id = l.id
+            """).fetchall()
+        # проходимся по всем значениям и выбираем максимальное время
+        for v in values:
+            if v[0] not in best_times_dict:
+                best_times_dict[v[0]] = [v[1], v[2]]
             else:
-                # проходимся по всем значениям и выбираем максимальное время
-                max_minuts = 0
-                max_sec = 0
-                for el in values:
-                    if el[2] > max_minuts:
-                        max_minuts = el[2]
-                        max_sec = el[3]
-                    elif el[2] == max_minuts and el[3] > max_sec:
-                        max_minuts = el[2]
-                        max_sec = el[3]
-                best_times_dict[i].append([max_minuts, max_sec])
+                if v[1] < best_times_dict[v[0]][0]:
+                    best_times_dict[v[0]] = [v[1], v[2]]
+                elif v[1] == best_times_dict[v[0]][0] and v[2] < best_times_dict[v[0]][1]:
+                    best_times_dict[v[0]] = [v[1], v[2]]
         return best_times_dict
 
     def insert_words(self, level_id, minuts, seconds):

@@ -48,6 +48,7 @@ class GameManager:
             stage = self.stages[self.current_stage]
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    self.DATABASE.close()
                     return
                 self.ui_manager.process_events(event)
                 stage.process_event(event)

@@ -36,7 +36,8 @@ class EndStage(Stage):
         self.font38 = pygame.font.Font(r'Resources/Pixeboy.ttf', 38)
         self.font40 = pygame.font.Font(r'Resources/Pixeboy.ttf', 40)
         self.font55 = pygame.font.Font(r'Resources/Pixeboy.ttf', 55)
-        self.insert_into_db()
+        if is_win:
+            self.insert_into_db()
 
     def data_base(self):
         pass
@@ -182,7 +183,6 @@ class EndStage(Stage):
                 self.db.insert_words(6, self.minuts, self.sec)
             else:
                 self.db.insert_words(int(self.name_lvl), self.minuts, self.sec)
-            self.db.close()
         except Exception:
             pass
 
