@@ -120,13 +120,12 @@ class OwnLevel:
         time = (time // 30) * 30  # Округление времени
         # Время на 1 модуль должно находиться в границах от 20 до 120 сек
         if time // modules >= 20 and time // modules <= 120:
-            pass
-            # hard_mode, modules, time = self.hard_mode, self.lvl_time, self.lvl_modules
-            # bomb = Bomb(self.gm.stages["game"])
-            # level = FreeLevel(time, modules, hardmode=hard_mode)
-            # bomb.load_level(level)
-            # self.gm.stages["game"].set_bomb(bomb)
-            # self.gm.change_stage("game")
+            self.LCS.end()
+            bomb = Bomb(self.gm.stages["game"])
+            level = FreeLevel(time, modules, hardmode=hard_mode)
+            bomb.load_level(level)
+            self.gm.stages["game"].set_bomb(bomb)
+            self.gm.change_stage("game")
         else:
             self.start_random_mode()
 
@@ -168,7 +167,7 @@ class OwnLevel:
             hard_mode = True
         else:
             hard_mode = False
-        return hard_mode, randint(1, 6), randint(30, 570)
+        return hard_mode, randint(1, 5), randint(30, 570)
 
 
 class StartBtn(pygame.sprite.Sprite):
