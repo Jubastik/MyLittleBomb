@@ -11,11 +11,14 @@ class AhmedModule(BobmModule):
     """Моудуль Ахмеда"""
 
     def init(self):
+        # множество для чисел
         self.list_digits = set()
         # шрифт
         self.font22 = pygame.font.Font(r'Resources/Pixeboy.ttf', 22)
         self.font60 = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)
+        # переменная для подходящего условия
         self.what_conditional = 0
+
         self.isdefused = False
         self.click = False
         # кол-во батареек на бомбе
