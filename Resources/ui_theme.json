@@ -44,6 +44,19 @@
       "size": "45",
       "regular_path": "Resources/pix-font.otf"
     }
+  },
+  "#text_box":
+  {
+    "colours":
+    {
+      "normal_text": "#212121",
+      "dark_bg": "#FFFFFF00"
+    },
+    "font":
+    {
+      "name": "pix-font",
+      "size": "25",
+      "regular_path": "Resources/pix-font.otf"
+    }
   }
-
 }

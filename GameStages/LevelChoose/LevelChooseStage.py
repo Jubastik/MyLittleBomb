@@ -3,6 +3,7 @@ import pygame_gui
 
 from CONSTANTS import WIDTH
 from Entities.Bomb import Bomb
+from GameStages.LevelChoose.LevelsDescript import *
 from GameStages.LevelChoose.Own_lvl_menu import OwnLevel
 from GameStages.Stage import Stage
 from Levels.Level1 import Level1
@@ -27,6 +28,9 @@ START_BUTTONS_SIZE = (231, 35)
 TITLE_POS = (60, 77)
 BEST_TIME_TXT_POS = (55, 690)
 BEST_TIME_POS = (210, 770)
+
+TEXT_BOX_POS = (21, 210)
+TEXT_BOX_SIZE = (511, 420)
 
 
 class LevelChooseStage(Stage):
@@ -245,16 +249,20 @@ class LevelChooseStage(Stage):
             START_BUTTONS_SIZE),
             text='1 уровень',
             manager=self.ui_manager)
+
         self.lbl_first_lvl = pygame_gui.elements.UILabel(
             relative_rect=pygame.Rect((SECOND_BLOCK_POS[0] + TITLE_POS[0], SECOND_BLOCK_POS[1] + TITLE_POS[1]),
                                       (337, 55)),
             text=f'Первые шаги',
             manager=self.ui_manager,
             object_id="#game_title")
+
         self.txt_first_lvl = pygame_gui.elements.UITextBox(
-            """<p>Первого уровня <strong>не будет</strong>, кодеры приняли <strong>ислам</strong></p>""",
-            relative_rect=pygame.Rect((800, 300), (400, 50)),
-            manager=self.ui_manager)
+            FIRES_LVL_DESCRIPT,
+            relative_rect=pygame.Rect((SECOND_BLOCK_POS[0] + TEXT_BOX_POS[0], SECOND_BLOCK_POS[1] + TEXT_BOX_POS[1]),
+                                      TEXT_BOX_SIZE),
+            manager=self.ui_manager,
+            object_id="#text_box")
         self.page1_ui_group.extend([self.btn_first_lvl, self.lbl_first_lvl, self.txt_first_lvl])
 
     def second_lvl_gui(self):
@@ -262,14 +270,42 @@ class LevelChooseStage(Stage):
             (THIRD_BLOCK_POS[0] + START_BUTTONS_POS[0], THIRD_BLOCK_POS[1] + START_BUTTONS_POS[1]), START_BUTTONS_SIZE),
             text='2 уровень',
             manager=self.ui_manager)
-        self.page1_ui_group.extend([self.btn_second_lvl])
+
+        self.lbl_second_lvl = pygame_gui.elements.UILabel(
+            relative_rect=pygame.Rect((THIRD_BLOCK_POS[0] + TITLE_POS[0], THIRD_BLOCK_POS[1] + TITLE_POS[1]),
+                                      (337, 55)),
+            text=f'Вторые шаги',
+            manager=self.ui_manager,
+            object_id="#game_title")
+
+        self.txt_second_lvl = pygame_gui.elements.UITextBox(
+            SECOND_LVL_DESCRIPT,
+            relative_rect=pygame.Rect((THIRD_BLOCK_POS[0] + TEXT_BOX_POS[0], THIRD_BLOCK_POS[1] + TEXT_BOX_POS[1]),
+                                      TEXT_BOX_SIZE),
+            manager=self.ui_manager,
+            object_id="#text_box")
+        self.page1_ui_group.extend([self.btn_second_lvl, self.lbl_second_lvl, self.txt_second_lvl])
 
     def third_lvl_gui(self):
         self.btn_third_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(
             (FIRST_BLOCK_POS[0] + START_BUTTONS_POS[0], FIRST_BLOCK_POS[1] + START_BUTTONS_POS[1]), START_BUTTONS_SIZE),
             text='3 уровень',
             manager=self.ui_manager)
-        self.page2_ui_group.extend([self.btn_third_lvl])
+
+        self.lbl_third_lvl = pygame_gui.elements.UILabel(
+            relative_rect=pygame.Rect((FIRST_BLOCK_POS[0] + TITLE_POS[0], FIRST_BLOCK_POS[1] + TITLE_POS[1]),
+                                      (337, 55)),
+            text=f'Третие шаги',
+            manager=self.ui_manager,
+            object_id="#game_title")
+
+        self.txt_third_lvl = pygame_gui.elements.UITextBox(
+            THIRD_LVL_DESCRIPT,
+            relative_rect=pygame.Rect((FIRST_BLOCK_POS[0] + TEXT_BOX_POS[0], FIRST_BLOCK_POS[1] + TEXT_BOX_POS[1]),
+                                      TEXT_BOX_SIZE),
+            manager=self.ui_manager,
+            object_id="#text_box")
+        self.page2_ui_group.extend([self.btn_third_lvl, self.lbl_third_lvl, self.txt_third_lvl])
 
     def fourth_lvl_gui(self):
         self.btn_fourth_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(
@@ -277,14 +313,42 @@ class LevelChooseStage(Stage):
             START_BUTTONS_SIZE),
             text='4 уровень',
             manager=self.ui_manager)
-        self.page2_ui_group.extend([self.btn_fourth_lvl])
+
+        self.lbl_fourth_lvl = pygame_gui.elements.UILabel(
+            relative_rect=pygame.Rect((SECOND_BLOCK_POS[0] + TITLE_POS[0], SECOND_BLOCK_POS[1] + TITLE_POS[1]),
+                                      (337, 55)),
+            text=f'Четвертые шаги',
+            manager=self.ui_manager,
+            object_id="#game_title")
+
+        self.txt_fourth_lvl = pygame_gui.elements.UITextBox(
+            FOURTH_LVL_DESCRIPT,
+            relative_rect=pygame.Rect((SECOND_BLOCK_POS[0] + TEXT_BOX_POS[0], SECOND_BLOCK_POS[1] + TEXT_BOX_POS[1]),
+                                      TEXT_BOX_SIZE),
+            manager=self.ui_manager,
+            object_id="#text_box")
+        self.page2_ui_group.extend([self.btn_fourth_lvl, self.lbl_fourth_lvl, self.txt_fourth_lvl])
 
     def fifth_lvl_gui(self):
         self.btn_fifth_lvl = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(
             (THIRD_BLOCK_POS[0] + START_BUTTONS_POS[0], THIRD_BLOCK_POS[1] + START_BUTTONS_POS[1]), START_BUTTONS_SIZE),
             text='5 уровень',
             manager=self.ui_manager)
-        self.page2_ui_group.extend([self.btn_fifth_lvl])
+
+        self.lbl_fifth_lvl = pygame_gui.elements.UILabel(
+            relative_rect=pygame.Rect((THIRD_BLOCK_POS[0] + TITLE_POS[0], THIRD_BLOCK_POS[1] + TITLE_POS[1]),
+                                      (337, 55)),
+            text=f'Пятые шаги',
+            manager=self.ui_manager,
+            object_id="#game_title")
+
+        self.txt_fifth_lvl = pygame_gui.elements.UITextBox(
+            FOURTH_LVL_DESCRIPT,
+            relative_rect=pygame.Rect((THIRD_BLOCK_POS[0] + TEXT_BOX_POS[0], THIRD_BLOCK_POS[1] + TEXT_BOX_POS[1]),
+                                      TEXT_BOX_SIZE),
+            manager=self.ui_manager,
+            object_id="#text_box")
+        self.page2_ui_group.extend([self.btn_fifth_lvl, self.lbl_fifth_lvl, self.txt_fifth_lvl])
 
     # ------------------------------------------------------------------------------------------------------------------
     # Отрисовка уровня
