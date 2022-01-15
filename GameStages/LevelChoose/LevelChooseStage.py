@@ -343,7 +343,7 @@ class LevelChooseStage(Stage):
             object_id="#game_title")
 
         self.txt_fifth_lvl = pygame_gui.elements.UITextBox(
-            FOURTH_LVL_DESCRIPT,
+            FIFTH_LVL_DESCRIPT,
             relative_rect=pygame.Rect((THIRD_BLOCK_POS[0] + TEXT_BOX_POS[0], THIRD_BLOCK_POS[1] + TEXT_BOX_POS[1]),
                                       TEXT_BOX_SIZE),
             manager=self.ui_manager,
