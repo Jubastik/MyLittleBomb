@@ -9,7 +9,6 @@ class DataBase:
         cur = self.con.cursor()
         # словарь с уровнями и значениями лучшего времени
         best_times_dict = {}
-        # проходимся по всем значениям
         values = cur.execute("""
             SELECT l.level_name, a.minuts, a.seconds FROM all_information a
             join levels l on a.level_id = l.id

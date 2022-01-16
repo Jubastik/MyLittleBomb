@@ -34,14 +34,14 @@ class KeyboardModule(BobmModule):
         self.answer = sorted([self.img_1, self.img_2, self.img_3, self.img_4])
 
     def generate(self):
-        # Цифры - положение бэкграунда (кнопки) относительно модуля
+        # Цифры - положение кнопки относительно модуля
         self.position_btn = [
             [self.x + 75, self.y + 95],
             [self.x + 155, self.y + 95],
             [self.x + 75, self.y + 175],
             [self.x + 155, self.y + 175],
         ]
-        # Цифры - положение изображения относительно модуля
+        # Цифры - положение изображения на кнопке относительно модуля
         self.position_btn_img = [
             [self.x + 85, self.y + 105],
             [self.x + 165, self.y + 105],
@@ -69,6 +69,7 @@ class KeyboardModule(BobmModule):
             "4": None,
         }
 
+        # Загрузка картинок на кнопках
         self.first_btn_img = load_image(f"Bomb/keyboard_module/{self.image_set} set/{self.img_1}.png")
         self.second_btn_img = load_image(f"Bomb/keyboard_module/{self.image_set} set/{self.img_2}.png")
         self.third_btn_img = load_image(f"Bomb/keyboard_module/{self.image_set} set/{self.img_3}.png")
@@ -115,6 +116,7 @@ class KeyboardModule(BobmModule):
         # Проверка на нажатие по кнопкам
         if self.first_btn_rect.collidepoint((x, y)) and self.first_btn != self.btn_correct:
             if self.answer[0] == self.img_1:
+                # Если нажатие верное
                 self.blocks_defused += 1
                 self.first_btn = self.btn_correct
                 del self.answer[0]
