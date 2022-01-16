@@ -20,9 +20,6 @@ class GameStage(Stage):
     def init(self):
         return self
 
-    def stage_launch(self):
-        self.mistakes = 0
-
     def set_bomb(self, bomb):
         self.bomb = bomb
 

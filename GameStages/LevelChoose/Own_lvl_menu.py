@@ -118,8 +118,8 @@ class OwnLevel:
     def start_random_mode(self):
         hard_mode, modules, time = self.random_bomb_generation()
         time = (time // 30) * 30  # Округление времени
-        # Время на 1 модуль должно находиться в границах от 20 до 120 сек
-        if time // modules >= 20 and time // modules <= 120:
+        # Время на 1 модуль должно находиться в границах от 15 до 80 сек
+        if time // modules >= 15 and time // modules <= 80:
             self.LCS.end()
             bomb = Bomb(self.gm.stages["game"])
             level = FreeLevel(time, modules, hardmode=hard_mode)
@@ -163,7 +163,7 @@ class OwnLevel:
             self.lvl_modules += 1
 
     def random_bomb_generation(self):
-        if randint(0, 20) == 15:
+        if randint(1, 9) == 1:
             hard_mode = True
         else:
             hard_mode = False
