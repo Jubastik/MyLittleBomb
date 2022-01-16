@@ -3,7 +3,7 @@ import sqlite3
 import pygame
 import pygame_gui
 
-from CONSTANTS import WIDTH, HEIGHT
+from CONSTANTS import WIDTH, HEIGHT, FPS
 from GameStages.Stage import Stage
 from image_loader import load_image
 
@@ -21,17 +21,33 @@ class EndStage(Stage):
         return self
 
     def load_data(self, is_win, time, mistakes, all_time, modules_count, name_lvl):
-        self.name_lvl = name_lvl
         # загружаем инф об уровне
-        self.minuts = round((all_time / 30) // 60)
-        self.sec = (all_time / 30) % 60
-        self.all_time = f'{int(self.minuts)}:{int(self.sec)}'
+        self.name_lvl = name_lvl
+        self.mistakes = mistakes
+        # кол-во всего времени
+        all_time = all_time // FPS
+        self.minuts = str(all_time // 60)
+        self.sec = str(all_time % 60)
+        if len(self.minuts) == 1:
+            self.minuts = "0" + self.minuts
+        if len(self.sec) == 1:
+            self.sec = "0" + self.sec
+        self.all_time = f'{self.minuts}:{self.sec}'
+
         self.modules_count = modules_count - 1
         self.is_win = is_win
-        self.minuts = int((time / 30) // 60)
-        self.sec = int(time / 30) % 60
-        self.mistakes = mistakes
-        self.time = f'{int(self.minuts)}:{int(self.sec)}'
+
+        # кол-во оставшегося времени
+        time = time // FPS
+        self.minuts = str(time // 60)
+        self.sec = str(time % 60)
+        # Если однозначное число минут/секунд докидываем 0 перед числом (для красоты)
+        if len(self.minuts) == 1:
+            self.minuts = "0" + self.minuts
+        if len(self.sec) == 1:
+            self.sec = "0" + self.sec
+        self.time = f'{self.minuts}:{self.sec}'
+
         self.font80 = pygame.font.Font(r'Resources/Pixeboy.ttf', 80)
         self.font30 = pygame.font.Font(r'Resources/Pixeboy.ttf', 30)
         self.font38 = pygame.font.Font(r'Resources/Pixeboy.ttf', 38)
@@ -66,7 +82,6 @@ class EndStage(Stage):
         # елси у нас 3 символа во времени, значит время в правильном формате
         if not self.b:
             if len(self.all_time) == 3:
-                print('yes')
                 self.b = True
                 self.all_time = str(self.all_time)
                 self.all_time += '0'
