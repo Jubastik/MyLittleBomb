@@ -88,7 +88,7 @@ class Bomb:
                 pygame.Rect(BOMB_IMG_X + 135, BOMB_IMG_Y + 45, 15, 15),
                 width=0,
             )
-        elif not self.indicators[1]:
+        if not self.indicators[1]:
             pygame.draw.rect(
                 screen,
                 (0, 0, 0),
