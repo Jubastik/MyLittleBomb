@@ -10,6 +10,7 @@ class BigButtonModule(BobmModule):
     """Моудуль бомбы с большой кнопкой"""
 
     def init(self):
+        self.font = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)
         self.isdefused = False
         self.click = False
         # кол-во батареек на бомбе
@@ -36,8 +37,7 @@ class BigButtonModule(BobmModule):
         self.strip = screen.blit(self.strip_color, self.strip_position)
         # вставлям текст который рандомно выбради из списка
         txt = self.button_words
-        font = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)
-        res = font.render(txt, True, (255, 255, 255))
+        res = self.font.render(txt, True, (255, 255, 255))
         screen.blit(res, self.position_inscription)
 
     def draw_background(self, screen):
