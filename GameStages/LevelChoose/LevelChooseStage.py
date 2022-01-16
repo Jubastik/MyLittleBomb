@@ -274,7 +274,7 @@ class LevelChooseStage(Stage):
         self.lbl_second_lvl = pygame_gui.elements.UILabel(
             relative_rect=pygame.Rect((THIRD_BLOCK_POS[0] + TITLE_POS[0], THIRD_BLOCK_POS[1] + TITLE_POS[1]),
                                       (337, 55)),
-            text=f'Вторые шаги',
+            text=f'Не трожь',
             manager=self.ui_manager,
             object_id="#game_title")
 
@@ -295,7 +295,7 @@ class LevelChooseStage(Stage):
         self.lbl_third_lvl = pygame_gui.elements.UILabel(
             relative_rect=pygame.Rect((FIRST_BLOCK_POS[0] + TITLE_POS[0], FIRST_BLOCK_POS[1] + TITLE_POS[1]),
                                       (337, 55)),
-            text=f'Третие шаги',
+            text=f'ЭНИАК',
             manager=self.ui_manager,
             object_id="#game_title")
 
@@ -317,7 +317,7 @@ class LevelChooseStage(Stage):
         self.lbl_fourth_lvl = pygame_gui.elements.UILabel(
             relative_rect=pygame.Rect((SECOND_BLOCK_POS[0] + TITLE_POS[0], SECOND_BLOCK_POS[1] + TITLE_POS[1]),
                                       (337, 55)),
-            text=f'Четвертые шаги',
+            text=f'Ахмээд',
             manager=self.ui_manager,
             object_id="#game_title")
 
@@ -338,7 +338,7 @@ class LevelChooseStage(Stage):
         self.lbl_fifth_lvl = pygame_gui.elements.UILabel(
             relative_rect=pygame.Rect((THIRD_BLOCK_POS[0] + TITLE_POS[0], THIRD_BLOCK_POS[1] + TITLE_POS[1]),
                                       (337, 55)),
-            text=f'Пятые шаги',
+            text=f'Идиотизм',
             manager=self.ui_manager,
             object_id="#game_title")
 
