@@ -12,6 +12,7 @@ class EndStage(Stage):
     """Подсчёт результатов"""
 
     def init(self):
+        self.b = False
         self.db = self.gm.DATABASE
         self.ui_manager = self.gm.ui_manager
         self.background = pygame.Surface((self.width, self.height))
@@ -62,16 +63,27 @@ class EndStage(Stage):
         txt = '2. Bomb parameters'
         res = self.font30.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 440))
+        # елси у нас 3 символа во времени, значит время в правильном формате
+        if not self.b:
+            if len(self.all_time) == 3:
+                print('yes')
+                self.b = True
+                self.all_time = str(self.all_time)
+                self.all_time += '0'
+        # добавляем ноль к числу
+            else:
+                self.b = True
+        self.b = False
         if self.modules_count > 1:
             if self.mistakes > 1 or self.mistakes == 0:
-                txt = f'{self.all_time}0 | {self.modules_count} moduls | {self.mistakes} mistakes'
+                txt = f'{self.all_time} | {self.modules_count} moduls | {self.mistakes} mistakes'
             else:
-                txt = f'{self.all_time}0 | {self.modules_count} moduls | {self.mistakes} mistake'
+                txt = f'{self.all_time} | {self.modules_count} moduls | {self.mistakes} mistake'
         else:
             if self.mistakes > 1 or self.mistakes == 0:
-                txt = f'{self.all_time}0 | {self.modules_count} modul | {self.mistakes} mistakes'
+                txt = f'{self.all_time} | {self.modules_count} modul | {self.mistakes} mistakes'
             else:
-                txt = f'{self.all_time}0 | {self.modules_count} modul | {self.mistakes} mistake'
+                txt = f'{self.all_time} | {self.modules_count} modul | {self.mistakes} mistake'
         res = self.font38.render(txt, True, (0, 0, 0))
         screen.blit(res, (WIDTH / 2 - 100, 473))
 
