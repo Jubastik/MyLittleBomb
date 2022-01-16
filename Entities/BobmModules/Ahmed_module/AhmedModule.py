@@ -59,7 +59,6 @@ class AhmedModule(BobmModule):
             count += 1
 
     def check_conditional(self):
-        print(self.INDICATORS_COUNT, self.BATTERY_COUNT)
         self.what_conditional = 0
         b = False
         # проверяем условия
@@ -74,7 +73,6 @@ class AhmedModule(BobmModule):
         elif self.INDICATORS_COUNT[1] and not self.INDICATORS_COUNT[0] and self.BATTERY_COUNT == 1:
             self.what_conditional = 3
             self.right_answer = self.conditional_three
-            print('3 условие')
         elif self.what_conditional == 0:
             for s in SYMBOLS:
                 if s in symb:
@@ -88,7 +86,6 @@ class AhmedModule(BobmModule):
         else:
             self.what_conditional = 5
             self.right_answer = self.conditional_five
-        print(self.what_conditional)
         if self.right_answer not in self.random_position_for_digits:
             self.random_position_for_digits.pop(-1)
             self.random_position_for_digits.append(self.right_answer)
