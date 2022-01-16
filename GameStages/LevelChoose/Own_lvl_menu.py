@@ -1,8 +1,9 @@
 from random import randint
 
 import pygame
-from Levels.FreeGame import FreeLevel
+
 from Entities.Bomb import Bomb
+from Levels.FreeGame import FreeLevel
 from image_loader import load_image
 
 # Позиции элементов относительно модуля
@@ -19,9 +20,9 @@ START_BTN_POS = (336, 812)
 
 class OwnLevel:
     def __init__(self, LCS, x, y):
-        self.LCS = LCS
+        self.LCS = LCS  # LevelChooseStage
         self.gm = self.LCS.gm
-        self.font = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)
+        self.font = pygame.font.Font(r'Resources/Pixeboy.ttf', 60)  # Шрифт для отрисовки цифр
         # Координаты блока
         self.x = x
         self.y = y
@@ -33,7 +34,7 @@ class OwnLevel:
         self.banana_time = 0  # Время нахождения банана в одном из состояний
         self.lamp_on = False
         self.hard_mode = False
-        self.lvl_time = 300
+        self.lvl_time = 300  # Текущее время в секундах для своей игры
         self.lvl_modules = 3
 
     def init_img(self):
@@ -118,8 +119,8 @@ class OwnLevel:
     def start_random_mode(self):
         hard_mode, modules, time = self.random_bomb_generation()
         time = (time // 30) * 30  # Округление времени
-        # Время на 1 модуль должно находиться в границах от 20 до 120 сек
-        if time // modules >= 20 and time // modules <= 120:
+        # Время на 1 модуль должно находиться в границах от 15 до 80 сек
+        if time // modules >= 15 and time // modules <= 80:
             self.LCS.end()
             bomb = Bomb(self.gm.stages["game"])
             level = FreeLevel(time, modules, hardmode=hard_mode)
@@ -137,7 +138,6 @@ class OwnLevel:
         bomb.load_level(level)
         self.gm.stages["game"].set_bomb(bomb)
         self.gm.change_stage("game")
-
 
     def on_sprite(self):
         # Изменение времени нахождения курсора на блоке
@@ -163,7 +163,7 @@ class OwnLevel:
             self.lvl_modules += 1
 
     def random_bomb_generation(self):
-        if randint(0, 20) == 15:
+        if randint(1, 9) == 1:
             hard_mode = True
         else:
             hard_mode = False

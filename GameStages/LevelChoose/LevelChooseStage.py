@@ -3,7 +3,8 @@ import pygame_gui
 
 from CONSTANTS import WIDTH
 from Entities.Bomb import Bomb
-from GameStages.LevelChoose.LevelsDescript import *
+from GameStages.LevelChoose.LevelsDescript import FIRES_LVL_DESCRIPT, SECOND_LVL_DESCRIPT, THIRD_LVL_DESCRIPT, \
+    FOURTH_LVL_DESCRIPT, FIFTH_LVL_DESCRIPT
 from GameStages.LevelChoose.Own_lvl_menu import OwnLevel
 from GameStages.Stage import Stage
 from Levels.Level1 import Level1
@@ -13,15 +14,16 @@ from Levels.Level4 import Level4
 from Levels.Level5 import Level5
 from image_loader import load_image
 
-OWN_LVL_X1 = 100
-OWN_LVL_X2 = OWN_LVL_X1 + 553
+OWN_LVL_X1 = 100  # Верх собственного уровня
 OWN_LVL_Y1 = 20
+OWN_LVL_X2 = OWN_LVL_X1 + 553  # Низ собственного уровня
 OWN_LVL_Y2 = OWN_LVL_Y1 + 1036
 
 FIRST_BLOCK_POS = (100, 20)
 SECOND_BLOCK_POS = (WIDTH // 3 + 50, 20)
 THIRD_BLOCK_POS = (WIDTH // 3 * 2, 20)
 
+# Далее все координаты идут относительно блока
 START_BUTTONS_POS = (161, 924)
 START_BUTTONS_SIZE = (231, 35)
 
@@ -180,9 +182,12 @@ class LevelChooseStage(Stage):
         self.third_lvl_gui()
         self.fourth_lvl_gui()
         self.fifth_lvl_gui()
-        self.change_page(self.page)
+        self.change_page(self.page)  # Отключаю ненужный gui
 
     def get_lvl_results(self):
+        # Словарь с лучшим временем уровня.
+        # Пример: 'first': [3, 45]. 3 - минуты, 45 секунды.
+        # При отсутствии времени ключ уровня отсутствует.
         self.lvl_results = self.gm.DATABASE.get_best_time()
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -274,7 +279,7 @@ class LevelChooseStage(Stage):
         self.lbl_second_lvl = pygame_gui.elements.UILabel(
             relative_rect=pygame.Rect((THIRD_BLOCK_POS[0] + TITLE_POS[0], THIRD_BLOCK_POS[1] + TITLE_POS[1]),
                                       (337, 55)),
-            text=f'Вторые шаги',
+            text=f'Не трожь',
             manager=self.ui_manager,
             object_id="#game_title")
 
@@ -295,7 +300,7 @@ class LevelChooseStage(Stage):
         self.lbl_third_lvl = pygame_gui.elements.UILabel(
             relative_rect=pygame.Rect((FIRST_BLOCK_POS[0] + TITLE_POS[0], FIRST_BLOCK_POS[1] + TITLE_POS[1]),
                                       (337, 55)),
-            text=f'Третие шаги',
+            text=f'ЭНИАК',
             manager=self.ui_manager,
             object_id="#game_title")
 
@@ -317,7 +322,7 @@ class LevelChooseStage(Stage):
         self.lbl_fourth_lvl = pygame_gui.elements.UILabel(
             relative_rect=pygame.Rect((SECOND_BLOCK_POS[0] + TITLE_POS[0], SECOND_BLOCK_POS[1] + TITLE_POS[1]),
                                       (337, 55)),
-            text=f'Четвертые шаги',
+            text=f'Ахмээд',
             manager=self.ui_manager,
             object_id="#game_title")
 
@@ -338,7 +343,7 @@ class LevelChooseStage(Stage):
         self.lbl_fifth_lvl = pygame_gui.elements.UILabel(
             relative_rect=pygame.Rect((THIRD_BLOCK_POS[0] + TITLE_POS[0], THIRD_BLOCK_POS[1] + TITLE_POS[1]),
                                       (337, 55)),
-            text=f'Пятые шаги',
+            text=f'Идиотизм',
             manager=self.ui_manager,
             object_id="#game_title")
 
@@ -354,11 +359,12 @@ class LevelChooseStage(Stage):
     # Отрисовка уровня
     def draw_first_lvl(self, screen):
         lvl = "first"
+        # Отрисовка бэкграунда
         self.rect_first = screen.blit(self.sprite_first, SECOND_BLOCK_POS)
 
+        # Отрисовка лучшего времени
         res = self.font_best_time_txt.render("Лучшая попытка", True, (183, 47, 42))
         screen.blit(res, (SECOND_BLOCK_POS[0] + BEST_TIME_TXT_POS[0], SECOND_BLOCK_POS[1] + BEST_TIME_TXT_POS[1]))
-
         if lvl in self.lvl_results:
             txt = f"{self.lvl_results[lvl][0]}:{self.lvl_results[lvl][1]}"
         else:
