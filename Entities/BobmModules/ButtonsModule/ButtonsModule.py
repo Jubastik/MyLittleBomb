@@ -54,6 +54,7 @@ class ButtonsModule(BobmModule):
         for s in SYMBOLS:
             if s in symb:
                 translate = TRANSLATE[0]
+                break
         else:
             translate = TRANSLATE[1]
         # Создаём последовательность
