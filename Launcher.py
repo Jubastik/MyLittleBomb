@@ -3,7 +3,6 @@ import os
 import pygame
 from CONSTANTS import FPS, WIDTH, HEIGHT
 from GameManager import GameManager
-import ctypes
 
 
 def launch():
