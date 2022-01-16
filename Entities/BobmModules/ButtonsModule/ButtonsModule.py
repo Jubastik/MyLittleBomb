@@ -54,11 +54,9 @@ class ButtonsModule(BobmModule):
         for s in SYMBOLS:
             if s in symb:
                 translate = TRANSLATE[0]
-                print(0)
                 break
         else:
             translate = TRANSLATE[1]
-            print(1)
         # Создаём последовательность
         show = COLORS[:]
         shuffle(show)
