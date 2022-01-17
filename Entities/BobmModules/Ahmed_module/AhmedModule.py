@@ -64,15 +64,13 @@ class AhmedModule(BobmModule):
         # проверяем условия
         serial_num = self.bomb.serial_number
         symb = list(serial_num[0] + serial_num[2])
-        translate = None
         if self.BATTERY_COUNT == 3:
             self.what_conditional = 1
             self.right_answer = self.conditional_one
         elif self.INDICATORS_COUNT[0] and not self.INDICATORS_COUNT[1]:
             self.what_conditional = 2
             self.right_answer = self.conditional_two
-        elif not self.INDICATORS_COUNT[0] and self.INDICATORS_COUNT[1] and \
-                self.BATTERY_COUNT == 1:
+        elif self.INDICATORS_COUNT[1] and not self.INDICATORS_COUNT[0] and self.BATTERY_COUNT == 1:
             self.what_conditional = 3
             self.right_answer = self.conditional_three
         elif self.what_conditional == 0:
@@ -140,7 +138,7 @@ class AhmedModule(BobmModule):
                                    f' {self.second_operation} {self.third_digit} '
         self.conditional_one = eval(self.conditional_one)
         if self.conditional_one != int(self.conditional_one):
-            self.conditional_one = round(int(self.conditional_one), 1)
+            self.conditional_one = round(self.conditional_one, 1)
         else:
             self.conditional_one = int(self.conditional_one)
 
@@ -156,7 +154,7 @@ class AhmedModule(BobmModule):
                                    f' * {self.third_digit} '
         self.conditional_two = eval(self.conditional_two)
         if self.conditional_two != int(self.conditional_two):
-            self.conditional_two = round(int(self.conditional_two), 1)
+            self.conditional_two = round(self.conditional_two, 1)
         else:
             self.conditional_two = int(self.conditional_two)
 
@@ -168,7 +166,7 @@ class AhmedModule(BobmModule):
                                  f' {self.second_operation} 10 '
         self.conditional_three = eval(self.conditional_three)
         if self.conditional_three != int(self.conditional_three):
-            self.conditional_three = round(int(self.conditional_three), 1)
+            self.conditional_three = round(self.conditional_three, 1)
         else:
             self.conditional_three = int(self.conditional_three)
 
@@ -180,7 +178,7 @@ class AhmedModule(BobmModule):
                                 f' {self.second_operation} {self.third_digit} '
         self.conditional_four = eval(self.conditional_four)
         if self.conditional_four != int(self.conditional_four):
-            self.conditional_four = round(int(self.conditional_four), 1)
+            self.conditional_four = round(self.conditional_four, 1)
         else:
             self.conditional_four = int(self.conditional_four)
 
@@ -192,7 +190,7 @@ class AhmedModule(BobmModule):
                                 f'{self.second_operation} {self.third_digit} '
         self.conditional_five = eval(self.conditional_five)
         if self.conditional_five != int(self.conditional_five):
-            self.conditional_five = round(int(self.conditional_five), 1)
+            self.conditional_five = round(self.conditional_five, 1)
         else:
             self.conditional_five = int(self.conditional_five)
 
@@ -447,7 +445,7 @@ class AhmedModule(BobmModule):
                     self.bomb.gs.lose()
 
         elif self.ninth_btn_rect.collidepoint((x, y)):
-            self.nine_btn = self.btn_hold
+            self.ninth_btn = self.btn_hold
             # если индекс кнопки верный, то модуль обезвржен
             if ind == 8:
                 self.isdefused = True
