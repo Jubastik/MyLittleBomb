@@ -84,7 +84,10 @@ class ButtonsModule(BobmModule):
                 self.step = (self.step + 1) % len(self.show)
                 self.button_now = [self.show[self.step], (1 * FPS) - 1, False]
             else:
-                self.button_now = [self.show[self.step], (1 * FPS) - 1, True]
+                step = self.step % len(
+                    self.show
+                )  # Возможно, бесполезная строчка, но предотвращает баги.
+                self.button_now = [self.show[step], (1 * FPS) - 1, True]
                 self.buttons[self.button_now[0]].change_image(islightning=True)
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -113,7 +116,7 @@ class ButtonsModule(BobmModule):
     def LKM_down(self, x, y):
         # Получаем ответ
         answer = "on module"
-        
+
         for btn in self.buttons.values():
             if btn.check_click(x, y):
                 answer = btn.color
@@ -137,6 +140,7 @@ class ButtonsModule(BobmModule):
                     if self.bomb.gs.mistakes >= 3:
                         self.bomb.gs.lose()
                     self.module_img_red_timer += FPS // 2
+                    self.step = 0  # Теоритическое исправление бага
                     self.show = self.info[: self.correct_answers + 1]
                     return
             else:
@@ -147,6 +151,7 @@ class ButtonsModule(BobmModule):
                     self.answer = []
                     self.correct_answers += 1
                     self.answer_step = 1
+                    self.step = 0  # Теоритическое исправление бага
                 else:
                     # Следующий этап разминирования текущего этапа
                     self.answer_step += 1
