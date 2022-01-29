@@ -1,3 +1,9 @@
+Инструкция - https://docs.google.com/document/d/10K39vNIL9V1iu4_iRRIUM3-GUT3xu5T9xGU2inMUlX4/edit
+Презентация - https://1drv.ms/p/s!Aht_ZDr4f20Qg9BN0qUyjfbjIj1cHA?e=7FbWRS
+Проект был защищён на максимальный балл.
+Рецензия - https://yumaa.notion.site/08b74f7bf82d4585aacf6696d67e8c60
+
+
 You’re alone in a room with a bomb. Your friends, the “Experts”, have the manual needed to defuse it. But there’s a catch: the Experts can’t see the bomb, so everyone will need to talk it out – fast!
 
 Ты один в комнате с бомбой. У ваших друзей, “Экспертов”, есть инструкция, необходимая для его обезвреживания. Но есть одна загвоздка: эксперты не могут видеть бомбу, поэтому всем нужно будет выговориться – быстро!
