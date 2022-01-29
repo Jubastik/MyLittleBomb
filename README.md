@@ -5,6 +5,7 @@
 Проект был защищён на максимальный балл.
 Рецензия - https://yumaa.notion.site/08b74f7bf82d4585aacf6696d67e8c60
 
+Для игры установите библиотеки из requirements.txt и запустите  Launcher.py.
 
 You’re alone in a room with a bomb. Your friends, the “Experts”, have the manual needed to defuse it. But there’s a catch: the Experts can’t see the bomb, so everyone will need to talk it out – fast!
 
