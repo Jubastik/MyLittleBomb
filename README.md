@@ -9,6 +9,7 @@
 
  1. Распакуйте скопированный архив
  2. Установите библиотеки из файла **requirements.txt**
+ 
 	`pip install -r requirements.txt`
 	
  3. Запустите Launcher.py
