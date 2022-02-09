@@ -22,5 +22,7 @@
 
 ## Рецензия и презентация
 Проект получил максимальный балл в Яндекс Лицее. 
+
 [Рецензия](https://yumaa.notion.site/08b74f7bf82d4585aacf6696d67e8c60)
+
 [Презентация](https://1drv.ms/p/s!Aht_ZDr4f20Qg9BN0qUyjfbjIj1cHA?e=7FbWRS)
